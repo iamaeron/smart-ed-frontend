@@ -31,7 +31,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     initializeAuth();
   }, []);
 
-  if (!hasSession) {
+  if (location.pathname !== "/" && !hasSession) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 

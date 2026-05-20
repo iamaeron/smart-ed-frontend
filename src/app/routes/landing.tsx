@@ -17,10 +17,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { type UserData, userSchema } from "@/types/form/user";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth.context";
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
+import Loader from "@/components/loader";
 
 const SignInPage = () => {
-  const { user, isLoading } = useAuth();
+  const navigate = useNavigate();
+  const { user, isLoading, setUser } = useAuth();
   const { control, handleSubmit, formState } = useForm<UserData>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -29,19 +31,27 @@ const SignInPage = () => {
     },
   });
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   if (user) {
     return <Navigate to="/system-admin/dashboard" />;
   }
 
   const onSubmit: SubmitHandler<UserData> = async (data) => {
-    const csrf = await api.get("/sanctum/csrf-cookie");
-    if (csrf.status === 204) {
-      const res = await api.post("/api/login", data);
-      console.log(res.data);
+    try {
+      const csrf = await api.get("/sanctum/csrf-cookie");
+      if (csrf.status === 204) {
+        const res = await api.post("/api/login", data);
+        if (res.data.results.User) {
+          setUser(res.data.results.User);
+        }
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
-
-  if (isLoading) return <div>Loading ...</div>;
 
   return (
     <Center mih="100vh" py={80} bg="lightBackground" pos="relative">
@@ -114,7 +124,12 @@ const SignInPage = () => {
               )}
             />
 
-            <Button type="submit" mt={6} mb={26}>
+            <Button
+              loading={formState.isSubmitting}
+              type="submit"
+              mt={6}
+              mb={26}
+            >
               Sign in
             </Button>
           </Flex>

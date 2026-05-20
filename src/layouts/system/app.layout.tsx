@@ -2,7 +2,6 @@ import {
   ActionIcon,
   AppShell,
   Burger,
-  Button,
   Flex,
   Group,
   Image,
@@ -11,18 +10,18 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import logo from "@/assets/smarted-logo.png";
-import SidebarLink from "@/components/sidebar/SidebarLink";
+import SidebarLink from "@/components/sidebar/sidebar-link";
 import {
   Bell,
   Chart,
   FileCheck,
-  Logout2,
   SidebarMinimalistic,
   SquareAcademicCap,
   UserCircle,
   UsersGroupRounded,
   Widget,
 } from "@solar-icons/react";
+import LogOutModal from "@/components/sidebar/log-out-modal";
 
 const SystemAdminAppLayout = ({ children }: { children: React.ReactNode }) => {
   const [opened, { toggle }] = useDisclosure();
@@ -125,15 +124,8 @@ const SystemAdminAppLayout = ({ children }: { children: React.ReactNode }) => {
             />
           </Stack>
         </AppShell.Section>
-        <AppShell.Section p="md">
-          <Button
-            justify="left"
-            fullWidth
-            variant="outline"
-            leftSection={<Logout2 weight="Outline" size={20} />}
-          >
-            Log out
-          </Button>
+        <AppShell.Section p="0">
+          <LogOutModal />
         </AppShell.Section>
       </AppShell.Navbar>
       <AppShell.Main bg="lightBackground">{children}</AppShell.Main>

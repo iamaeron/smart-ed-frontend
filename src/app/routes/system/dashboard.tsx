@@ -1,6 +1,6 @@
-import QuickViewCol from "@/components/dashboard/QuickViewCol";
-import QuickViewContainer from "@/components/dashboard/QuickViewContainer";
-import SystemAdminAppLayout from "@/layouts/system/AppLayout";
+import QuickViewCol from "@/components/dashboard/quick-view-col";
+import QuickViewContainer from "@/components/dashboard/quick-view-container";
+import SystemAdminAppLayout from "@/layouts/system/app.layout";
 import {
   Box,
   Button,
@@ -9,8 +9,6 @@ import {
   Grid,
   Group,
   Indicator,
-  Paper,
-  ScrollArea,
   Stack,
   Text,
 } from "@mantine/core";
@@ -21,8 +19,8 @@ import {
   UserHandUp,
 } from "@solar-icons/react";
 import { DonutChart } from "@mantine/charts";
-import ResourceSummary from "@/components/dashboard/ResourceSummary";
-import RecentActivity from "@/components/dashboard/RecentActivity";
+import ResourceSummary from "@/components/dashboard/resource-summary";
+import RecentActivity from "@/components/dashboard/recent-activity";
 
 const SystemAdminDashboard = () => {
   const enrollDummyData = [

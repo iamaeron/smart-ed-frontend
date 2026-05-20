@@ -1,10 +1,11 @@
+import Loader from "@/components/loader";
 import { useAuth } from "@/contexts/auth.context";
 import { Navigate, Outlet, useLocation } from "react-router";
 
 const ProtectedRoutes = ({ allowedRoles }: { allowedRoles?: string[] }) => {
   const { isLoading, user } = useAuth();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader />;
 
   // If no session, redirect to login and save the attempted URL
   //   if (!session) {
