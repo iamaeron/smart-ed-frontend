@@ -23,7 +23,7 @@ import Loader from "@/components/loader";
 const SignInPage = () => {
   const navigate = useNavigate();
   const { user, isLoading, setUser } = useAuth();
-  const { control, handleSubmit, formState } = useForm<UserData>({
+  const { control, handleSubmit, formState, setError } = useForm<UserData>({
     resolver: zodResolver(userSchema),
     defaultValues: {
       username: "",
@@ -40,16 +40,18 @@ const SignInPage = () => {
   }
 
   const onSubmit: SubmitHandler<UserData> = async (data) => {
-    try {
-      const csrf = await api.get("/sanctum/csrf-cookie");
-      if (csrf.status === 204) {
+    const csrf = await api.get("/sanctum/csrf-cookie");
+    if (csrf.status === 204) {
+      try {
         const res = await api.post("/api/login", data);
+
         if (res.data.results.User) {
           setUser(res.data.results.User);
         }
+      } catch (err: any) {
+        setError("username", { message: err.response.data.message });
+        setError("password", { message: err.response.data.message });
       }
-    } catch (error) {
-      console.error(error);
     }
   };
 
