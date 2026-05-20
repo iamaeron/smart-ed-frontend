@@ -45,7 +45,7 @@ const SystemAdminDashboard = () => {
       <Grid mt={20}>
         <Grid.Col span={3}>
           <Card radius="lg" p="lg" shadow="sm">
-            <Text mb={14} fw={600}>
+            <Text mb={18} fw={600}>
               Enrollment by Gender
             </Text>
 
@@ -113,7 +113,7 @@ const SystemAdminDashboard = () => {
           </Card>
         </Grid.Col>
         <Grid.Col span={3}>
-          <Card mah={210} radius="lg" p="lg" shadow="sm">
+          <Card h="100%" radius="lg" p="lg" shadow="sm">
             <Group mb={18} align="flex-start" justify="space-between">
               <Text fw={600}>Notifications</Text>
 

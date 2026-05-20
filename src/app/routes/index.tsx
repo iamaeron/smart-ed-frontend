@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
 import SignInPage from "./landing";
-import SystemAdminDashboard from "./system-admin/dashboard";
+import SystemAdminDashboard from "./system/dashboard";
 
 const AppRoutes = () => {
   return (

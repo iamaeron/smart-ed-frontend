@@ -10,7 +10,7 @@ export const theme = createTheme({
   colors: {
     mainText: singleColor("#111111"),
     longText: singleColor("#555555"),
-    grey: singleColor("#9c9b9c"),
+    grey: singleColor("#555555"),
     whBg: singleColor("#ffffff"),
     lightBackground: singleColor("#f3f5ff"),
     accent2: singleColor("#cfddff"),
@@ -20,7 +20,7 @@ export const theme = createTheme({
     primary2: singleColor("#192d7c"),
 
     // Submissions group
-    subRed: singleColor("#db3237"),
+    subRed: singleColor("#DB3237"),
     subGreen: singleColor("#3cbb54"),
     subYellow: singleColor("#f4c10d"),
   },

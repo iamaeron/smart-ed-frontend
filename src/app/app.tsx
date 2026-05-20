@@ -3,7 +3,7 @@ import "@mantine/charts/styles.css";
 
 import { MantineProvider } from "@mantine/core";
 import AppRoutes from "./routes";
-import { theme } from "./theme";
+import { theme } from "@/lib/theme";
 
 const App = () => {
   return (
