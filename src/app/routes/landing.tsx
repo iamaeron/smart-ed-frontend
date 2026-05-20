@@ -12,11 +12,15 @@ import {
 } from "@mantine/core";
 import logo from "@/assets/smarted-logo.png";
 import { InfoCircle } from "@solar-icons/react";
-import { Controller, Form, useForm, type SubmitHandler } from "react-hook-form";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type UserData, userSchema } from "@/types/form/user";
+import { api } from "@/lib/api";
+import { useAuth } from "@/contexts/auth.context";
+import { Navigate } from "react-router";
 
 const SignInPage = () => {
+  const { user, isLoading } = useAuth();
   const { control, handleSubmit, formState } = useForm<UserData>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -25,12 +29,22 @@ const SignInPage = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<UserData> = (data) => {
-    console.log(data);
+  if (user) {
+    return <Navigate to="/system-admin/dashboard" />;
+  }
+
+  const onSubmit: SubmitHandler<UserData> = async (data) => {
+    const csrf = await api.get("/sanctum/csrf-cookie");
+    if (csrf.status === 204) {
+      const res = await api.post("/api/login", data);
+      console.log(res.data);
+    }
   };
 
+  if (isLoading) return <div>Loading ...</div>;
+
   return (
-    <Center h="100vh" bg="lightBackground">
+    <Center mih="100vh" py={80} bg="lightBackground" pos="relative">
       <Paper radius="lg" bg="whBg" p="xl" shadow="lg" maw={480}>
         <Flex direction="column" align="center">
           <Image src={logo} h={66} w={66} />

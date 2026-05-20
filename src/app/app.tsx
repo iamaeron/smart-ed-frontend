@@ -4,11 +4,14 @@ import "@mantine/charts/styles.css";
 import { MantineProvider } from "@mantine/core";
 import AppRoutes from "./routes";
 import { theme } from "@/lib/theme";
+import AuthContextProvider from "@/contexts/auth.context";
 
 const App = () => {
   return (
     <MantineProvider theme={theme}>
-      <AppRoutes />
+      <AuthContextProvider>
+        <AppRoutes />
+      </AuthContextProvider>
     </MantineProvider>
   );
 };

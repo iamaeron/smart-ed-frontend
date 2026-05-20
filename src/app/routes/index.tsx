@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 import SignInPage from "./landing";
 import SystemAdminDashboard from "./system/dashboard";
+import ProtectedRoutes from "@/layouts/protected-routes";
 
 const AppRoutes = () => {
   return (
@@ -8,10 +9,12 @@ const AppRoutes = () => {
       <Route path="/" element={<SignInPage />} />
 
       {/* System Admin Routes */}
-      <Route
-        path="/system-admin/dashboard"
-        element={<SystemAdminDashboard />}
-      />
+      <Route element={<ProtectedRoutes />}>
+        <Route
+          path="/system-admin/dashboard"
+          element={<SystemAdminDashboard />}
+        />
+      </Route>
     </Routes>
   );
 };

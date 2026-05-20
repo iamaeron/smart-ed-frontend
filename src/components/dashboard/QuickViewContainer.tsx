@@ -37,6 +37,7 @@ const QuickViewContainer = ({ children }: QuickViewContainerType) => {
             data={["React", "Angular", "Vue", "Svelte"]}
             defaultValue={"React"}
             className="school-year-select"
+            comboboxProps={{ shadow: "xl" }}
             styles={{
               input: {
                 background: "rgba(255,255,255,0.3)",
@@ -44,10 +45,10 @@ const QuickViewContainer = ({ children }: QuickViewContainerType) => {
                 border: "1px solid rgba(255,255,255,0.5)",
               },
               dropdown: {
-                background: "rgba(255,255,255,0.3)",
+                background: "rgba(255,255,255,0.2)",
                 color: "white",
                 border: "1px solid rgba(255,255,255,0.5)",
-                backdropFilter: "blur(4px)",
+                backdropFilter: "blur(14px)",
               },
             }}
             classNames={{
