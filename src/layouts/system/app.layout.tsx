@@ -100,25 +100,25 @@ const SystemAdminAppLayout = ({ children }: { children: React.ReactNode }) => {
             />
             <SidebarLink
               label="Schools Directory"
-              to="/system-admin/division-overview"
+              to="/system-admin/schools-directory"
               icon={SquareAcademicCap}
               collapsed={!desktopOpened}
             />
             <SidebarLink
               label="News & Alert"
-              to="/system-admin/division-overview"
+              to="/system-admin/news"
               icon={Bell}
               collapsed={!desktopOpened}
             />
             <SidebarLink
               label="Submissions"
-              to="/system-admin/division-overview"
+              to="/system-admin/submissions"
               icon={FileCheck}
               collapsed={!desktopOpened}
             />
             <SidebarLink
               label="System Management"
-              to="/system-admin/division-overview"
+              to="/system-admin/system-management"
               icon={UsersGroupRounded}
               collapsed={!desktopOpened}
             />
