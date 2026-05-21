@@ -40,20 +40,24 @@ const SignInPage = () => {
   }
 
   const onSubmit: SubmitHandler<UserData> = async (data) => {
-    const csrf = await api.get("/sanctum/csrf-cookie");
-    if (csrf.status === 204) {
-      try {
-        const res = await api.post("/api/login", data);
+    // const csrf = await api.get("/sanctum/csrf-cookie");
+    // if (csrf.status === 204) {
+    try {
+      const res = await api.post("/api/login", data);
 
-        if (res.data.results.User) {
-          setUser(res.data.results.User);
-          window.location.reload();
-        }
-      } catch (err: any) {
-        setError("username", { message: err.response.data.message });
-        setError("password", { message: err.response.data.message });
+      const token = res.data?.results?.token;
+      const userData = res.data?.results?.User;
+
+      if (token && userData) {
+        localStorage.setItem("auth_token", token);
+        setUser(userData);
+        window.location.reload();
       }
+    } catch (err: any) {
+      setError("username", { message: err.response.data.message });
+      setError("password", { message: err.response.data.message });
     }
+    // }
   };
 
   return (

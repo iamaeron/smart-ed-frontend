@@ -14,10 +14,10 @@ export const theme = createTheme({
     whBg: singleColor("#ffffff"),
     lightBackground: singleColor("#f3f5ff"),
     accent2: singleColor("#cfddff"),
-    border: singleColor("#eaeaff"),
+    border: singleColor("#EAEAFF"),
     accent1: singleColor("#ff9500"),
     primary: singleColor("#2c68ff"),
-    primary2: singleColor("#192d7c"),
+    primary2: singleColor("#192D7C"),
 
     // Submissions group
     subRed: singleColor("#DB3237"),

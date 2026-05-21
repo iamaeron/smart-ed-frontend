@@ -39,7 +39,7 @@ const RecentActivity = () => {
         <Stack gap={4}>
           {data.results ? (
             data.results.data.map((log: Log) => (
-              <Paper p="sm" radius="md" withBorder shadow="none">
+              <Paper key={log.id} p="sm" radius="md" withBorder shadow="none">
                 <Box>
                   <Text
                     size="xs"

@@ -14,6 +14,15 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const initializeAuth = async () => {
+      const token = localStorage.getItem("auth_token");
+
+      if (!token) {
+        setHasSession(false);
+        authStore.getState().setUser(null);
+        authStore.getState().setIsLoading(false);
+        return;
+      }
+
       try {
         const response = await api.get("/api/user");
 
@@ -21,7 +30,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
         authStore.getState().setUser(response.data);
       } catch (error) {
         setHasSession(false);
-        console.log("No valid session cookie found, user is a guest.");
+        localStorage.removeItem("auth_token");
         authStore.getState().setUser(null);
       } finally {
         authStore.getState().setIsLoading(false);

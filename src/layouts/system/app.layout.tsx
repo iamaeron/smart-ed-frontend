@@ -29,6 +29,8 @@ const SystemAdminAppLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AppShell
+      p="lg"
+      bg="lightBackground"
       layout="alt"
       header={{ height: 60 }}
       navbar={{
@@ -128,7 +130,7 @@ const SystemAdminAppLayout = ({ children }: { children: React.ReactNode }) => {
           <LogOutModal />
         </AppShell.Section>
       </AppShell.Navbar>
-      <AppShell.Main bg="lightBackground">{children}</AppShell.Main>
+      <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );
 };
