@@ -1,6 +1,6 @@
 import { Box, Button, Card, Group, Table, Text } from "@mantine/core";
 
-const ResourceSummary = () => {
+const ResourceSummary = ({ summary = true }: { summary?: boolean }) => {
   const dummyTableData = [
     {
       resource: "Classrooms",
@@ -30,10 +30,16 @@ const ResourceSummary = () => {
 
   const rows = dummyTableData.map((element) => (
     <Table.Tr key={element.resource}>
-      <Table.Td>{element.resource}</Table.Td>
-      <Table.Td>{element.inventory}</Table.Td>
-      <Table.Td>{element.requirement}</Table.Td>
-      <Table.Td>{element.need}</Table.Td>
+      <Table.Td w={summary ? "auto" : "100%"}>{element.resource}</Table.Td>
+      <Table.Td pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
+        {element.inventory}
+      </Table.Td>
+      <Table.Td pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
+        {element.requirement}
+      </Table.Td>
+      <Table.Td pr={summary ? 0 : 40} pl={summary ? 0 : 50} fw={600}>
+        {element.need}
+      </Table.Td>
     </Table.Tr>
   ));
 
@@ -42,26 +48,35 @@ const ResourceSummary = () => {
       <Group justify="space-between">
         <Box>
           <Text mb={2} fw={600}>
-            Resource Summary
+            {summary ? "Resource Summary" : "Resource Management"}
           </Text>
           <Text mb={18} c="longText" size="sm">
-            A summary of classrooms, teachers, seats, and learning materials
-            across all schools in the division.
+            {summary
+              ? "A summary of classrooms, teachers, seats, and learning materials across all schools in the division."
+              : "Monitor and manage school resources"}
           </Text>
         </Box>
 
-        <Button mt={-12} p={0} variant="white" c="primary">
-          View all
-        </Button>
+        {summary ? (
+          <Button mt={-12} p={0} variant="white" c="primary">
+            View all
+          </Button>
+        ) : null}
       </Group>
 
       <Table horizontalSpacing={0}>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Resources</Table.Th>
-            <Table.Th>Inventory</Table.Th>
-            <Table.Th>Requirement</Table.Th>
-            <Table.Th>Need</Table.Th>
+            <Table.Th pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
+              Inventory
+            </Table.Th>
+            <Table.Th pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
+              Requirement
+            </Table.Th>
+            <Table.Th pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
+              Need
+            </Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

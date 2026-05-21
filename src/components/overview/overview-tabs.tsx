@@ -1,6 +1,8 @@
 import { FloatingIndicator, Tabs } from "@mantine/core";
 import { useState } from "react";
 import classes from "@/css/Overview.module.css";
+import EnrollmentTab from "./enrollment-tab";
+import ResourceTab from "./resource-tab";
 
 const OverviewTabs = () => {
   const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
@@ -33,8 +35,12 @@ const OverviewTabs = () => {
         />
       </Tabs.List>
 
-      <Tabs.Panel value="1">First tab content</Tabs.Panel>
-      <Tabs.Panel value="2">Second tab content</Tabs.Panel>
+      <Tabs.Panel value="1">
+        <EnrollmentTab />
+      </Tabs.Panel>
+      <Tabs.Panel value="2">
+        <ResourceTab />
+      </Tabs.Panel>
       <Tabs.Panel value="3">Third tab content</Tabs.Panel>
     </Tabs>
   );

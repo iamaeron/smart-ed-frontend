@@ -1,7 +1,7 @@
-import SystemAdminAppLayout from "@/layouts/system/app.layout";
+import AppLayout from "@/layouts/app.layout";
 
 const SystemAdminSchoolsDirectory = () => {
-  return <SystemAdminAppLayout>Hey</SystemAdminAppLayout>;
+  return <AppLayout>Hey</AppLayout>;
 };
 
 export default SystemAdminSchoolsDirectory;

@@ -3,13 +3,12 @@ import QuickViewContainer from "@/components/dashboard/quick-view-container";
 import { Card, Center, Grid, Text } from "@mantine/core";
 import { Buildings, SquareAcademicCap, UserHandUp } from "@solar-icons/react";
 import ResourceSummary from "@/components/dashboard/resource-summary";
-import RecentActivity from "@/components/dashboard/recent-activity";
 import ComparativeEnrollment from "@/components/dashboard/comparative-enrollment";
 import EnrollmentByGender from "@/components/dashboard/enrollment-by-gender";
 import NotificationsCol from "@/components/dashboard/notifications-col";
 import AppLayout from "@/layouts/app.layout";
 
-const SystemAdminDashboard = () => {
+const DivisionAdminDashboard = () => {
   return (
     <AppLayout>
       <QuickViewContainer>
@@ -51,9 +50,6 @@ const SystemAdminDashboard = () => {
             <Grid.Col span={12}>
               <NotificationsCol />
             </Grid.Col>
-            <Grid.Col span={12}>
-              <RecentActivity />
-            </Grid.Col>
           </Grid>
         </Grid.Col>
       </Grid>
@@ -61,4 +57,4 @@ const SystemAdminDashboard = () => {
   );
 };
 
-export default SystemAdminDashboard;
+export default DivisionAdminDashboard;

@@ -17,11 +17,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { type UserData, userSchema } from "@/types/form/user.type";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth.context";
-import { Navigate, useNavigate } from "react-router";
+import { Navigate } from "react-router";
 import Loader from "@/components/loader";
 
 const SignInPage = () => {
-  const navigate = useNavigate();
   const { user, isLoading, setUser } = useAuth();
   const { control, handleSubmit, formState, setError } = useForm<UserData>({
     resolver: zodResolver(userSchema),
@@ -36,12 +35,14 @@ const SignInPage = () => {
   }
 
   if (user) {
-    return <Navigate to="/system-admin/dashboard" />;
+    return (
+      <Navigate
+        to={`/${user.role.toLowerCase().replace(" ", "-")}/dashboard`}
+      />
+    );
   }
 
   const onSubmit: SubmitHandler<UserData> = async (data) => {
-    // const csrf = await api.get("/sanctum/csrf-cookie");
-    // if (csrf.status === 204) {
     try {
       const res = await api.post("/api/login", data);
 
@@ -51,13 +52,11 @@ const SignInPage = () => {
       if (token && userData) {
         localStorage.setItem("auth_token", token);
         setUser(userData);
-        window.location.reload();
       }
     } catch (err: any) {
       setError("username", { message: err.response.data.message });
       setError("password", { message: err.response.data.message });
     }
-    // }
   };
 
   return (

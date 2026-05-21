@@ -9,16 +9,17 @@ const OverviewCol = ({ label, value, icon }: QuickViewColProps) => {
   return (
     <Card
       w="100%"
-      bg="rgba(255,255,255,0.3)"
-      withBorder
+      bg="white"
+      // withBorder
       p="lg"
-      c="white"
+      c="mainText"
       radius="lg"
-      bd="1px solid rgba(255,255,255,0.5)"
+      // bd="1px solid rgba(0,0,0,0.1)"
+      shadow="xl"
     >
       <Group justify="space-between">
         <Box>
-          <Text mt={2} mb={20}>
+          <Text mt={2} mb={20} fw={600}>
             {label}
           </Text>
           <Text
@@ -26,7 +27,7 @@ const OverviewCol = ({ label, value, icon }: QuickViewColProps) => {
               textShadow:
                 "0px 1px 0px rgb(0 0 0 / 0.075), 0px 1px 1px rgb(0 0 0 / 0.075), 0px 2px 2px rgb(0 0 0 / 0.075)",
             }}
-            fz={45}
+            fz={40}
             fw={600}
             lts={2}
             lh={1}
@@ -35,7 +36,12 @@ const OverviewCol = ({ label, value, icon }: QuickViewColProps) => {
           </Text>
         </Box>
 
-        <Center style={{ borderRadius: "999px" }} bg="white" w={50} h={50}>
+        <Center
+          style={{ borderRadius: "999px" }}
+          bg="lightBackground"
+          w={50}
+          h={50}
+        >
           <Icon color="#2C68FF" weight="BoldDuotone" size={30} />
         </Center>
       </Group>

@@ -3,19 +3,14 @@ import { Modal, Button, Text, Stack, Flex, Paper } from "@mantine/core";
 import { Logout2 } from "@solar-icons/react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth.context";
-import { Navigate, useNavigate } from "react-router";
 
 const LogOutModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const { setUser } = useAuth();
-  const navigate = useNavigate();
 
   const handleLogOut = async () => {
     try {
       await api.post("/api/logout");
-
-      navigate("/");
-
       setUser(null);
     } catch (error) {
       console.error("Logout failed:", error);

@@ -7,11 +7,21 @@ import SystemAdminSchoolsDirectory from "./system/schools-directory";
 import SystemAdminNews from "./system/news-alert";
 import SystemAdminSubmissions from "./system/submissions";
 import SystemAdminSystemManagement from "./system/system-management";
+import SchoolAdminDashboard from "./school/dashboard";
+import DivisionAdminDashboard from "./division/dashboard";
 
 const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<SignInPage />} />
+
+      {/* School Admin Routes */}
+      <Route element={<ProtectedRoutes />}>
+        <Route
+          path="/school-admin/dashboard"
+          element={<SchoolAdminDashboard />}
+        />
+      </Route>
 
       {/* System Admin Routes */}
       <Route element={<ProtectedRoutes />}>
@@ -35,6 +45,14 @@ const AppRoutes = () => {
         <Route
           path="/system-admin/system-management"
           element={<SystemAdminSystemManagement />}
+        />
+      </Route>
+
+      {/* Division Admin Routes */}
+      <Route element={<ProtectedRoutes />}>
+        <Route
+          path="/division-admin/dashboard"
+          element={<DivisionAdminDashboard />}
         />
       </Route>
     </Routes>

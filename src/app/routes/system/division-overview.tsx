@@ -1,10 +1,10 @@
-import OverviewTabs from "@/components/overview/overview-tab";
-import SystemAdminAppLayout from "@/layouts/system/app.layout";
-import { Box, Flex, Select, Tabs, Text, Title } from "@mantine/core";
+import OverviewTabs from "@/components/overview/overview-tabs";
+import AppLayout from "@/layouts/app.layout";
+import { Box, Flex, Select, Text, Title } from "@mantine/core";
 
 const SystemAdminDivisionOverview = () => {
   return (
-    <SystemAdminAppLayout>
+    <AppLayout>
       <Flex mb={30} align="flex-end" justify="space-between">
         <Box>
           <Text c="primary2">DIVISION OVERVIEW</Text>
@@ -40,7 +40,7 @@ const SystemAdminDivisionOverview = () => {
       </Flex>
 
       <OverviewTabs />
-    </SystemAdminAppLayout>
+    </AppLayout>
   );
 };
 

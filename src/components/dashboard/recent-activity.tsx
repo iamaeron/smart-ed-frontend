@@ -1,7 +1,4 @@
-import {
-  useFetchActivityLogs,
-  useFetchRecentActivityLogs,
-} from "@/lib/fetcher/activity.fetcher";
+import { useFetchActivityLogs } from "@/lib/fetcher/activity.fetcher";
 import type { Log } from "@/types/data/log.type";
 import {
   Box,
@@ -11,18 +8,20 @@ import {
   Group,
   Loader,
   Paper,
-  Pill,
   Stack,
   Text,
 } from "@mantine/core";
 import dayjs from "dayjs";
 
 const RecentActivity = () => {
-  const { data, isPending } = useFetchRecentActivityLogs();
+  const { data, isPending } = useFetchActivityLogs({
+    per_page: 2,
+    sortBy: "created_at",
+  });
 
   console.log(data);
   return (
-    <Card radius="lg" p="lg" shadow="sm">
+    <Card h="100%" radius="lg" p="lg" shadow="sm">
       <Group mb={18} align="flex-start" justify="space-between">
         <Text fw={600}>Recent Activity</Text>
 

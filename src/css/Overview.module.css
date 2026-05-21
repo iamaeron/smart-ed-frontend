@@ -1,6 +1,6 @@
 .list {
   position: relative;
-  margin-bottom: var(--mantine-spacing-md);
+  margin-bottom: var(--mantine-spacing-xl);
   background-color: #eaeaff;
   padding: 6px;
   border-radius: 30px;

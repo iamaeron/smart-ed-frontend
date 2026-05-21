@@ -25,9 +25,8 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
       try {
         const response = await api.get("/api/user");
-
         setHasSession(true);
-        authStore.getState().setUser(response.data);
+        authStore.getState().setUser(response.data.data);
       } catch (error) {
         setHasSession(false);
         localStorage.removeItem("auth_token");
