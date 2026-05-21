@@ -1,11 +1,29 @@
-import { ActionIcon, AppShell, Burger, Group } from "@mantine/core";
+import { ActionIcon, AppShell, Burger, Group, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { SidebarMinimalistic, UserCircle } from "@solar-icons/react";
+import { Sidebar, SidebarMinimalistic, UserCircle } from "@solar-icons/react";
 import AppSidebar from "@/components/sidebar";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const [opened, { toggle }] = useDisclosure();
-  const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+  const [desktopOpened, handlers] = useDisclosure(
+    Boolean(localStorage.getItem("sme-sidebar-state")) ?? true,
+    {
+      onOpen: () => {
+        localStorage.setItem("sme-sidebar-state", "true");
+      },
+      onClose: () => {
+        localStorage.setItem("sme-sidebar-state", "false");
+      },
+    },
+  );
+
+  const toggleDesktop = () => {
+    if (!desktopOpened) {
+      handlers.open();
+    } else {
+      handlers.close();
+    }
+  };
 
   return (
     <AppShell
@@ -28,7 +46,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       }}
       padding="md"
     >
-      <AppShell.Header withBorder={false}>
+      <AppShell.Header px="lg" withBorder={false}>
         <Group h="100%" px="md" justify="space-between">
           <Group>
             <Burger
@@ -37,14 +55,21 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
               hiddenFrom="sm"
               size="sm"
             />
-            <ActionIcon
-              onClick={toggleDesktop}
-              visibleFrom="sm"
-              variant="subtle"
-              color="gray"
+            <Tooltip
+              label={`${desktopOpened ? "Minimize" : "Expand"} sidebar`}
+              style={{ fontSize: "13px" }}
+              position="bottom"
+              color="rgba(17, 16, 23, 0.7)"
             >
-              <SidebarMinimalistic size={22} />
-            </ActionIcon>
+              <ActionIcon
+                onClick={toggleDesktop}
+                visibleFrom="sm"
+                variant="subtle"
+                color="gray"
+              >
+                <Sidebar size={22} />
+              </ActionIcon>
+            </Tooltip>
           </Group>
 
           <Group>
