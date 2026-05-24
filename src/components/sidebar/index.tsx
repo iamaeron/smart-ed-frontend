@@ -16,11 +16,22 @@ const AppSidebar = ({ opened, desktopOpened, toggle }: AppSidebarProps) => {
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         <Flex align="center" gap={10} style={{ whiteSpace: "nowrap" }}>
           <Image src={logo} w={30} h={30} />
-          {desktopOpened ? (
+          {/* {desktopOpened ? (
             <Text size="lg" c="primary2" fw={600}>
               SMART Ed
             </Text>
-          ) : null}
+          ) : null} */}
+          <Text
+            size="lg"
+            className={[
+              "sidebar-logo-text",
+              desktopOpened ? "" : "hidden",
+            ].join(" ")}
+            c="primary2"
+            fw={600}
+          >
+            SMART Ed
+          </Text>
         </Flex>
       </Group>
       <SidebarLinksContainer desktopOpened={desktopOpened} />

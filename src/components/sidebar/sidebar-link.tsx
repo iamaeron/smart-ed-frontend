@@ -46,11 +46,12 @@ const SidebarLink = ({
             color={isActive ? "#2C68FF" : "#3f3f46"}
           />
         }
-        label={collapsed ? "" : label}
+        // label={collapsed ? " " : label}
+        label={label}
         color={isActive ? "#2C68FF" : "#111111"}
         variant={isActive ? "light" : "default"}
         active={isActive}
-        className="nv"
+        className={["nv sidebar-link", collapsed ? "hidden" : ""].join(" ")}
         py="6px"
       />
     </Tooltip>

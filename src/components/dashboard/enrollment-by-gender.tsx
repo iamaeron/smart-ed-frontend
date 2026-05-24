@@ -1,5 +1,5 @@
 import { DonutChart } from "@mantine/charts";
-import { Box, Card, Group, Text } from "@mantine/core";
+import { Box, Card, Group, Stack, Text } from "@mantine/core";
 
 const EnrollmentByGender = () => {
   const enrollDummyData = [
@@ -13,7 +13,7 @@ const EnrollmentByGender = () => {
         Enrollment by Gender
       </Text>
 
-      <Group gap={20} align="center" justify="center">
+      <Stack gap={20} align="center" justify="center">
         <div>
           <DonutChart
             data={enrollDummyData}
@@ -66,7 +66,7 @@ const EnrollmentByGender = () => {
             </Box>
           </Group>
         </Group>
-      </Group>
+      </Stack>
     </Card>
   );
 };

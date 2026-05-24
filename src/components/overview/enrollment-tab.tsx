@@ -101,21 +101,23 @@ const EnrollmentTab = () => {
               </Group>
             </Group>
 
-            <BarChart
-              h={300}
-              w="100%"
-              data={dummyData}
-              dataKey="year"
-              barProps={{
-                strokeLinecap: "round",
-                radius: [99, 999, 5, 5],
-              }}
-              series={[
-                { name: "public", color: "primary" },
-                { name: "private", color: "accent1" },
-              ]}
-              tickLine="none"
-            />
+            <ResponsiveContainer debounce={250} height={300}>
+              <BarChart
+                h={300}
+                w="100%"
+                data={dummyData}
+                dataKey="year"
+                barProps={{
+                  strokeLinecap: "round",
+                  radius: [99, 999, 5, 5],
+                }}
+                series={[
+                  { name: "public", color: "primary" },
+                  { name: "private", color: "accent1" },
+                ]}
+                tickLine="none"
+              />
+            </ResponsiveContainer>
           </Stack>
         </Card>
       </Grid.Col>

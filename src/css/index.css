@@ -2,3 +2,25 @@
   --mantine-font-family: "Inter" !important;
   --mantine-font-family-headings: "Inter" !important;
 }
+
+.sidebar-link,
+.sidebar-logo-text {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar-link > .mantine-NavLink-body,
+.sidebar-logo-text {
+  opacity: 1;
+  transition: all 0.3s ease-in-out 0.1s;
+  pointer-events: all;
+  transform: translateY(0px);
+}
+
+.sidebar-link.hidden > .mantine-NavLink-body,
+.sidebar-logo-text.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.1s ease-in-out 0s;
+  transform: translateY(3px);
+}

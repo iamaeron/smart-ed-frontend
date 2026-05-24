@@ -6,12 +6,12 @@ import AppSidebar from "@/components/sidebar";
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const [opened, { toggle }] = useDisclosure();
   const [desktopOpened, handlers] = useDisclosure(
-    Boolean(localStorage.getItem("sme-sidebar-state")) ?? true,
+    JSON.parse(localStorage.getItem("sme-sidebar-state") ?? "") ?? true,
     {
-      onOpen: () => {
+      onOpen() {
         localStorage.setItem("sme-sidebar-state", "true");
       },
-      onClose: () => {
+      onClose() {
         localStorage.setItem("sme-sidebar-state", "false");
       },
     },
@@ -38,7 +38,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       }}
       styles={{
         navbar: {
-          transition: "width 300ms ease, min-width 300ms ease",
+          transition: "width 200ms ease, min-width 200ms ease",
         },
         main: {
           transition: "padding-left 300ms ease",
@@ -55,21 +55,22 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
               hiddenFrom="sm"
               size="sm"
             />
-            <Tooltip
+            {/* <Tooltip
               label={`${desktopOpened ? "Minimize" : "Expand"} sidebar`}
               style={{ fontSize: "13px" }}
-              position="bottom"
+              position="right"
+              withArrow
               color="rgba(17, 16, 23, 0.7)"
+            > */}
+            <ActionIcon
+              onClick={toggleDesktop}
+              visibleFrom="sm"
+              variant="subtle"
+              color="gray"
             >
-              <ActionIcon
-                onClick={toggleDesktop}
-                visibleFrom="sm"
-                variant="subtle"
-                color="gray"
-              >
-                <Sidebar size={22} />
-              </ActionIcon>
-            </Tooltip>
+              <Sidebar size={22} />
+            </ActionIcon>
+            {/* </Tooltip> */}
           </Group>
 
           <Group>
