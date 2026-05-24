@@ -26,16 +26,6 @@ const SystemAdminDivisionOverview = () => {
               border: "#EAEAFF",
             },
           }}
-          //   dropdown: {
-          //     background: "rgba(255,255,255,0.2)",
-          //     color: "white",
-          //     border: "1px solid rgba(255,255,255,0.5)",
-          //     backdropFilter: "blur(14px)",
-          //   },
-          // }}
-          // classNames={{
-          //   option: selectClasses.option,
-          // }}
         />
       </Flex>
 

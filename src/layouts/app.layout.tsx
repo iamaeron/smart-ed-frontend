@@ -1,6 +1,6 @@
-import { ActionIcon, AppShell, Burger, Group, Tooltip } from "@mantine/core";
+import { ActionIcon, AppShell, Burger, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Sidebar, SidebarMinimalistic, UserCircle } from "@solar-icons/react";
+import { Sidebar, UserCircle } from "@solar-icons/react";
 import AppSidebar from "@/components/sidebar";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
