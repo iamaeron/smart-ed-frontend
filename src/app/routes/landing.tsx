@@ -17,11 +17,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { type UserData, userSchema } from "@/types/form/user.type";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth.context";
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import Loader from "@/components/loader";
+import { useEffect } from "react";
 
 const SignInPage = () => {
   const { user, isLoading, setUser } = useAuth();
+  const navigate = useNavigate();
   const { control, handleSubmit, formState, setError } = useForm<UserData>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -30,16 +32,19 @@ const SignInPage = () => {
     },
   });
 
+  useEffect(() => {
+    if (user && !isLoading) {
+      const targetRole = user.role.toLowerCase().replace(" ", "-");
+      navigate(`/${targetRole}/dashboard`, { replace: true });
+    }
+  }, [user, isLoading, navigate]);
+
   if (isLoading) {
     return <Loader />;
   }
 
   if (user) {
-    return (
-      <Navigate
-        to={`/${user.role.toLowerCase().replace(" ", "-")}/dashboard`}
-      />
-    );
+    return <Loader />;
   }
 
   const onSubmit: SubmitHandler<UserData> = async (data) => {

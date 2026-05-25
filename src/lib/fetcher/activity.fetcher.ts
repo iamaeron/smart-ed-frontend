@@ -1,9 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../api";
-
-type Param = {
-  [k: string]: string;
-};
+import type { Param } from "@/types/form/req.type";
 
 export const useFetchActivityLogs = (params: Param | {} = {}) => {
   const urlParams = new URLSearchParams(params).toString();

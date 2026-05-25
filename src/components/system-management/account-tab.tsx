@@ -4,18 +4,19 @@ import {
   Flex,
   Group,
   Paper,
+  Select,
   Skeleton,
   Stack,
   TextInput,
   Title,
 } from "@mantine/core";
-import { Magnifier } from "@solar-icons/react";
+import { AltArrowDown, Filter, Magnifier } from "@solar-icons/react";
 import { Plus } from "lucide-react";
 import AccountList from "./account-list";
 
 const AccountTab = () => {
   const { data, isPending } = useFetchUserAccounts();
-  console.log(data);
+
   return (
     <Paper bg="white" p={26} radius="lg">
       <Flex gap={4}>
@@ -30,7 +31,6 @@ const AccountTab = () => {
         <Group>
           <TextInput
             variant="filled"
-            //   bg="lightBackground"
             placeholder="Search accounts ..."
             styles={{
               input: {
@@ -38,6 +38,32 @@ const AccountTab = () => {
               },
             }}
             leftSection={<Magnifier size={16} />}
+          />
+
+          <Select
+            placeholder="Pick value"
+            variant="filled"
+            leftSection={<Filter size={16} />}
+            rightSection={<AltArrowDown size={16} />}
+            data={["React", "Angular", "Vue", "Svelte"]}
+            styles={{
+              input: {
+                backgroundColor: "#F3F5FF",
+              },
+            }}
+          />
+
+          <Select
+            placeholder="Pick value"
+            variant="filled"
+            leftSection={<Filter size={16} />}
+            rightSection={<AltArrowDown size={16} />}
+            data={["React", "Angular", "Vue", "Svelte"]}
+            styles={{
+              input: {
+                backgroundColor: "#F3F5FF",
+              },
+            }}
           />
         </Group>
 

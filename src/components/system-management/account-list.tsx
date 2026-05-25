@@ -1,8 +1,23 @@
-import { Box, Center, Flex, Group, Paper, Table, Text } from "@mantine/core";
+import {
+  Badge,
+  Box,
+  Center,
+  Flex,
+  Group,
+  Paper,
+  Table,
+  Text,
+} from "@mantine/core";
 import { Letter, MenuDots, Phone } from "@solar-icons/react";
+import Show from "../show";
 
 const AccountList = ({ data }: { data: any }) => {
-  console.log(data);
+  const badgeColors = {
+    "System Admin": "green",
+    "School Admin": "blue",
+    "Division Admin": "red",
+  };
+
   const rows = data.map((element: any) => (
     <Table.Tr key={element.id}>
       <Table.Td>
@@ -40,17 +55,31 @@ const AccountList = ({ data }: { data: any }) => {
           </Group>
         </Box>
       </Table.Td>
-      <Table.Td>{element.role}</Table.Td>
+      <Table.Td>
+        <Show when={element.role}>
+          <Badge
+            tt="capitalize"
+            variant="outline"
+            size="lg"
+            color={badgeColors[element.role]}
+          >
+            {element.role}
+          </Badge>
+        </Show>
+      </Table.Td>
       <Table.Td>
         <Box>
-          <Text fz={14} fw={element.school.school_id ? 500 : 400}>
-            {element.school.school_name}
-          </Text>
-          {element.school.school_id ? (
-            <Text fz={14} c="longText">
-              ID: {element.school.school_code}
+          <Show when={element.school.school_id} fallback={"Division Level"}>
+            <Text fz={14} fw={element.school.school_id ? 500 : 400}>
+              {element.school.school_name}
             </Text>
-          ) : null}
+
+            <Show when={element.school.school_id}>
+              <Text fz={14} c="longText">
+                ID: {element.school.school_code}
+              </Text>
+            </Show>
+          </Show>
         </Box>
       </Table.Td>
       <Table.Td>
