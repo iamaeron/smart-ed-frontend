@@ -68,6 +68,7 @@ const LogOutModal = () => {
         leftSection={<Logout2 weight="BoldDuotone" size={20} />}
       >
         Log out
+        {/* <span className="sidebar-logo-text">Log out</span> */}
       </Button>
     </>
   );

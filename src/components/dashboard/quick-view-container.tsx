@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import bg from "@/assets/dashboard-bg.jpg";
 import { AltArrowDown } from "@solar-icons/react";
-import selectClasses from "@/css/select.module.css";
+import AcademicYearPicker from "./academic-year-picker";
 
 type QuickViewContainerType = {
   schoolYearData?: {
@@ -31,30 +31,7 @@ const QuickViewContainer = ({ children }: QuickViewContainerType) => {
             </Title>
             <Text fw={300}>Schools Division of Mabalacat City</Text>
           </Box>
-          <Select
-            rightSection={<AltArrowDown color="#ffffff" />}
-            placeholder="Pick value"
-            data={["React", "Angular", "Vue", "Svelte"]}
-            defaultValue={"React"}
-            className="school-year-select"
-            comboboxProps={{ shadow: "xl" }}
-            styles={{
-              input: {
-                background: "rgba(255,255,255,0.3)",
-                color: "white",
-                border: "1px solid rgba(255,255,255,0.5)",
-              },
-              dropdown: {
-                background: "rgba(255,255,255,0.2)",
-                color: "white",
-                border: "1px solid rgba(255,255,255,0.5)",
-                backdropFilter: "blur(14px)",
-              },
-            }}
-            classNames={{
-              option: selectClasses.option,
-            }}
-          />
+          <AcademicYearPicker />
         </Flex>
 
         <Flex gap={16} align="center">

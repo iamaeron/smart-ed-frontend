@@ -1,3 +1,4 @@
+import AcademicYearPicker from "@/components/dashboard/academic-year-picker";
 import OverviewTabs from "@/components/overview/overview-tabs";
 import AppLayout from "@/layouts/app.layout";
 import { Box, Flex, Select, Text, Title } from "@mantine/core";
@@ -14,7 +15,8 @@ const SystemAdminDivisionOverview = () => {
           <Text c="grey">S.Y. 2025-2026</Text>
         </Box>
 
-        <Select
+        <AcademicYearPicker theme="default" />
+        {/* <Select
           placeholder="Pick value"
           data={["React", "Angular", "Vue", "Svelte"]}
           defaultValue={"React"}
@@ -26,7 +28,7 @@ const SystemAdminDivisionOverview = () => {
               border: "#EAEAFF",
             },
           }}
-        />
+        /> */}
       </Flex>
 
       <OverviewTabs />

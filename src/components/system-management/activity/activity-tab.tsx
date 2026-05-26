@@ -7,16 +7,55 @@ import {
   Title,
   Stack,
   Skeleton,
+  Pagination,
+  Center,
 } from "@mantine/core";
 import { Plus } from "lucide-react";
 import ActivityList from "./activity-list";
 import ListFilter from "../list-filter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TabSearchBar from "../tab-search-bar";
 
 const ActivityTab = () => {
-  const { data, isPending } = useFetchActivityLogs();
-  const [activities, setActivities] = useState([]);
+  const [page, setPage] = useState(1);
+  const { data, isPending } = useFetchActivityLogs({
+    per_page: 10,
+    page,
+  });
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [schoolFilter, setSchoolFilter] = useState("");
+  const [actionFilter, setActionFilter] = useState("");
+
+  const baseList = data?.results?.data || [];
+
+  const displayList = baseList.filter((act: any) => {
+    // Search Filter
+    const matchesSearch = searchQuery
+      ? act.user.name.toLowerCase().includes(searchQuery.toLowerCase())
+      : true;
+
+    // School Filter
+    const matchesSchool =
+      !schoolFilter || schoolFilter.toLowerCase().includes("all")
+        ? true
+        : act.user.school === schoolFilter;
+
+    // Action Filter
+    const matchesAction =
+      !actionFilter || actionFilter.toLowerCase().includes("all")
+        ? true
+        : act.log_name === actionFilter;
+
+    return matchesSearch && matchesSchool && matchesAction;
+  });
+
+  const handlePageChange = (newPage: number) => {
+    setSearchQuery("");
+    setSchoolFilter("");
+    setActionFilter("");
+    setPage(newPage);
+  };
 
   return (
     <Paper bg="white" p={26} radius="lg">
@@ -34,37 +73,21 @@ const ActivityTab = () => {
           <Group>
             <TabSearchBar
               placeholder="Search activity ..."
-              callbackFn={(v) => {
-                const filteredActivities = data.results.data.filter(
-                  (act: any) =>
-                    act.user.name.toLowerCase().includes(v.toLowerCase()),
-                );
-                setActivities(filteredActivities);
-              }}
+              callbackFn={(v) => setSearchQuery(v)}
             />
 
             <ListFilter
               all="All Schools"
-              data={data.results.data}
+              data={baseList}
               accessor="user.school"
-              callbackFn={(v) => {
-                const filteredActivities = (
-                  activities.length > 0 ? activities : data.results.data
-                ).filter((act: any) => act.user.school === v);
-                setActivities(filteredActivities);
-              }}
+              callbackFn={(v) => setSchoolFilter(v)}
             />
 
             <ListFilter
               all="All Actions"
-              data={data.results.data}
+              data={baseList}
               accessor="log_name"
-              callbackFn={(v) => {
-                const filteredActivities = data.results.data.filter(
-                  (act: any) => act.log_name === v,
-                );
-                setActivities(filteredActivities);
-              }}
+              callbackFn={(v) => setActionFilter(v)}
             />
           </Group>
         )}
@@ -74,15 +97,25 @@ const ActivityTab = () => {
 
       {isPending ? (
         <Stack gap={10}>
-          <Skeleton h={20} radius={6} />
-          <Skeleton h={20} radius={6} />
-          <Skeleton h={20} radius={6} />
+          <Skeleton h={40} radius={6} />
+          <Skeleton h={40} radius={6} />
+          <Skeleton h={40} radius={6} />
+          <Skeleton h={40} radius={6} />
+          <Skeleton h={40} radius={6} />
         </Stack>
       ) : (
-        <ActivityList
-          data={activities.length > 0 ? activities : data.results.data}
-        />
+        <ActivityList page={page} data={displayList} />
       )}
+
+      <Center my={20}>
+        {isPending ? null : (
+          <Pagination
+            value={page}
+            onChange={handlePageChange}
+            total={data.results.pagination.last_page}
+          />
+        )}
+      </Center>
     </Paper>
   );
 };

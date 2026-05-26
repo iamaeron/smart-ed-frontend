@@ -9,7 +9,7 @@ const ProtectedRoutes = () => {
 
   if (!user) return <Navigate to="/" replace />;
 
-  const userRoleToUrl = user?.role.toLowerCase().replace(" ", "-");
+  const userRoleToUrl = user?.role.toLowerCase().replace(" ", "-"); // System Admin -> system admin -> system-admin
 
   if (location.pathname.split("/")[1] !== userRoleToUrl) {
     return <Navigate to={`/${userRoleToUrl}/dashboard`} replace />;

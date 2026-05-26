@@ -3,10 +3,15 @@ import { useState } from "react";
 import classes from "@/css/Tab.module.css";
 import AccountTab from "./account/account-tab";
 import ActivityTab from "./activity/activity-tab";
+import SYManagementTab from "./sy-management/sy-management-tab";
+import { useSearchParams } from "react-router";
 
 const SystemManagementTabs = () => {
   const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
-  const [value, setValue] = useState<string | null>("1");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [value, setValue] = useState<string | null>(
+    searchParams.get("tab") ?? "accounts",
+  );
   const [controlsRefs, setControlsRefs] = useState<
     Record<string, HTMLButtonElement | null>
   >({});
@@ -16,18 +21,41 @@ const SystemManagementTabs = () => {
   };
 
   return (
-    <Tabs variant="none" value={value} onChange={setValue}>
+    <Tabs
+      variant="none"
+      value={value}
+      onChange={(value) => {
+        setValue(value);
+        setSearchParams({ tab: value ?? "" });
+      }}
+    >
       <Tabs.List ref={setRootRef} className={classes.list}>
-        <Tabs.Tab value="1" ref={setControlRef("1")} className={classes.tab}>
+        <Tabs.Tab
+          value="accounts"
+          ref={setControlRef("accounts")}
+          className={classes.tab}
+        >
           Accounts
         </Tabs.Tab>
-        <Tabs.Tab value="2" ref={setControlRef("2")} className={classes.tab}>
+        <Tabs.Tab
+          value="activity"
+          ref={setControlRef("activity")}
+          className={classes.tab}
+        >
           Activity
         </Tabs.Tab>
-        <Tabs.Tab value="3" ref={setControlRef("3")} className={classes.tab}>
+        <Tabs.Tab
+          value="division-lead"
+          ref={setControlRef("division-lead")}
+          className={classes.tab}
+        >
           Division Leadership
         </Tabs.Tab>
-        <Tabs.Tab value="4" ref={setControlRef("4")} className={classes.tab}>
+        <Tabs.Tab
+          value="sy-management"
+          ref={setControlRef("sy-management")}
+          className={classes.tab}
+        >
           School Year Management
         </Tabs.Tab>
 
@@ -38,14 +66,16 @@ const SystemManagementTabs = () => {
         />
       </Tabs.List>
 
-      <Tabs.Panel value="1">
+      <Tabs.Panel value="accounts">
         <AccountTab />
       </Tabs.Panel>
-      <Tabs.Panel value="2">
+      <Tabs.Panel value="activity">
         <ActivityTab />
       </Tabs.Panel>
-      <Tabs.Panel value="3">ye</Tabs.Panel>
-      <Tabs.Panel value="4">Third tab content</Tabs.Panel>
+      <Tabs.Panel value="division-lead">ye</Tabs.Panel>
+      <Tabs.Panel value="sy-management">
+        <SYManagementTab />
+      </Tabs.Panel>
     </Tabs>
   );
 };

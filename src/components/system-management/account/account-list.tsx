@@ -20,7 +20,7 @@ const AccountList = ({ data }: { data: any }) => {
   };
 
   const rows = data.map((element: any) => (
-    <Table.Tr key={element.id}>
+    <Table.Tr key={element.user_id}>
       <Table.Td>
         <Flex align="center" gap={14}>
           <Center

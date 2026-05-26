@@ -1,12 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
+import {
+  useQuery,
+  type UndefinedInitialDataOptions,
+} from "@tanstack/react-query";
 import { api } from "../api";
 import type { Param } from "@/types/form/req.type";
 
-export const useFetchActivityLogs = (params: Param | {} = {}) => {
+export const useFetchActivityLogs = (
+  params: Param | {} = {},
+  options?: UndefinedInitialDataOptions<any, Error, any, {}[]>,
+) => {
   const urlParams = new URLSearchParams(params).toString();
 
   return useQuery({
-    queryKey: ["activity_logs"],
+    ...options,
+    queryKey: ["activity_logs", params],
     queryFn: async () => {
       const res = await api.get(`/api/activity-logs?${urlParams}`);
       return res.data;
