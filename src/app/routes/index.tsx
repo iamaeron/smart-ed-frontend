@@ -18,7 +18,7 @@ const AppRoutes = () => {
       {/* School Admin Routes */}
       <Route element={<ProtectedRoutes />}>
         <Route
-          path="/school-admin/dashboard"
+          path="/school-account/dashboard"
           element={<SchoolAdminDashboard />}
         />
       </Route>

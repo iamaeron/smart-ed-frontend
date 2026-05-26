@@ -6,10 +6,11 @@ import {
   Group,
   Paper,
   Table,
+  TableScrollContainer,
   Text,
 } from "@mantine/core";
 import { Letter, MenuDots, Phone } from "@solar-icons/react";
-import Show from "../show";
+import Show from "../../show";
 
 const AccountList = ({ data }: { data: any }) => {
   const badgeColors = {
@@ -61,7 +62,14 @@ const AccountList = ({ data }: { data: any }) => {
             tt="capitalize"
             variant="outline"
             size="lg"
-            color={badgeColors[element.role]}
+            color={
+              badgeColors[
+                element.role as
+                  | "System Admin"
+                  | "Division Admin"
+                  | "School Admin"
+              ]
+            }
           >
             {element.role}
           </Badge>
@@ -89,17 +97,19 @@ const AccountList = ({ data }: { data: any }) => {
   ));
 
   return (
-    <Table horizontalSpacing={0} verticalSpacing="xs">
-      <Table.Thead>
-        <Table.Tr>
-          <Table.Th>User</Table.Th>
-          <Table.Th>Contact</Table.Th>
-          <Table.Th>Role</Table.Th>
-          <Table.Th>School/Assignment</Table.Th>
-        </Table.Tr>
-      </Table.Thead>
-      <Table.Tbody>{rows}</Table.Tbody>
-    </Table>
+    <TableScrollContainer minWidth="100%">
+      <Table horizontalSpacing={0} verticalSpacing="xs">
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>User</Table.Th>
+            <Table.Th>Contact</Table.Th>
+            <Table.Th>Role</Table.Th>
+            <Table.Th>School/Assignment</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
+    </TableScrollContainer>
   );
 };
 

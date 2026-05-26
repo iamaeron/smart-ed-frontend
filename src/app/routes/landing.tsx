@@ -49,14 +49,15 @@ const SignInPage = () => {
 
   const onSubmit: SubmitHandler<UserData> = async (data) => {
     try {
-      const res = await api.post("/api/login", data);
+      const csrf = await api.get("/sanctum/csrf-cookie");
 
-      const token = res.data?.results?.token;
-      const userData = res.data?.results?.User;
+      if (csrf.status === 204) {
+        const res = await api.post("/api/login", data);
 
-      if (token && userData) {
-        localStorage.setItem("auth_token", token);
-        setUser(userData);
+        const userData = res.data?.results?.user;
+        if (userData) {
+          setUser(userData);
+        }
       }
     } catch (err: any) {
       setError("username", { message: err.response.data.message });

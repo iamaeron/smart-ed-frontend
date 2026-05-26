@@ -19,7 +19,6 @@ const RecentActivity = () => {
     sortBy: "created_at",
   });
 
-  console.log(data);
   return (
     <Card h="100%" radius="lg" p="lg" shadow="sm">
       <Group mb={18} align="flex-start" justify="space-between">

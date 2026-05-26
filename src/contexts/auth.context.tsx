@@ -14,22 +14,12 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const initializeAuth = async () => {
-      const token = localStorage.getItem("auth_token");
-
-      if (!token) {
-        setHasSession(false);
-        authStore.getState().setUser(null);
-        authStore.getState().setIsLoading(false);
-        return;
-      }
-
       try {
         const response = await api.get("/api/user");
         setHasSession(true);
         authStore.getState().setUser(response.data.data);
       } catch (error) {
         setHasSession(false);
-        localStorage.removeItem("auth_token");
         authStore.getState().setUser(null);
       } finally {
         authStore.getState().setIsLoading(false);
