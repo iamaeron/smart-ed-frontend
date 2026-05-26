@@ -57,7 +57,7 @@ const SYManagementTab = () => {
           </Group>
         )}
 
-        <Button leftSection={<Plus size={16} />}>Add Account</Button>
+        <Button leftSection={<Plus size={16} />}>Add School Year</Button>
       </Flex>
 
       {isPending ? (
