@@ -11,7 +11,6 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Plus, X } from "lucide-react";
-import { useState } from "react";
 import { DateInput } from "@mantine/dates";
 import dayjs from "dayjs";
 import { Calendar } from "@solar-icons/react";
@@ -24,21 +23,25 @@ import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 
 const AddSYModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const [startDate, setStartDate] = useState<string | null>(null);
-  const [endDate, setEndDate] = useState<string | null>(null);
 
-  const { control, handleSubmit, formState, setError, getValues } =
-    useForm<AcademicYearData>({
+  const { control, handleSubmit, formState, watch } = useForm<AcademicYearData>(
+    {
       resolver: zodResolver(academicYearSchema),
       defaultValues: {
         start_date: undefined,
         end_date: undefined,
         academic_year: "",
       },
-    });
+    },
+  );
+
+  // Watch the form values instead of maintaining duplicate local state
+  const startDate = watch("start_date");
+  const endDate = watch("end_date");
 
   const onSubmit: SubmitHandler<AcademicYearData> = async (data) => {
     console.log(data);
+    close();
   };
 
   return (
@@ -47,7 +50,6 @@ const AddSYModal = () => {
         withCloseButton={false}
         opened={opened}
         onClose={close}
-        // title="Add New School Year"
         size="lg"
         centered
         padding={0}
@@ -58,93 +60,113 @@ const AddSYModal = () => {
               Add New School Year
             </Text>
 
-            <ActionIcon onClick={close} variant="subtle" color="gray">
+            <ActionIcon
+              onClick={close}
+              variant="subtle"
+              color="gray"
+              type="button"
+            >
               <X size={18} />
             </ActionIcon>
           </Group>
         </Card>
-        <Paper p="lg">
-          <Box mb={16}>
-            <Text fw={600} fz={14}>
-              School Year
-            </Text>
-            <Text size="lg" fw={600}>
-              {!startDate || !endDate ? (
-                <>--</>
-              ) : (
-                <>
-                  {dayjs(startDate).format("YYYY")}-
-                  {dayjs(endDate).format("YYYY")}
-                </>
-              )}
-            </Text>
-          </Box>
 
-          <Flex gap={8}>
-            <Controller
-              name="start_date"
-              control={control}
-              render={({ field }) => (
-                <Box>
-                  <DateInput
-                    {...field}
-                    labelProps={{
-                      mb: 6,
-                      fw: 400,
-                      c: formState.errors.academic_year?.message
-                        ? "subRed"
-                        : "grey",
-                    }}
-                    rightSection={<Calendar size={18} />}
-                    label="Start Date"
-                    flex={1}
-                  />
-                  {/* <TextInput
-                    
-                    error={formState.errors.username?.message ? true : false}
-                    label="Username"
-                    placeholder="Enter your username"
-                  /> */}
+        {/* FIX 1: Wrap inputs in an actual form element */}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Paper p="lg">
+            <Box mb={16}>
+              <Text fw={600} fz={14}>
+                School Year
+              </Text>
+              <Text size="lg" fw={600}>
+                {!startDate || !endDate ? (
+                  <>--</>
+                ) : (
+                  <>
+                    {dayjs(startDate).format("YYYY")}-
+                    {dayjs(endDate).format("YYYY")}
+                  </>
+                )}
+              </Text>
+            </Box>
 
-                  <Flex justify="flex-end">
-                    <Text mt={6} size="sm" c="subRed">
-                      {formState.errors.academic_year?.message}
-                    </Text>
-                  </Flex>
-                </Box>
-              )}
-            />
+            <Flex gap={8}>
+              <Controller
+                name="start_date"
+                control={control}
+                render={({ field }) => (
+                  <Box flex={1}>
+                    <DateInput
+                      {...field}
+                      labelProps={{
+                        mb: 6,
+                        fw: 400,
+                        c: formState.errors.start_date?.message
+                          ? "subRed"
+                          : "grey",
+                      }}
+                      rightSection={<Calendar size={18} />}
+                      label="Start Date"
+                    />
+                    {formState.errors.start_date?.message && (
+                      <Flex justify="flex-end">
+                        <Text mt={6} size="sm" c="subRed">
+                          {formState.errors.start_date?.message}
+                        </Text>
+                      </Flex>
+                    )}
+                  </Box>
+                )}
+              />
 
-            <DateInput
-              rightSection={<Calendar size={18} />}
-              label="End Date"
-              value={endDate}
-              onChange={setEndDate}
-              flex={1}
-            />
-          </Flex>
+              {/* FIX 2: Connect End Date to React Hook Form Controller as well */}
+              <Controller
+                name="end_date"
+                control={control}
+                render={({ field }) => (
+                  <Box flex={1}>
+                    <DateInput
+                      {...field}
+                      labelProps={{
+                        mb: 6,
+                        fw: 400,
+                        c: formState.errors.end_date?.message
+                          ? "subRed"
+                          : "grey",
+                      }}
+                      rightSection={<Calendar size={18} />}
+                      label="End Date"
+                    />
+                    {formState.errors.end_date?.message && (
+                      <Flex justify="flex-end">
+                        <Text mt={6} size="sm" c="subRed">
+                          {formState.errors.end_date?.message}
+                        </Text>
+                      </Flex>
+                    )}
+                  </Box>
+                )}
+              />
+            </Flex>
 
-          <Flex mt={20} gap={8}>
-            <Button
-              onClick={close}
-              tt="uppercase"
-              variant="outline"
-              color="primary"
-              c="primary"
-              fullWidth
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleSubmit(onSubmit)}
-              tt="uppercase"
-              color="primary"
-              fullWidth
-            >
-              Save changes
-            </Button>
-          </Flex>
-        </Paper>
+            <Flex mt={20} gap={8}>
+              <Button
+                onClick={close}
+                tt="uppercase"
+                variant="outline"
+                color="primary"
+                c="primary"
+                fullWidth
+                type="button"
+              >
+                Cancel
+              </Button>
+              <Button tt="uppercase" color="primary" fullWidth type="submit">
+                Save changes
+              </Button>
+            </Flex>
+          </Paper>
+        </form>
       </Modal>
 
       <Button onClick={open} leftSection={<Plus size={16} />}>
