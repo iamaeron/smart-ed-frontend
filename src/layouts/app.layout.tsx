@@ -4,15 +4,18 @@ import { Sidebar, UserCircle } from "@solar-icons/react";
 import AppSidebar from "@/components/sidebar";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
+  const sidebarLSKey = "sme-sidebar-state";
   const [opened, { toggle }] = useDisclosure();
   const [desktopOpened, handlers] = useDisclosure(
-    JSON.parse(localStorage.getItem("sme-sidebar-state") ?? "") ?? true,
+    localStorage.getItem(sidebarLSKey)
+      ? JSON.parse(localStorage.getItem(sidebarLSKey) ?? "")
+      : true,
     {
       onOpen() {
-        localStorage.setItem("sme-sidebar-state", "true");
+        localStorage.setItem(sidebarLSKey, "true");
       },
       onClose() {
-        localStorage.setItem("sme-sidebar-state", "false");
+        localStorage.setItem(sidebarLSKey, "false");
       },
     },
   );

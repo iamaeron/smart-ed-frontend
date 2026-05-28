@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^5.2.2",
     "@mantine/charts": "^9.2.1",
     "@mantine/core": "^9.2.1",
+    "@mantine/dates": "^9.2.1",
     "@mantine/hooks": "^9.2.1",
     "@million/lint": "^1.0.14",
     "@solar-icons/react": "^1.1.1",

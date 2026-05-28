@@ -12,6 +12,7 @@ import {
   Text,
 } from "@mantine/core";
 import dayjs from "dayjs";
+import { Link } from "react-router";
 
 const RecentActivity = () => {
   const { data, isPending } = useFetchActivityLogs({
@@ -24,7 +25,14 @@ const RecentActivity = () => {
       <Group mb={18} align="flex-start" justify="space-between">
         <Text fw={600}>Recent Activity</Text>
 
-        <Button mt={-6} p={0} variant="white" c="primary">
+        <Button
+          component={Link}
+          to={`/system-admin/system-management?tab=activity`}
+          mt={-6}
+          p={0}
+          variant="white"
+          c="primary"
+        >
           View all
         </Button>
       </Group>

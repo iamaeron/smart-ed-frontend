@@ -14,10 +14,10 @@ import logo from "@/assets/smarted-logo.png";
 import { InfoCircle } from "@solar-icons/react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type UserData, userSchema } from "@/types/form/user.type";
+import { type UserData, userSchema } from "@/types/form/user.schema";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth.context";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import Loader from "@/components/loader";
 import { useEffect } from "react";
 

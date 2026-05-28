@@ -1,18 +1,10 @@
-import {
-  Button,
-  Group,
-  Flex,
-  Paper,
-  Title,
-  Stack,
-  Skeleton,
-} from "@mantine/core";
-import { Plus } from "lucide-react";
+import { Group, Flex, Paper, Title, Stack, Skeleton } from "@mantine/core";
 import ListFilter from "../list-filter";
 import { useState } from "react";
 import TabSearchBar from "../tab-search-bar";
 import { useFetchAcademicYears } from "@/lib/fetcher/academic-year.fetcher";
 import SYManagementList from "./sy-management-list";
+import AddSYModal from "./add-sy-modal";
 
 const SYManagementTab = () => {
   const { data, isPending } = useFetchAcademicYears();
@@ -57,7 +49,7 @@ const SYManagementTab = () => {
           </Group>
         )}
 
-        <Button leftSection={<Plus size={16} />}>Add School Year</Button>
+        <AddSYModal />
       </Flex>
 
       {isPending ? (

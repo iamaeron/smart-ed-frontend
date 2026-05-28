@@ -1,8 +1,9 @@
-import { useContext, createContext, useEffect, useState } from "react";
+import { useContext, createContext, useEffect } from "react";
 import { authStore } from "@/stores/auth.store";
 import { type StoreApi, useStore } from "zustand";
 import { api } from "@/lib/api";
 import { Navigate, useLocation } from "react-router";
+import Loader from "@/components/loader";
 
 type AuthState = ReturnType<typeof authStore.getState>;
 
@@ -10,16 +11,18 @@ const AuthContext = createContext<StoreApi<AuthState> | undefined>(undefined);
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
-  const [hasSession, setHasSession] = useState(true);
+
+  const user = useStore(authStore, (state) => state.user);
+  const isLoading = useStore(authStore, (state) => state.isLoading);
 
   useEffect(() => {
     const initializeAuth = async () => {
       try {
         const response = await api.get("/api/user");
-        setHasSession(true);
-        authStore.getState().setUser(response.data.data);
+        authStore
+          .getState()
+          .setUser(response.data.results?.user || response.data.data);
       } catch (error) {
-        setHasSession(false);
         authStore.getState().setUser(null);
       } finally {
         authStore.getState().setIsLoading(false);
@@ -29,7 +32,11 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     initializeAuth();
   }, []);
 
-  if (location.pathname !== "/" && !hasSession) {
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (location.pathname !== "/" && !user) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
@@ -45,7 +52,6 @@ export const useAuthStore = <T,>(selector: (state: AuthState) => T) => {
   if (!store) {
     throw new Error("AuthStore must be used within AuthContextProvider");
   }
-
   return useStore(store, selector);
 };
 
@@ -54,6 +60,5 @@ export const useAuth = () => {
   if (!store) {
     throw new Error("AuthStore must be used within AuthContextProvider");
   }
-
   return useStore(store);
 };

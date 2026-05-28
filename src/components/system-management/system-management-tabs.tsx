@@ -5,6 +5,7 @@ import AccountTab from "./account/account-tab";
 import ActivityTab from "./activity/activity-tab";
 import SYManagementTab from "./sy-management/sy-management-tab";
 import { useSearchParams } from "react-router";
+import DivisionLeadershipTab from "./div-leadership/div-leadership-tab";
 
 const SystemManagementTabs = () => {
   const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
@@ -72,7 +73,9 @@ const SystemManagementTabs = () => {
       <Tabs.Panel value="activity">
         <ActivityTab />
       </Tabs.Panel>
-      <Tabs.Panel value="division-lead">ye</Tabs.Panel>
+      <Tabs.Panel value="division-lead">
+        <DivisionLeadershipTab />
+      </Tabs.Panel>
       <Tabs.Panel value="sy-management">
         <SYManagementTab />
       </Tabs.Panel>

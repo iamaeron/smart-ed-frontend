@@ -6,8 +6,11 @@ import { api } from "../api";
 import type { Param } from "@/types/form/req.type";
 
 export const useFetchActivityLogs = (
-  params: Param | {} = {},
-  options?: UndefinedInitialDataOptions<any, Error, any, {}[]>,
+  params?: Param | Record<string, any>,
+  options?: Omit<
+    UndefinedInitialDataOptions<any, Error, any, any>,
+    "queryKey" | "queryFn"
+  >,
 ) => {
   const urlParams = new URLSearchParams(params).toString();
 

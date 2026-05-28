@@ -1,6 +1,5 @@
 import { useFetchActivityLogs } from "@/lib/fetcher/activity.fetcher";
 import {
-  Button,
   Group,
   Flex,
   Paper,
@@ -10,18 +9,23 @@ import {
   Pagination,
   Center,
 } from "@mantine/core";
-import { Plus } from "lucide-react";
 import ActivityList from "./activity-list";
 import ListFilter from "../list-filter";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TabSearchBar from "../tab-search-bar";
+import { keepPreviousData } from "@tanstack/react-query";
 
 const ActivityTab = () => {
   const [page, setPage] = useState(1);
-  const { data, isPending } = useFetchActivityLogs({
-    per_page: 10,
-    page,
-  });
+  const { data, isPending, isPlaceholderData } = useFetchActivityLogs(
+    {
+      per_page: 10,
+      page,
+    },
+    {
+      placeholderData: keepPreviousData,
+    },
+  );
 
   const [searchQuery, setSearchQuery] = useState("");
   const [schoolFilter, setSchoolFilter] = useState("");
@@ -102,7 +106,14 @@ const ActivityTab = () => {
           <Skeleton h={40} radius={6} />
         </Stack>
       ) : (
-        <ActivityList page={page} data={displayList} />
+        <div
+          style={{
+            opacity: isPlaceholderData ? 0.5 : 1,
+            transition: "opacity 0.15s",
+          }}
+        >
+          <ActivityList page={page} data={displayList} />
+        </div>
       )}
 
       <Center my={20}>
