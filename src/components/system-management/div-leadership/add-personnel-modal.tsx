@@ -17,21 +17,24 @@ import {
   TextInput,
   Radio,
   Select,
+  Checkbox,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { ArrowDown, ChevronDown, ChevronRight, Plus, X } from "lucide-react";
+import { ChevronDown, Plus, X } from "lucide-react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import AddPersonnelConfirmModal from "./add-personnel-confirm-modal";
 import ErrorMessage from "@/components/form/error-message";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
+import { useState } from "react";
 
 const AddPersonnelModal = () => {
   const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
-  const { data, isPending: isAcademicYearsPending } = useFetchAcademicYears();
+  const { data } = useFetchAcademicYears();
+  const [currentlyInTerm, setCurrentlyInTerm] = useState(false);
 
   const termStartData =
     data?.results?.data.map((d: any) => dayjs(d.start_date).format("YYYY")) ||
@@ -39,7 +42,7 @@ const AddPersonnelModal = () => {
   const termEndData =
     data?.results?.data.map((d: any) => dayjs(d.end_date).format("YYYY")) || [];
 
-  const { control, handleSubmit, formState, watch, setValue, setError, reset } =
+  const { control, handleSubmit, formState, setError, reset } =
     useForm<PersonnelData>({
       resolver: zodResolver(personnelSchema),
       defaultValues: {
@@ -57,7 +60,7 @@ const AddPersonnelModal = () => {
       position: data.position,
       is_oic: data.is_oic === "true",
       term_start: Number(data.term_start),
-      term_end: Number(data.term_end),
+      term_end: currentlyInTerm ? null : Number(data.term_end),
     };
 
     try {
@@ -213,9 +216,18 @@ const AddPersonnelModal = () => {
                 name="term_end"
                 control={control}
                 render={({ field }) => (
-                  <Box flex={1}>
+                  <Box flex={1} pos="relative">
+                    <Checkbox
+                      size="xs"
+                      labelPosition="left"
+                      style={{ position: "absolute", right: 0, top: 4 }}
+                      label="Currently in term"
+                      checked={currentlyInTerm}
+                      onChange={(e) => setCurrentlyInTerm(e.target.checked)}
+                    />
                     <Select
                       {...field}
+                      disabled={currentlyInTerm}
                       allowDeselect={false}
                       label="Term End"
                       rightSection={<ChevronDown size={16} />}

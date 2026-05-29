@@ -17,9 +17,10 @@ import { useState } from "react";
 import TabSearchBar from "../tab-search-bar";
 
 const AccountTab = () => {
-  const { data, isPending } = useFetchUserAccounts();
+  const { data, isPending } = useFetchUserAccounts({ per_page: 5 });
   const [accounts, setAccounts] = useState([]);
 
+  console.log(data);
   return (
     <Paper bg="white" p={26} radius="lg">
       <Flex gap={4}>
@@ -61,6 +62,13 @@ const AccountTab = () => {
               }}
             />
 
+            {/* <ListFilter
+              all="All Schools"
+              data={baseList}
+              accessor="user.school"
+              callbackFn={(v) => setSchoolFilter(v)}
+            /> */}
+
             {/* <Select
               placeholder="Pick value"
               variant="filled"
@@ -73,20 +81,6 @@ const AccountTab = () => {
                 },
               }}
             /> */}
-
-            <Select
-              placeholder="Pick value"
-              variant="filled"
-              defaultValue="All Status"
-              leftSection={<Filter size={16} />}
-              rightSection={<AltArrowDown size={16} />}
-              data={["All Status", "Angular", "Vue", "Svelte"]}
-              styles={{
-                input: {
-                  backgroundColor: "#F3F5FF",
-                },
-              }}
-            />
           </Group>
         )}
 

@@ -23,7 +23,6 @@ import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { api } from "@/lib/api";
 import AddSYConfirmModal from "./add-sy-confirm-modal";
 import { useQueryClient } from "@tanstack/react-query";
-import { notifications } from "@mantine/notifications";
 import { toast } from "sonner";
 import ErrorMessage from "@/components/form/error-message";
 
@@ -31,7 +30,7 @@ const AddSYModal = () => {
   const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
 
-  const { control, handleSubmit, formState, watch, setValue, setError, reset } =
+  const { control, handleSubmit, formState, watch, setError, reset } =
     useForm<AcademicYearData>({
       resolver: zodResolver(academicYearSchema),
       defaultValues: {

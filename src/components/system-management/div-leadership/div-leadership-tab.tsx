@@ -1,5 +1,4 @@
 import {
-  Button,
   Group,
   Flex,
   Paper,
@@ -9,7 +8,6 @@ import {
   Center,
   Pagination,
 } from "@mantine/core";
-import { Plus } from "lucide-react";
 import ListFilter from "../list-filter";
 import { useState } from "react";
 import TabSearchBar from "../tab-search-bar";
