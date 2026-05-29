@@ -20,28 +20,53 @@ import {
   type AcademicYearData,
 } from "@/types/form/academic-year.schema";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
+import { api } from "@/lib/api";
+import AddSYConfirmModal from "./add-sy-confirm-modal";
+import { useQueryClient } from "@tanstack/react-query";
+import { notifications } from "@mantine/notifications";
+import { toast } from "sonner";
+import ErrorMessage from "@/components/form/error-message";
 
 const AddSYModal = () => {
+  const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
 
-  const { control, handleSubmit, formState, watch } = useForm<AcademicYearData>(
-    {
+  const { control, handleSubmit, formState, watch, setValue, setError, reset } =
+    useForm<AcademicYearData>({
       resolver: zodResolver(academicYearSchema),
       defaultValues: {
         start_date: undefined,
         end_date: undefined,
-        academic_year: "",
       },
-    },
-  );
+    });
 
   // Watch the form values instead of maintaining duplicate local state
   const startDate = watch("start_date");
   const endDate = watch("end_date");
 
   const onSubmit: SubmitHandler<AcademicYearData> = async (data) => {
-    console.log(data);
-    close();
+    const startYear = dayjs(data.start_date).format("YYYY");
+    const endYear = dayjs(data.end_date).format("YYYY");
+
+    const payload = {
+      academic_year: `S.Y. ${startYear}-${endYear}`,
+      start_date: dayjs(data.start_date).format("YYYY-MM-DD HH:mm:ss"),
+      end_date: dayjs(data.end_date).format("YYYY-MM-DD HH:mm:ss"),
+    };
+
+    try {
+      const res = await api.post(`/api/academic-years`, payload);
+
+      if (res.data.code === 200) {
+        toast.success(res.data.message);
+        queryClient.invalidateQueries({ queryKey: ["academic_years", {}] });
+        reset();
+        close();
+      }
+    } catch (err: any) {
+      setError("end_date", { message: "Error" });
+      setError("start_date", { message: "Error" });
+    }
   };
 
   return (
@@ -71,8 +96,7 @@ const AddSYModal = () => {
           </Group>
         </Card>
 
-        {/* FIX 1: Wrap inputs in an actual form element */}
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form id="academic-year-form" onSubmit={handleSubmit(onSubmit)}>
           <Paper p="lg">
             <Box mb={16}>
               <Text fw={600} fz={14}>
@@ -108,18 +132,14 @@ const AddSYModal = () => {
                       rightSection={<Calendar size={18} />}
                       label="Start Date"
                     />
-                    {formState.errors.start_date?.message && (
-                      <Flex justify="flex-end">
-                        <Text mt={6} size="sm" c="subRed">
-                          {formState.errors.start_date?.message}
-                        </Text>
-                      </Flex>
-                    )}
+                    <ErrorMessage
+                      atEnd={false}
+                      error={formState.errors.start_date?.message}
+                    />
                   </Box>
                 )}
               />
 
-              {/* FIX 2: Connect End Date to React Hook Form Controller as well */}
               <Controller
                 name="end_date"
                 control={control}
@@ -137,13 +157,10 @@ const AddSYModal = () => {
                       rightSection={<Calendar size={18} />}
                       label="End Date"
                     />
-                    {formState.errors.end_date?.message && (
-                      <Flex justify="flex-end">
-                        <Text mt={6} size="sm" c="subRed">
-                          {formState.errors.end_date?.message}
-                        </Text>
-                      </Flex>
-                    )}
+                    <ErrorMessage
+                      atEnd={false}
+                      error={formState.errors.end_date?.message}
+                    />
                   </Box>
                 )}
               />
@@ -161,9 +178,7 @@ const AddSYModal = () => {
               >
                 Cancel
               </Button>
-              <Button tt="uppercase" color="primary" fullWidth type="submit">
-                Save changes
-              </Button>
+              <AddSYConfirmModal />
             </Flex>
           </Paper>
         </form>

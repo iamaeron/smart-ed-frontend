@@ -19,7 +19,6 @@ const ActivityTab = () => {
   const [page, setPage] = useState(1);
   const { data, isPending, isPlaceholderData } = useFetchActivityLogs(
     {
-      per_page: 10,
       page,
     },
     {

@@ -3,6 +3,7 @@ import { useState } from "react";
 import classes from "@/css/Tab.module.css";
 import EnrollmentTab from "./enrollment-tab";
 import ResourceTab from "./resource-tab";
+import KPITab from "./kpi-tab";
 
 const OverviewTabs = () => {
   const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
@@ -41,7 +42,9 @@ const OverviewTabs = () => {
       <Tabs.Panel value="2">
         <ResourceTab />
       </Tabs.Panel>
-      <Tabs.Panel value="3">Third tab content</Tabs.Panel>
+      <Tabs.Panel value="3">
+        <KPITab />
+      </Tabs.Panel>
     </Tabs>
   );
 };

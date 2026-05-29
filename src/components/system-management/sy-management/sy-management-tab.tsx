@@ -8,7 +8,26 @@ import AddSYModal from "./add-sy-modal";
 
 const SYManagementTab = () => {
   const { data, isPending } = useFetchAcademicYears();
-  const [academicYears, setAcademicYears] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+
+  const baseList = data?.results?.data || [];
+
+  const displayList = baseList.filter((act: any) => {
+    // Search Filter
+    const matchesSearch = searchQuery
+      ? act.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        act.position.toLowerCase().includes(searchQuery.toLowerCase())
+      : true;
+
+    // Status Filter
+    const matchesPosition =
+      !statusFilter || statusFilter.toLowerCase().includes("all")
+        ? true
+        : act.status === statusFilter;
+
+    return matchesSearch && matchesPosition;
+  });
 
   return (
     <Paper bg="white" p={26} radius="lg">
@@ -26,25 +45,14 @@ const SYManagementTab = () => {
           <Group>
             <TabSearchBar
               placeholder="Search activity ..."
-              callbackFn={(v) => {
-                const filteredAcademicYears = data.results.data.filter(
-                  (act: any) =>
-                    act.academic_year.toLowerCase().includes(v.toLowerCase()),
-                );
-                setAcademicYears(filteredAcademicYears);
-              }}
+              callbackFn={(v) => setSearchQuery(v)}
             />
 
             <ListFilter
               all="All Status"
               data={data.results.data}
               accessor="status"
-              callbackFn={(v) => {
-                const filteredAcademicYears = data.results.data.filter(
-                  (act: any) => act.status === v,
-                );
-                setAcademicYears(filteredAcademicYears);
-              }}
+              callbackFn={(v) => setStatusFilter(v)}
             />
           </Group>
         )}
@@ -59,9 +67,7 @@ const SYManagementTab = () => {
           <Skeleton h={20} radius={6} />
         </Stack>
       ) : (
-        <SYManagementList
-          data={academicYears.length > 0 ? academicYears : data.results.data}
-        />
+        <SYManagementList data={displayList} />
       )}
     </Paper>
   );

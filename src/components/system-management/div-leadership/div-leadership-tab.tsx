@@ -6,6 +6,8 @@ import {
   Title,
   Stack,
   Skeleton,
+  Center,
+  Pagination,
 } from "@mantine/core";
 import { Plus } from "lucide-react";
 import ListFilter from "../list-filter";
@@ -13,10 +15,19 @@ import { useState } from "react";
 import TabSearchBar from "../tab-search-bar";
 import { useFetchDivisionLeadership } from "@/lib/fetcher/division-leadership.fetcher";
 import DivisionLeadershipList from "./div-leadership-list";
-// import SYManagementList from "./sy-management-list";
+import { keepPreviousData } from "@tanstack/react-query";
+import AddPersonnelModal from "./add-personnel-modal";
 
 const DivisionLeadershipTab = () => {
-  const { data, isPending } = useFetchDivisionLeadership();
+  const [page, setPage] = useState(1);
+  const { data, isPending, isPlaceholderData } = useFetchDivisionLeadership(
+    {
+      page,
+    },
+    {
+      placeholderData: keepPreviousData,
+    },
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [positionFilter, setPositionFilter] = useState("");
 
@@ -38,7 +49,11 @@ const DivisionLeadershipTab = () => {
     return matchesSearch && matchesPosition;
   });
 
-  console.log(data);
+  const handlePageChange = (newPage: number) => {
+    setSearchQuery("");
+    setPositionFilter("");
+    setPage(newPage);
+  };
 
   return (
     <Paper bg="white" p={26} radius="lg">
@@ -73,7 +88,7 @@ const DivisionLeadershipTab = () => {
           </Group>
         )}
 
-        <Button leftSection={<Plus size={16} />}>Add Personnel</Button>
+        <AddPersonnelModal />
       </Flex>
 
       {isPending ? (
@@ -83,8 +98,25 @@ const DivisionLeadershipTab = () => {
           <Skeleton h={20} radius={6} />
         </Stack>
       ) : (
-        <DivisionLeadershipList data={displayList} />
+        <div
+          style={{
+            opacity: isPlaceholderData ? 0.5 : 1,
+            transition: "opacity 0.15s",
+          }}
+        >
+          <DivisionLeadershipList data={displayList} />
+        </div>
       )}
+
+      <Center my={20}>
+        {isPending ? null : (
+          <Pagination
+            value={page}
+            onChange={handlePageChange}
+            total={data.results.pagination.last_page}
+          />
+        )}
+      </Center>
     </Paper>
   );
 };

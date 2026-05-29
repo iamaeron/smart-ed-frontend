@@ -7,6 +7,7 @@ import AppRoutes from "./routes";
 import { theme } from "@/lib/theme";
 import AuthContextProvider from "@/contexts/auth.context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,6 +22,7 @@ const App = () => {
     <MantineProvider theme={theme}>
       <AuthContextProvider>
         <QueryClientProvider client={queryClient}>
+          <Toaster closeButton />
           <AppRoutes />
         </QueryClientProvider>
       </AuthContextProvider>

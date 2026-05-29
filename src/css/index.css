@@ -3,6 +3,18 @@
   --mantine-font-family-headings: "Inter" !important;
 }
 
+.mantine-Input-input[data-variant="default"] {
+  border-color: #9c9c9c;
+}
+
+.mantine-Input-input[data-variant="default"]:focus {
+  border-color: #2c68ff;
+}
+
+.mantine-InputWrapper-label {
+  font-weight: 600 !important;
+}
+
 .sidebar-link,
 .sidebar-logo-text {
   overflow: hidden;
