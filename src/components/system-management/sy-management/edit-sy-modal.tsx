@@ -26,7 +26,7 @@ import { toast } from "sonner";
 import ErrorMessage from "@/components/form/error-message";
 import type { AcademicYear } from "@/types/data/academic-year.type";
 
-type EditSYModalProps = {
+export type EditSYModalProps = {
   sy: AcademicYear;
   opened: boolean;
   onClose: () => void;
@@ -100,7 +100,7 @@ const EditSYModal = ({ sy, opened, onClose }: EditSYModalProps) => {
           </Group>
         </Card>
 
-        <form id="academic-year-form" onSubmit={handleSubmit(onSubmit)}>
+        <form id="edit-academic-year-form" onSubmit={handleSubmit(onSubmit)}>
           <Paper p="lg">
             <Box mb={16}>
               <Text fw={600} fz={14}>

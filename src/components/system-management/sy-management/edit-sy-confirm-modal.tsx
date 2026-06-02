@@ -42,7 +42,7 @@ const EditSYConfirmModal = () => {
             </Button>
             <Button
               type="submit"
-              form="academic-year-form"
+              form="edit-academic-year-form"
               tt="uppercase"
               color="primary"
               fullWidth
