@@ -15,6 +15,7 @@ import { useFetchAcademicYears } from "@/lib/fetcher/academic-year.fetcher";
 import SYManagementList from "./sy-management-list";
 import AddSYModal from "./add-sy-modal";
 import { keepPreviousData } from "@tanstack/react-query";
+import ListPending from "@/components/list-pending";
 
 const SYManagementTab = () => {
   const [page, setPage] = useState(1);
@@ -87,14 +88,9 @@ const SYManagementTab = () => {
           <Skeleton h={20} radius={6} />
         </Stack>
       ) : (
-        <div
-          style={{
-            opacity: isPlaceholderData ? 0.5 : 1,
-            transition: "opacity 0.15s",
-          }}
-        >
+        <ListPending pending={isPlaceholderData}>
           <SYManagementList data={displayList} />
-        </div>
+        </ListPending>
       )}
 
       <Center my={20}>

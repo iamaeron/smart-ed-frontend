@@ -15,6 +15,7 @@ import { useFetchDivisionLeadership } from "@/lib/fetcher/division-leadership.fe
 import DivisionLeadershipList from "./div-leadership-list";
 import { keepPreviousData } from "@tanstack/react-query";
 import AddPersonnelModal from "./add-personnel-modal";
+import ListPending from "@/components/list-pending";
 
 const DivisionLeadershipTab = () => {
   const [page, setPage] = useState(1);
@@ -97,14 +98,9 @@ const DivisionLeadershipTab = () => {
           <Skeleton h={20} radius={6} />
         </Stack>
       ) : (
-        <div
-          style={{
-            opacity: isPlaceholderData ? 0.5 : 1,
-            transition: "opacity 0.15s",
-          }}
-        >
+        <ListPending pending={isPlaceholderData}>
           <DivisionLeadershipList data={displayList} />
-        </div>
+        </ListPending>
       )}
 
       <Center my={20}>

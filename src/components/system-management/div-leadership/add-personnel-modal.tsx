@@ -44,7 +44,7 @@ const AddPersonnelModal = () => {
   const termEndData =
     data?.results?.data.map((d: any) => dayjs(d.end_date).format("YYYY")) || [];
 
-  const { control, handleSubmit, formState, setError, reset, setValue } =
+  const { control, handleSubmit, formState, setError, reset, setValue, watch } =
     useForm<PersonnelData>({
       resolver: zodResolver(personnelSchema),
       defaultValues: {
@@ -56,6 +56,8 @@ const AddPersonnelModal = () => {
         current_term: "false",
       },
     });
+
+  const termStart = watch("term_start");
 
   const onSubmit: SubmitHandler<PersonnelData> = async (data) => {
     const payload = {
@@ -75,6 +77,7 @@ const AddPersonnelModal = () => {
         queryClient.invalidateQueries({
           queryKey: ["division_leadership", {}],
         });
+        setCurrentlyInTerm(false);
         reset();
         close();
       }
@@ -245,7 +248,14 @@ const AddPersonnelModal = () => {
                       comboboxProps={{
                         shadow: "xl",
                       }}
-                      data={termEndData}
+                      data={
+                        termStart
+                          ? termEndData.filter(
+                              (year: string) =>
+                                Number(year) >= Number(termStart),
+                            )
+                          : termEndData
+                      }
                     />
                     <ErrorMessage
                       atEnd={false}

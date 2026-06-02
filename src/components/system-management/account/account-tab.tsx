@@ -1,6 +1,5 @@
 import { useFetchUserAccounts } from "@/lib/fetcher/user.fetcher";
 import {
-  Button,
   Center,
   Flex,
   Group,
@@ -10,12 +9,13 @@ import {
   Stack,
   Title,
 } from "@mantine/core";
-import { Plus } from "lucide-react";
 import AccountList from "./account-list";
 import ListFilter from "../list-filter";
 import { useState } from "react";
 import TabSearchBar from "../tab-search-bar";
 import { keepPreviousData } from "@tanstack/react-query";
+import AddAccountModal from "./add-account-modal";
+import ListPending from "@/components/list-pending";
 
 const AccountTab = () => {
   const [page, setPage] = useState(1);
@@ -112,7 +112,7 @@ const AccountTab = () => {
           </Group>
         )}
 
-        <Button leftSection={<Plus size={16} />}>Add Account</Button>
+        <AddAccountModal />
       </Flex>
 
       {isPending ? (
@@ -122,14 +122,9 @@ const AccountTab = () => {
           <Skeleton h={20} radius={6} />
         </Stack>
       ) : (
-        <div
-          style={{
-            opacity: isPlaceholderData ? 0.5 : 1,
-            transition: "opacity 0.15s",
-          }}
-        >
+        <ListPending pending={isPlaceholderData}>
           <AccountList data={displayList} />
-        </div>
+        </ListPending>
       )}
 
       <Center my={20}>

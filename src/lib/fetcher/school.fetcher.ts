@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "../api";
 import type { FetcherOptions, Param } from "@/types/form/req.type";
 
-export const useFetchAcademicYears = (
+export const useFetchSchools = (
   params: Param | {} = {},
   options?: FetcherOptions,
 ) => {
@@ -10,9 +10,9 @@ export const useFetchAcademicYears = (
 
   return useQuery({
     ...options,
-    queryKey: ["academic_years", params],
+    queryKey: ["schools", params],
     queryFn: async () => {
-      const res = await api.get(`/api/academic-years?${urlParams}`);
+      const res = await api.get(`/api/schools?${urlParams}`);
       return res.data;
     },
   });

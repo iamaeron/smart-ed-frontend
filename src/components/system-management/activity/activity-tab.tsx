@@ -14,6 +14,7 @@ import ListFilter from "../list-filter";
 import { useState } from "react";
 import TabSearchBar from "../tab-search-bar";
 import { keepPreviousData } from "@tanstack/react-query";
+import ListPending from "@/components/list-pending";
 
 const ActivityTab = () => {
   const [page, setPage] = useState(1);
@@ -105,14 +106,9 @@ const ActivityTab = () => {
           <Skeleton h={40} radius={6} />
         </Stack>
       ) : (
-        <div
-          style={{
-            opacity: isPlaceholderData ? 0.5 : 1,
-            transition: "opacity 0.15s",
-          }}
-        >
+        <ListPending pending={isPlaceholderData}>
           <ActivityList page={page} data={displayList} />
-        </div>
+        </ListPending>
       )}
 
       <Center my={20}>

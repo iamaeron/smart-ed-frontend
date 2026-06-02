@@ -21,7 +21,7 @@ const SidebarLinksContainer = ({
     switch (user.role) {
       case "System Admin":
         return systemAdminNavLinks;
-      case "School Admin":
+      case "School Account":
         return schoolAdminNavLinks;
       default:
         return divisionAdminNavLinks;

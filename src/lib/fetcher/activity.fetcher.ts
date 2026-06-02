@@ -1,16 +1,10 @@
-import {
-  useQuery,
-  type UndefinedInitialDataOptions,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { api } from "../api";
-import type { Param } from "@/types/form/req.type";
+import type { FetcherOptions, Param } from "@/types/form/req.type";
 
 export const useFetchActivityLogs = (
   params?: Param | Record<string, any>,
-  options?: Omit<
-    UndefinedInitialDataOptions<any, Error, any, any>,
-    "queryKey" | "queryFn"
-  >,
+  options?: FetcherOptions,
 ) => {
   const urlParams = new URLSearchParams(params).toString();
 

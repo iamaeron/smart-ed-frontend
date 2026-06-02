@@ -16,22 +16,22 @@ import {
 export const schoolAdminNavLinks = [
   {
     label: "Dashboard",
-    to: "/school-admin/dashboard",
+    to: "/school-account/dashboard",
     icon: Widget,
   },
   {
     label: "School Overview",
-    to: "/school-admin/school-overview",
+    to: "/school-account/school-overview",
     icon: Chart,
   },
   {
     label: "Submissions",
-    to: "/school-admin/submissions",
-    icon: SquareAcademicCap,
+    to: "/school-account/submissions",
+    icon: FileCheck,
   },
   {
     label: "News & Alert",
-    to: "/school-admin/news",
+    to: "/school-account/news",
     icon: Bell,
   },
 ];

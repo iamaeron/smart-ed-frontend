@@ -77,10 +77,7 @@ const AccountList = ({ data }: { data: any }) => {
       </Table.Td>
       <Table.Td>
         <Box>
-          <Show
-            when={element.assignment.type === "school"}
-            fallback={"Division Level"}
-          >
+          <Show when={element.assignment.school_id} fallback={"Division Level"}>
             <Text fz={14} fw={element.assignment?.school_code ? 500 : 400}>
               {element.assignment.school_name}
             </Text>
