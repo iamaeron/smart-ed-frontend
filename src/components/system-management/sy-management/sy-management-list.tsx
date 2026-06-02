@@ -2,7 +2,13 @@ import type {
   AcademicYear,
   AcademicYearStatus,
 } from "@/types/data/academic-year.type";
-import { Badge, Table, TableScrollContainer, Text } from "@mantine/core";
+import {
+  Badge,
+  Table,
+  TableScrollContainer,
+  Text,
+  VisuallyHidden,
+} from "@mantine/core";
 import dayjs from "dayjs";
 import SYManagementListItemOptions from "./sy-management-list-item-options";
 
@@ -47,9 +53,14 @@ const SYManagementList = ({ data }: { data: any }) => {
       <Table horizontalSpacing={0} verticalSpacing="xs">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Date Added</Table.Th>
-            <Table.Th>School Year</Table.Th>
-            <Table.Th>Status</Table.Th>
+            <Table.Th w="33%">Date Added</Table.Th>
+            <Table.Th w="33%">School Year</Table.Th>
+            <Table.Th w="33%">Status</Table.Th>
+            <Table.Th w={60}>
+              <VisuallyHidden className="visually-hidden">
+                Actions
+              </VisuallyHidden>
+            </Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

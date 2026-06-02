@@ -58,10 +58,10 @@ const ActivityList = ({ data, page }: { data: any; page: number }) => {
       <Table key={page} horizontalSpacing={0} verticalSpacing="xs">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Timestamp</Table.Th>
-            <Table.Th>User</Table.Th>
-            <Table.Th>Action</Table.Th>
-            <Table.Th>Section</Table.Th>
+            <Table.Th w="25%">Timestamp</Table.Th>
+            <Table.Th w="25%">User</Table.Th>
+            <Table.Th w="15%">Action</Table.Th>
+            <Table.Th w="35%">Section</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

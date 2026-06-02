@@ -1,4 +1,11 @@
-import { Table, TableScrollContainer, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Table,
+  TableScrollContainer,
+  Text,
+  VisuallyHidden,
+} from "@mantine/core";
+import { MenuDots } from "@solar-icons/react";
 
 const DivisionLeadershipList = ({
   data,
@@ -28,6 +35,11 @@ const DivisionLeadershipList = ({
           </Text>
         </Table.Td>
         <Table.Td>{element.description}</Table.Td>
+        <Table.Td>
+          <ActionIcon variant="subtle" color="gray">
+            <MenuDots weight="Bold" size={20} />
+          </ActionIcon>
+        </Table.Td>
       </Table.Tr>
     );
   });
@@ -37,9 +49,14 @@ const DivisionLeadershipList = ({
       <Table key={page} horizontalSpacing={0} verticalSpacing="xs">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Name</Table.Th>
-            <Table.Th>Position</Table.Th>
-            <Table.Th>Service Period</Table.Th>
+            <Table.Th w="35%">Name</Table.Th>
+            <Table.Th w="35%">Position</Table.Th>
+            <Table.Th w="25%">Service Period</Table.Th>
+            <Table.Th w={30}>
+              <VisuallyHidden className="visually-hidden">
+                Actions
+              </VisuallyHidden>
+            </Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

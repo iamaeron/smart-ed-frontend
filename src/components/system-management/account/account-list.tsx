@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   Badge,
   Box,
   Center,
@@ -8,6 +9,7 @@ import {
   Table,
   TableScrollContainer,
   Text,
+  VisuallyHidden,
 } from "@mantine/core";
 import { Letter, MenuDots, Phone } from "@solar-icons/react";
 import Show from "../../show";
@@ -91,20 +93,27 @@ const AccountList = ({ data }: { data: any }) => {
         </Box>
       </Table.Td>
       <Table.Td>
-        <MenuDots weight="Bold" size={20} />
+        <ActionIcon variant="subtle" color="gray">
+          <MenuDots weight="Bold" size={20} />
+        </ActionIcon>
       </Table.Td>
     </Table.Tr>
   ));
 
   return (
     <TableScrollContainer minWidth="100%">
-      <Table horizontalSpacing={0} verticalSpacing="xs">
+      <Table layout="fixed" horizontalSpacing={0} verticalSpacing="xs">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>User</Table.Th>
-            <Table.Th>Contact</Table.Th>
-            <Table.Th>Role</Table.Th>
-            <Table.Th>School/Assignment</Table.Th>
+            <Table.Th w={"25%"}>User</Table.Th>
+            <Table.Th w={"25%"}>Contact</Table.Th>
+            <Table.Th w={"15%"}>Role</Table.Th>
+            <Table.Th w={"35%"}>School/Assignment</Table.Th>
+            <Table.Th w={30}>
+              <VisuallyHidden className="visually-hidden">
+                Actions
+              </VisuallyHidden>
+            </Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
