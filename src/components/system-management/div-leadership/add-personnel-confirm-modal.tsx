@@ -34,6 +34,7 @@ const AddPersonnelConfirmModal = () => {
               tt="uppercase"
               variant="outline"
               color="primary"
+              type="button"
               c="primary"
               fullWidth
             >

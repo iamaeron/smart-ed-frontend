@@ -33,6 +33,7 @@ const AddSYConfirmModal = () => {
               onClick={close}
               tt="uppercase"
               variant="outline"
+              type="button"
               color="primary"
               c="primary"
               fullWidth

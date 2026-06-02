@@ -1,4 +1,4 @@
-import { TextInput } from "@mantine/core";
+import { Input, TextInput } from "@mantine/core";
 import { Magnifier } from "@solar-icons/react";
 import { useEffect, useState } from "react";
 
@@ -39,6 +39,17 @@ const TabSearchBar = ({
       value={value}
       onChange={handleChange}
       leftSection={<Magnifier size={16} />}
+      rightSection={
+        <Input.ClearButton
+          aria-label="Clear input"
+          onClick={() => setValue("")}
+          style={
+            value
+              ? { opacity: 1, pointerEvents: "all" }
+              : { opacity: 0, pointerEvents: "none" }
+          }
+        />
+      }
     />
   );
 };

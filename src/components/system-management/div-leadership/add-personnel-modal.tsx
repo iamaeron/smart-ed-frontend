@@ -35,14 +35,16 @@ const AddPersonnelModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const { data } = useFetchAcademicYears();
   const [currentlyInTerm, setCurrentlyInTerm] = useState(false);
+  const currentYear = dayjs().year();
 
   const termStartData =
-    data?.results?.data.map((d: any) => dayjs(d.start_date).format("YYYY")) ||
-    [];
+    data?.results?.data
+      .map((d: any) => dayjs(d.start_date).format("YYYY"))
+      .filter((v: string) => Number(v) <= currentYear) || [];
   const termEndData =
     data?.results?.data.map((d: any) => dayjs(d.end_date).format("YYYY")) || [];
 
-  const { control, handleSubmit, formState, setError, reset } =
+  const { control, handleSubmit, formState, setError, reset, setValue } =
     useForm<PersonnelData>({
       resolver: zodResolver(personnelSchema),
       defaultValues: {
@@ -51,6 +53,7 @@ const AddPersonnelModal = () => {
         is_oic: "true",
         term_start: "",
         term_end: "",
+        current_term: "false",
       },
     });
 
@@ -61,6 +64,7 @@ const AddPersonnelModal = () => {
       is_oic: data.is_oic === "true",
       term_start: Number(data.term_start),
       term_end: currentlyInTerm ? null : Number(data.term_end),
+      current_term: currentlyInTerm,
     };
 
     try {
@@ -223,7 +227,13 @@ const AddPersonnelModal = () => {
                       style={{ position: "absolute", right: 0, top: 4 }}
                       label="Currently in term"
                       checked={currentlyInTerm}
-                      onChange={(e) => setCurrentlyInTerm(e.target.checked)}
+                      onChange={(e) => {
+                        setCurrentlyInTerm(e.target.checked);
+                        setValue(
+                          "current_term",
+                          e.target.checked ? "true" : "false",
+                        );
+                      }}
                     />
                     <Select
                       {...field}

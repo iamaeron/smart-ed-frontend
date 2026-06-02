@@ -1,26 +1,64 @@
 import { useFetchUserAccounts } from "@/lib/fetcher/user.fetcher";
 import {
   Button,
+  Center,
   Flex,
   Group,
+  Pagination,
   Paper,
-  Select,
   Skeleton,
   Stack,
   Title,
 } from "@mantine/core";
-import { AltArrowDown, Filter } from "@solar-icons/react";
 import { Plus } from "lucide-react";
 import AccountList from "./account-list";
 import ListFilter from "../list-filter";
 import { useState } from "react";
 import TabSearchBar from "../tab-search-bar";
+import { keepPreviousData } from "@tanstack/react-query";
 
 const AccountTab = () => {
-  const { data, isPending } = useFetchUserAccounts({ per_page: 5 });
-  const [accounts, setAccounts] = useState([]);
+  const [page, setPage] = useState(1);
+  const { data, isPending, isPlaceholderData } = useFetchUserAccounts(
+    { per_page: 5, page },
+    {
+      placeholderData: keepPreviousData,
+    },
+  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [roleFilter, setRoleFilter] = useState("");
 
   console.log(data);
+
+  const baseList = data?.results?.users || [];
+
+  const displayList = baseList.filter((act: any) => {
+    // Search Filter
+    const matchesSearch = searchQuery
+      ? act.name.toLowerCase().includes(searchQuery.toLowerCase())
+      : true;
+
+    // Role Filter
+    const matchesRole =
+      !roleFilter || roleFilter.toLowerCase().includes("all")
+        ? true
+        : act?.role === roleFilter;
+
+    // Action Filter
+    // const matchesAction =
+    //   !actionFilter || actionFilter.toLowerCase().includes("all")
+    //     ? true
+    //     : act.log_name === actionFilter;
+
+    return matchesSearch && matchesRole; // && matchesAction;
+  });
+
+  const handlePageChange = (newPage: number) => {
+    setSearchQuery("");
+    setRoleFilter("");
+    setPage(newPage);
+  };
+
   return (
     <Paper bg="white" p={26} radius="lg">
       <Flex gap={4}>
@@ -42,24 +80,14 @@ const AccountTab = () => {
           <Group>
             <TabSearchBar
               placeholder="Search accounts ..."
-              callbackFn={(v) => {
-                const filteredAccounts = data.results.users.filter((act: any) =>
-                  act.name.toLowerCase().includes(v.toLowerCase()),
-                );
-                setAccounts(filteredAccounts);
-              }}
+              callbackFn={(v) => setSearchQuery(v)}
             />
 
             <ListFilter
               all="All Roles"
               data={data.results.users}
               accessor="role"
-              callbackFn={(v) => {
-                const filteredAccounts = data.results.users.filter(
-                  (acc: any) => acc.role === v,
-                );
-                setAccounts(filteredAccounts);
-              }}
+              callbackFn={(v) => setRoleFilter(v)}
             />
 
             {/* <ListFilter
@@ -94,10 +122,25 @@ const AccountTab = () => {
           <Skeleton h={20} radius={6} />
         </Stack>
       ) : (
-        <AccountList
-          data={accounts.length > 0 ? accounts : data.results.users}
-        />
+        <div
+          style={{
+            opacity: isPlaceholderData ? 0.5 : 1,
+            transition: "opacity 0.15s",
+          }}
+        >
+          <AccountList data={displayList} />
+        </div>
       )}
+
+      <Center my={20}>
+        {isPending ? null : (
+          <Pagination
+            value={page}
+            onChange={handlePageChange}
+            total={data.results.pagination.last_page}
+          />
+        )}
+      </Center>
     </Paper>
   );
 };

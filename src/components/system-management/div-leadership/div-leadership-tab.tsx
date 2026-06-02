@@ -21,6 +21,7 @@ const DivisionLeadershipTab = () => {
   const { data, isPending, isPlaceholderData } = useFetchDivisionLeadership(
     {
       page,
+      sortBy: "term_start",
     },
     {
       placeholderData: keepPreviousData,
