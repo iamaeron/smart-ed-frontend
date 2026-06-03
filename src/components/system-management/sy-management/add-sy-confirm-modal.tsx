@@ -1,4 +1,5 @@
-import { Button, Flex, Modal, Paper, Stack, Text } from "@mantine/core";
+import ConfirmPopupUI from "@/components/confirm-popup-ui";
+import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { InboxIn } from "@solar-icons/react";
 
@@ -14,43 +15,15 @@ const AddSYConfirmModal = () => {
         size="md"
         centered
       >
-        <Paper p={6}>
-          <Stack align="center" gap={10}>
-            <div>
-              <InboxIn color="#2c68ff" size={44} />
-            </div>
-            <Text size="xl" fw={700}>
-              Add New School Year?
-            </Text>
-            <Text size="sm" ta="center">
-              <span style={{ fontWeight: 600 }}>Warning:</span> The new school
-              year will be visible to all modules. Please verify dates before
-              proceeding.
-            </Text>
-          </Stack>
-          <Flex mt={20} gap={8}>
-            <Button
-              onClick={close}
-              tt="uppercase"
-              variant="outline"
-              type="button"
-              color="primary"
-              c="primary"
-              fullWidth
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              form="academic-year-form"
-              tt="uppercase"
-              color="primary"
-              fullWidth
-            >
-              Confirm
-            </Button>
-          </Flex>
-        </Paper>
+        <ConfirmPopupUI
+          title="Add New School Year?"
+          description="The new school year will be visible to all modules. Please verify dates before proceeding."
+          confirmText="Confirm"
+          PopupIcon={InboxIn}
+          formId="academic-year-form"
+          onClose={close}
+          type="info"
+        />
       </Modal>
       <Button
         onClick={open}

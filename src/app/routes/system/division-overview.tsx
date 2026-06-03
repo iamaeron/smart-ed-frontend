@@ -1,7 +1,7 @@
 import AcademicYearPicker from "@/components/dashboard/academic-year-picker";
 import OverviewTabs from "@/components/overview/overview-tabs";
 import AppLayout from "@/layouts/app.layout";
-import { Box, Flex, Select, Text, Title } from "@mantine/core";
+import { Box, Flex, Text, Title } from "@mantine/core";
 
 const SystemAdminDivisionOverview = () => {
   return (

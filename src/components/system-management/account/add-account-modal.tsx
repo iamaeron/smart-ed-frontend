@@ -30,7 +30,9 @@ const AddAccountModal = () => {
   const { data } = useFetchSchools({ per_page: 50 });
 
   const schoolList =
-    data?.results?.schools.map((school: any) => school.school_name) || [];
+    data?.results?.data?.schools.map((school: any) => school.school_name) || [];
+
+  console.log(data?.results?.schools);
 
   const { control, handleSubmit, formState, setError, reset } =
     useForm<AccountData>({

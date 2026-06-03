@@ -182,6 +182,7 @@ const EditSYModal = ({ sy, opened, onClose }: EditSYModalProps) => {
               >
                 Cancel
               </Button>
+
               <EditSYConfirmModal />
             </Flex>
           </Paper>

@@ -9,7 +9,6 @@ import ArchiveSYConfirmModal from "./archive-sy-confirm-modal";
 type Modals = "edit" | "archive" | "activate";
 
 const SYManagementListItemOptions = ({ item }: { item: AcademicYear }) => {
-  // const [modalOpened, { open, close }] = useDisclosure(false);
   const [activeModal, setActiveModal] = useState<Modals | null>(null);
 
   return (
@@ -51,6 +50,7 @@ const SYManagementListItemOptions = ({ item }: { item: AcademicYear }) => {
         opened={activeModal === "edit"}
         onClose={() => setActiveModal(null)}
       />
+
       <ArchiveSYConfirmModal
         sy={item}
         opened={activeModal === "archive"}
