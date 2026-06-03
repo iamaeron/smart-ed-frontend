@@ -17,3 +17,19 @@ export const useFetchSchools = (
     },
   });
 };
+
+export const useFetchSchoolTypes = (
+  params: Param | {} = {},
+  options?: FetcherOptions,
+) => {
+  const urlParams = new URLSearchParams(params).toString();
+
+  return useQuery({
+    ...options,
+    queryKey: ["school_types", params],
+    queryFn: async () => {
+      const res = await api.get(`/api/school-types?${urlParams}`);
+      return res.data;
+    },
+  });
+};

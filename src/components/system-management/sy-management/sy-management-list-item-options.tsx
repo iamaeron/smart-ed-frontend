@@ -5,6 +5,7 @@ import { Archive, CheckCircle, MenuDots, Pen } from "@solar-icons/react";
 import EditSYModal from "./edit-sy-modal";
 import { useState } from "react";
 import ArchiveSYConfirmModal from "./archive-sy-confirm-modal";
+import ActivateSYConfirmModal from "./active-sy-confirm-modal";
 
 type Modals = "edit" | "archive" | "activate";
 
@@ -38,7 +39,11 @@ const SYManagementListItemOptions = ({ item }: { item: AcademicYear }) => {
             </Menu.Item>
           </Show>
           <Show when={item.status === "archived"}>
-            <Menu.Item color="red" leftSection={<CheckCircle size={16} />}>
+            <Menu.Item
+              onClick={() => setActiveModal("activate")}
+              color="red"
+              leftSection={<CheckCircle size={16} />}
+            >
               Set as Active Year
             </Menu.Item>
           </Show>
@@ -54,6 +59,12 @@ const SYManagementListItemOptions = ({ item }: { item: AcademicYear }) => {
       <ArchiveSYConfirmModal
         sy={item}
         opened={activeModal === "archive"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <ActivateSYConfirmModal
+        sy={item}
+        opened={activeModal === "activate"}
         onClose={() => setActiveModal(null)}
       />
     </>

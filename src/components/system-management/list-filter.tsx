@@ -9,9 +9,16 @@ type ListFilterType = {
   all: string;
   accessor: string;
   callbackFn?: (v: any) => void;
+  bg?: string;
 };
 
-const ListFilter = ({ data, all, accessor, callbackFn }: ListFilterType) => {
+const ListFilter = ({
+  data,
+  all,
+  accessor,
+  callbackFn,
+  bg,
+}: ListFilterType) => {
   const filterList = pluckPath(data, accessor);
   const [selectedValue, setSelectedValue] = useState(all ?? "");
 
@@ -37,7 +44,7 @@ const ListFilter = ({ data, all, accessor, callbackFn }: ListFilterType) => {
       }}
       styles={{
         input: {
-          backgroundColor: "#F3F5FF",
+          backgroundColor: bg || "#F3F5FF",
           textTransform: "capitalize",
         },
         option: {

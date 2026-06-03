@@ -1,9 +1,31 @@
+.scrollWrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-bottom: var(--mantine-spacing-xl);
+  border-radius: 30px;
+
+  /* Smooth scrolling experience */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Hide scrollbars if preferred */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .list {
   position: relative;
-  margin-bottom: var(--mantine-spacing-xl);
+  /* margin-bottom: var(--mantine-spacing-xl); */
   background-color: #eaeaff;
   padding: 6px;
   border-radius: 30px;
+  width: 100%;
+  min-width: max-content;
+
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  flex-shrink: 0;
+  overflow-x: auto;
 }
 
 .indicator {
@@ -25,6 +47,11 @@
   color: var(--mantine-color-gray-7);
   border: 0;
   flex: 1;
+  flex-shrink: 0;
+  padding-right: 30px;
+  padding-left: 30px;
+  white-space: nowrap;
+  /* padding: 8px 16px; */
 
   &[data-active] {
     color: var(--mantine-color-black);

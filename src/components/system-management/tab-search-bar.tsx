@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 const TabSearchBar = ({
   callbackFn,
   placeholder,
+  bg,
 }: {
   callbackFn?: (v: string) => void;
   placeholder?: string;
+  bg?: string;
 }) => {
   const [value, setValue] = useState("");
 
@@ -33,7 +35,7 @@ const TabSearchBar = ({
       placeholder={placeholder ? placeholder : "Search ..."}
       styles={{
         input: {
-          backgroundColor: "#F3F5FF",
+          backgroundColor: bg || "#F3F5FF",
         },
       }}
       value={value}

@@ -6,6 +6,7 @@ import ActivityTab from "./activity/activity-tab";
 import SYManagementTab from "./sy-management/sy-management-tab";
 import { useSearchParams } from "react-router";
 import DivisionLeadershipTab from "./div-leadership/div-leadership-tab";
+import TabListScroller from "../tab-list-scroller";
 
 const SystemManagementTabs = () => {
   const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
@@ -30,42 +31,44 @@ const SystemManagementTabs = () => {
         setSearchParams({ tab: value ?? "" });
       }}
     >
-      <Tabs.List ref={setRootRef} className={classes.list}>
-        <Tabs.Tab
-          value="accounts"
-          ref={setControlRef("accounts")}
-          className={classes.tab}
-        >
-          Accounts
-        </Tabs.Tab>
-        <Tabs.Tab
-          value="activity"
-          ref={setControlRef("activity")}
-          className={classes.tab}
-        >
-          Activity
-        </Tabs.Tab>
-        <Tabs.Tab
-          value="division-lead"
-          ref={setControlRef("division-lead")}
-          className={classes.tab}
-        >
-          Division Leadership
-        </Tabs.Tab>
-        <Tabs.Tab
-          value="sy-management"
-          ref={setControlRef("sy-management")}
-          className={classes.tab}
-        >
-          School Year Management
-        </Tabs.Tab>
+      <TabListScroller>
+        <Tabs.List ref={setRootRef} className={classes.list}>
+          <Tabs.Tab
+            value="accounts"
+            ref={setControlRef("accounts")}
+            className={classes.tab}
+          >
+            Accounts
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="activity"
+            ref={setControlRef("activity")}
+            className={classes.tab}
+          >
+            Activity
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="division-lead"
+            ref={setControlRef("division-lead")}
+            className={classes.tab}
+          >
+            Division Leadership
+          </Tabs.Tab>
+          <Tabs.Tab
+            value="sy-management"
+            ref={setControlRef("sy-management")}
+            className={classes.tab}
+          >
+            School Year Management
+          </Tabs.Tab>
 
-        <FloatingIndicator
-          target={value ? controlsRefs[value] : null}
-          parent={rootRef}
-          className={classes.indicator}
-        />
-      </Tabs.List>
+          <FloatingIndicator
+            target={value ? controlsRefs[value] : null}
+            parent={rootRef}
+            className={classes.indicator}
+          />
+        </Tabs.List>
+      </TabListScroller>
 
       <Tabs.Panel value="accounts">
         <AccountTab />
