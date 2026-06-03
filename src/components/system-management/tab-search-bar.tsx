@@ -33,6 +33,7 @@ const TabSearchBar = ({
     <TextInput
       variant="filled"
       placeholder={placeholder ? placeholder : "Search ..."}
+      classNames={{ input: "search-input" }}
       styles={{
         input: {
           backgroundColor: bg || "#F3F5FF",
@@ -41,6 +42,7 @@ const TabSearchBar = ({
       value={value}
       onChange={handleChange}
       leftSection={<Magnifier size={16} />}
+      leftSectionProps={{ style: { color: "#555555" } }}
       rightSection={
         <Input.ClearButton
           aria-label="Clear input"

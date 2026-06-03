@@ -1,5 +1,5 @@
 import ConfirmPopupUI from "@/components/confirm-popup-ui";
-import { Button, Flex, Modal, Paper, Stack, Text } from "@mantine/core";
+import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { InboxIn } from "@solar-icons/react";
 

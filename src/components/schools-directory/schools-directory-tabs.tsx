@@ -14,10 +14,11 @@ import {
 } from "@mantine/core";
 import classes from "@/css/Tab.module.css";
 import { useLayoutEffect, useState } from "react";
-import { useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { Dot } from "lucide-react";
 import { Calendar, MapPoint, Phone, User } from "@solar-icons/react";
 import TabListScroller from "../tab-list-scroller";
+import AppTooltip from "../system-management/app-tooltip";
 
 const SchoolsDirectoryTabs = ({ schools }: { schools: any[] }) => {
   const { data, isPending } = useFetchSchoolTypes();
@@ -129,6 +130,9 @@ const SchoolsDirectoryTabs = ({ schools }: { schools: any[] }) => {
 
                             <Box>
                               <Button
+                                component={Link}
+                                to={`/system-admin/schools-directory/${school.id}`}
+                                preventScrollReset={true}
                                 variant="outline"
                                 c="primary"
                                 px="md"
@@ -151,14 +155,19 @@ const SchoolsDirectoryTabs = ({ schools }: { schools: any[] }) => {
                                   />
                                 </div>
                                 <Box>
-                                  <Text
-                                    lineClamp={1}
-                                    fz={14}
-                                    c="mainText"
-                                    fw={600}
+                                  <AppTooltip
+                                    label={school.address}
+                                    position="bottom-start"
                                   >
-                                    {school.address}
-                                  </Text>
+                                    <Text
+                                      lineClamp={1}
+                                      fz={14}
+                                      c="mainText"
+                                      fw={600}
+                                    >
+                                      {school.address}
+                                    </Text>
+                                  </AppTooltip>
                                   <Text fz={12} c="longText">
                                     {school.latitude}, {school.longitude}
                                   </Text>
@@ -176,14 +185,19 @@ const SchoolsDirectoryTabs = ({ schools }: { schools: any[] }) => {
                                   />
                                 </div>
                                 <Box>
-                                  <Text
-                                    lineClamp={1}
-                                    fz={14}
-                                    c="mainText"
-                                    fw={600}
+                                  <AppTooltip
+                                    label={school.school_head.name}
+                                    position="bottom-start"
                                   >
-                                    {school.school_head.name}
-                                  </Text>
+                                    <Text
+                                      lineClamp={1}
+                                      fz={14}
+                                      c="mainText"
+                                      fw={600}
+                                    >
+                                      {school.school_head.name}
+                                    </Text>
+                                  </AppTooltip>
                                   <Text fz={12} c="longText">
                                     {school.school_head.position}
                                   </Text>

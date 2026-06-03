@@ -9,6 +9,7 @@ import SystemAdminSubmissions from "./system/submissions";
 import SystemAdminSystemManagement from "./system/system-management";
 import SchoolAdminDashboard from "./school/dashboard";
 import DivisionAdminDashboard from "./division/dashboard";
+import SystemAdminSchoolDirectory from "./system/schools-directory/id";
 
 const AppRoutes = () => {
   return (
@@ -33,10 +34,16 @@ const AppRoutes = () => {
           path="/system-admin/division-overview"
           element={<SystemAdminDivisionOverview />}
         />
+
         <Route
           path="/system-admin/schools-directory"
           element={<SystemAdminSchoolsDirectory />}
         />
+        <Route
+          path="/system-admin/schools-directory/:id"
+          element={<SystemAdminSchoolDirectory />}
+        />
+
         <Route path="/system-admin/news" element={<SystemAdminNews />} />
         <Route
           path="/system-admin/submissions"

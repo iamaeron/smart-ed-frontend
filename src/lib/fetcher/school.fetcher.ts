@@ -18,6 +18,23 @@ export const useFetchSchools = (
   });
 };
 
+export const useFetchSchool = (
+  schoolId: string,
+  params: Param | {} = {},
+  options?: FetcherOptions,
+) => {
+  const urlParams = new URLSearchParams(params).toString();
+
+  return useQuery({
+    ...options,
+    queryKey: ["school", schoolId, params],
+    queryFn: async () => {
+      const res = await api.get(`/api/schools/${schoolId}?${urlParams}`);
+      return res.data;
+    },
+  });
+};
+
 export const useFetchSchoolTypes = (
   params: Param | {} = {},
   options?: FetcherOptions,
