@@ -8,6 +8,7 @@ import { theme } from "@/lib/theme";
 import AuthContextProvider from "@/contexts/auth.context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
+import ScrollToTop from "@/components/scroll-to-top";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +24,7 @@ const App = () => {
       <AuthContextProvider>
         <QueryClientProvider client={queryClient}>
           <Toaster closeButton />
+          <ScrollToTop />
           <AppRoutes />
         </QueryClientProvider>
       </AuthContextProvider>
