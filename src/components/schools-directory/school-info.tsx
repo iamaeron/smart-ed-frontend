@@ -2,9 +2,6 @@ import { Card, Divider, Grid, Text } from "@mantine/core";
 import SchoolLogoCard from "./school-logo-card";
 
 const SchoolInfo = ({ school }: { school: { [k: string]: any } }) => {
-  const splitAddress = school.address.split(",");
-  console.log(splitAddress);
-
   return (
     <Grid>
       <Grid.Col span={8}>
@@ -36,10 +33,12 @@ const SchoolInfo = ({ school }: { school: { [k: string]: any } }) => {
           </Text>
           <Divider mb={20} />
           <Grid rowGap={20}>
-            <Info label="School Name" value={school.school_name} />
-            <Info label="School ID" value={school.school_code} />
-            <Info label="Year Established" value={school.year_established} />
-            <Info label="Type" value={school.school_type.name} />
+            <Info label="Street" value={school.address.street} />
+            <Info label="City" value={school.address.city} />
+            <Info label="Barangay" value={school.address.barangay} />
+            <Info label="Province" value={school.address.province} />
+            <Info label="District" value={school.district} />
+            <Info label="Region" value={school.region} />
           </Grid>
 
           <Text fw={600} fz={18} mt={40} mb={10}>

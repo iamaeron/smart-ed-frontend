@@ -33,6 +33,8 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
     },
   } as const;
 
+  const address = `${school.address.street}, ${school.address.barangay}, ${school.address.city}, ${school.address.province}`;
+
   return (
     <MotionGridCol layout variants={itemVariants} key={school.id} span={6}>
       <Card p="lg" radius="lg" shadow="sm">
@@ -96,9 +98,9 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                     />
                   </div>
                   <Box>
-                    <AppTooltip label={school.address} position="bottom-start">
+                    <AppTooltip label={address} position="bottom-start">
                       <Text lineClamp={1} fz={14} c="mainText" fw={600}>
-                        {school.address}
+                        {address}
                       </Text>
                     </AppTooltip>
                     <Text fz={12} c="longText">
