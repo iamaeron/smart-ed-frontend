@@ -1,11 +1,9 @@
-import Loader from "@/components/loader";
 import TabListScroller from "@/components/tab-list-scroller";
 import AppLayout from "@/layouts/app.layout";
 import { useFetchSchool } from "@/lib/fetcher/school.fetcher";
 import {
   Box,
   Button,
-  Card,
   Flex,
   FloatingIndicator,
   Grid,

@@ -1,36 +1,18 @@
 import { FloatingIndicator, Tabs } from "@mantine/core";
-import { useState } from "react";
 import classes from "@/css/Tab.module.css";
 import AccountTab from "./account/account-tab";
 import ActivityTab from "./activity/activity-tab";
 import SYManagementTab from "./sy-management/sy-management-tab";
-import { useSearchParams } from "react-router";
 import DivisionLeadershipTab from "./div-leadership/div-leadership-tab";
 import TabListScroller from "../tab-list-scroller";
+import useTabs from "@/hooks/use-tabs";
 
 const SystemManagementTabs = () => {
-  const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [value, setValue] = useState<string | null>(
-    searchParams.get("tab") ?? "accounts",
-  );
-  const [controlsRefs, setControlsRefs] = useState<
-    Record<string, HTMLButtonElement | null>
-  >({});
-  const setControlRef = (val: string) => (node: HTMLButtonElement) => {
-    controlsRefs[val] = node;
-    setControlsRefs(controlsRefs);
-  };
+  const { handleSwitchTab, value, setControlRef, setRootRef, target, rootRef } =
+    useTabs("accounts");
 
   return (
-    <Tabs
-      variant="none"
-      value={value}
-      onChange={(value) => {
-        setValue(value);
-        setSearchParams({ tab: value ?? "" });
-      }}
-    >
+    <Tabs variant="none" value={value} onChange={handleSwitchTab}>
       <TabListScroller>
         <Tabs.List ref={setRootRef} className={classes.list}>
           <Tabs.Tab
@@ -63,7 +45,7 @@ const SystemManagementTabs = () => {
           </Tabs.Tab>
 
           <FloatingIndicator
-            target={value ? controlsRefs[value] : null}
+            target={target}
             parent={rootRef}
             className={classes.indicator}
           />

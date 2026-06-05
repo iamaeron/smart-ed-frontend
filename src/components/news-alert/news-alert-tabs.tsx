@@ -1,12 +1,9 @@
+import TabListScroller from "@/components/tab-list-scroller";
 import { FloatingIndicator, Tabs } from "@mantine/core";
 import classes from "@/css/Tab.module.css";
-import EnrollmentTab from "./enrollment-tab";
-import ResourceTab from "./resource-tab";
-import KPITab from "./kpi-tab";
-import TabListScroller from "../tab-list-scroller";
 import useTabs from "@/hooks/use-tabs";
 
-const OverviewTabs = () => {
+const NewsAlertTabs = () => {
   const { handleSwitchTab, value, setControlRef, setRootRef, target, rootRef } =
     useTabs("1");
 
@@ -15,13 +12,10 @@ const OverviewTabs = () => {
       <TabListScroller>
         <Tabs.List ref={setRootRef} className={classes.list}>
           <Tabs.Tab value="1" ref={setControlRef("1")} className={classes.tab}>
-            Enrollment
+            Notifications
           </Tabs.Tab>
           <Tabs.Tab value="2" ref={setControlRef("2")} className={classes.tab}>
-            Resources
-          </Tabs.Tab>
-          <Tabs.Tab value="3" ref={setControlRef("3")} className={classes.tab}>
-            Key Performance Indicator
+            Announcements
           </Tabs.Tab>
 
           <FloatingIndicator
@@ -32,17 +26,10 @@ const OverviewTabs = () => {
         </Tabs.List>
       </TabListScroller>
 
-      <Tabs.Panel value="1">
-        <EnrollmentTab />
-      </Tabs.Panel>
-      <Tabs.Panel value="2">
-        <ResourceTab />
-      </Tabs.Panel>
-      <Tabs.Panel value="3">
-        <KPITab />
-      </Tabs.Panel>
+      <Tabs.Panel value="1">notif</Tabs.Panel>
+      <Tabs.Panel value="2">anno</Tabs.Panel>
     </Tabs>
   );
 };
 
-export default OverviewTabs;
+export default NewsAlertTabs;

@@ -9,11 +9,11 @@ import {
   Text,
 } from "@mantine/core";
 import classes from "@/css/Tab.module.css";
-import { useLayoutEffect, useMemo, useState, useCallback } from "react";
-import { useSearchParams } from "react-router";
+import { useLayoutEffect, useMemo, useState } from "react";
 import TabListScroller from "../tab-list-scroller";
 import { motion, AnimatePresence } from "motion/react";
 import SchoolCard from "./school-card";
+import useTabs from "@/hooks/use-tabs";
 
 const MotionGrid = motion.create(Grid);
 
@@ -36,27 +36,10 @@ const SchoolsDirectoryTabs = ({ schools }: { schools: any[] }) => {
     return [{ id: 543, name: "All" }, ...data.results.school_types];
   }, [data?.results?.school_types]);
 
-  const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
+  const { handleSwitchTab, value, setControlRef, setRootRef, target, rootRef } =
+    useTabs("All");
+
   const [isReady, setIsReady] = useState(false);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [value, setValue] = useState<string>(searchParams.get("tab") ?? "All");
-
-  const [controlsRefs, setControlsRefs] = useState<
-    Record<string, HTMLButtonElement | null>
-  >({});
-
-  const setControlRef = useCallback(
-    (val: string) => (node: HTMLButtonElement | null) => {
-      if (node) {
-        setControlsRefs((prev) => {
-          if (prev[val] === node) return prev;
-          return { ...prev, [val]: node };
-        });
-      }
-    },
-    [],
-  );
 
   const mappedSchoolsByTab = useMemo(() => {
     if (!baseTabs || !schools) return {};
@@ -85,11 +68,7 @@ const SchoolsDirectoryTabs = ({ schools }: { schools: any[] }) => {
       keepMounted={false}
       variant="none"
       value={value}
-      onChange={(val) => {
-        const nextVal = val ?? "All";
-        setValue(nextVal);
-        setSearchParams({ tab: nextVal });
-      }}
+      onChange={handleSwitchTab}
     >
       <TabListScroller>
         <Tabs.List ref={setRootRef} className={classes.list}>
@@ -109,9 +88,9 @@ const SchoolsDirectoryTabs = ({ schools }: { schools: any[] }) => {
                   <span>{type.name}</span>
                 </Tabs.Tab>
               ))}
-              {isReady && controlsRefs[value] && (
+              {isReady && target && (
                 <FloatingIndicator
-                  target={controlsRefs[value]}
+                  target={target}
                   parent={rootRef}
                   className={classes.indicator}
                 />
