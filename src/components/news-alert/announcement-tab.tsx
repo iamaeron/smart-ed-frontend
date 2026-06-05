@@ -36,7 +36,7 @@ const AnnouncementTab = () => {
         <Grid gap={30}>
           {isPending
             ? [1, 2, 3].map((i) => (
-                <Grid.Col key={i}>
+                <Grid.Col key={i} span={4}>
                   <Skeleton h={200} radius="lg" w="100%" />
                 </Grid.Col>
               ))

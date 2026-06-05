@@ -146,7 +146,7 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                   </div>
                   <Box>
                     <Text lineClamp={1} fz={14} c="longText">
-                      (02) 8123-4567
+                      {school.phone_number}
                     </Text>
                   </Box>
                 </Flex>

@@ -1,16 +1,72 @@
-import { Button, Card, Center, Image, Paper, Text } from "@mantine/core";
+import { api } from "@/lib/api";
+import {
+  Button,
+  Card,
+  Center,
+  Divider,
+  Flex,
+  Image,
+  Paper,
+  Text,
+} from "@mantine/core";
 import { UploadMinimalistic } from "@solar-icons/react";
-import { Pen, X } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Check, Pen, X } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { toast } from "sonner";
 
 const SchoolLogoCard = ({ school }: { school: { [k: string]: any } }) => {
+  const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [image, setImage] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    // Do something with the files
-    console.log(acceptedFiles);
+    const foundFile = acceptedFiles[0];
+    if (!foundFile) return;
+
+    setFile(foundFile);
+
+    const localUrl = URL.createObjectURL(foundFile);
+    setImage(localUrl);
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
+    },
+    multiple: false,
+  });
+
+  const handleImageUpload = async () => {
+    if (!file) return;
+
+    setIsLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const res = await api.post(
+        `/api/schools/${school.id}/upload-image`,
+        formData,
+      );
+
+      if (res.data.code === 200) {
+        queryClient.invalidateQueries({
+          queryKey: ["school", String(school.id)],
+        });
+        toast(res.data.message);
+        setImage(null);
+        setIsEditing(false);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Card
@@ -32,27 +88,42 @@ const SchoolLogoCard = ({ school }: { school: { [k: string]: any } }) => {
           bg="gray.1"
           h={230}
           shadow="none"
-          style={{ border: "2px dashed #EAEAFF" }}
+          className={["drop-box", isDragActive && "dragging"].join(" ")}
           {...getRootProps()}
         >
           <Center h="100%">
-            <Paper shadow="md" h="max-content" w="max-content">
-              <input
-                {...getInputProps({
-                  style: { display: "none" },
-                  id: "logo-picker",
-                })}
-              />
-              <Button
-                component="label"
-                htmlFor="logo-picker"
-                variant="white"
-                color="dark"
-                leftSection={<UploadMinimalistic size={16} />}
-              >
-                Upload
-              </Button>
-            </Paper>
+            <input
+              {...getInputProps({
+                style: { display: "none" },
+                id: "logo-picker",
+              })}
+            />
+            {image ? (
+              <Image src={image} h={170} w={170} radius="md" />
+            ) : (
+              <Flex direction={"column"} align={"center"}>
+                <Paper
+                  bg="transparent"
+                  shadow="md"
+                  h="max-content"
+                  w="max-content"
+                >
+                  <Button
+                    component="label"
+                    htmlFor="logo-picker"
+                    variant="white"
+                    color="dark"
+                    leftSection={<UploadMinimalistic size={16} />}
+                  >
+                    Upload
+                  </Button>
+                </Paper>
+                <Divider w="100%" my="xs" label="Or" labelPosition="center" />
+                <Text fz={14} c="longText">
+                  Drag an image file here
+                </Text>
+              </Flex>
+            )}
           </Center>
         </Card>
       ) : (
@@ -69,7 +140,11 @@ const SchoolLogoCard = ({ school }: { school: { [k: string]: any } }) => {
       )}
       <Center>
         <Button
-          onClick={() => setIsEditing(!isEditing)}
+          onClick={() => {
+            setIsEditing(!isEditing);
+
+            if (image) setImage(null);
+          }}
           variant="outline"
           color={isEditing ? "dark" : "primary"}
           mt={20}
@@ -77,6 +152,21 @@ const SchoolLogoCard = ({ school }: { school: { [k: string]: any } }) => {
         >
           {isEditing ? "Cancel" : "Change"}
         </Button>
+
+        {isEditing ? (
+          <Button
+            onClick={handleImageUpload}
+            variant="filled"
+            color={"primary"}
+            ml={10}
+            loading={isLoading}
+            disabled={!image}
+            mt={20}
+            leftSection={<Check size={16} />}
+          >
+            Save
+          </Button>
+        ) : null}
       </Center>
     </Card>
   );

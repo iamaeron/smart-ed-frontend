@@ -40,3 +40,14 @@
 .search-input::placeholder {
   color: #555555 !important;
 }
+
+.drop-box {
+  border-width: 2px;
+  border-style: dashed;
+  border-color: #ced4da;
+}
+
+.drop-box:hover,
+.drop-box.dragging {
+  border-color: #868e96;
+}
