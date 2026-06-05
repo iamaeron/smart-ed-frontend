@@ -4,11 +4,10 @@ import {
   Box,
   Button,
   Card,
+  Collapse,
   Flex,
   Grid,
   Group,
-  Image,
-  Paper,
   Pill,
   Skeleton,
   Stack,
@@ -16,21 +15,38 @@ import {
 } from "@mantine/core";
 import dayjs from "dayjs";
 import { Plus } from "lucide-react";
+import AddAnnouncementModal from "./add-announcement-modal";
+import PublicAnnouncementCard from "./public-announcement-card";
+import { useDisclosure } from "@mantine/hooks";
 
 const AnnouncementTab = () => {
   const { data, isPending } = useFetchAnnouncements();
+  const [expanded, { toggle }] = useDisclosure(false);
 
   console.log(data);
 
+  const latestPublicAnnouncements =
+    data?.results?.public.length > 3
+      ? data?.results?.public.slice(0, 3)
+      : data?.results?.public;
+
   return (
     <>
-      <Card w="100%" bg="white" p="xl" c="mainText" radius="lg" shadow="none">
+      <Card
+        w="100%"
+        bg="white"
+        p="xl"
+        pb="0"
+        c="mainText"
+        radius="lg"
+        shadow="none"
+      >
         <Group mb={30} justify="space-between">
           <Text fz={18} fw={600}>
             Public Announcements
           </Text>
 
-          <Button leftSection={<Plus size={16} />}>New Announcement</Button>
+          <AddAnnouncementModal />
         </Group>
 
         <Grid gap={30}>
@@ -40,38 +56,32 @@ const AnnouncementTab = () => {
                   <Skeleton h={200} radius="lg" w="100%" />
                 </Grid.Col>
               ))
-            : data.results.public.map(
+            : latestPublicAnnouncements.map(
                 (announcement: Announcement, i: number) => (
-                  <Grid.Col key={i} span={4}>
-                    <Paper style={{ position: "relative" }}>
-                      <Pill
-                        size="md"
-                        style={{ position: "absolute", top: 14, left: 14 }}
-                        bg="mainText"
-                      >
-                        <Text c="white" fw={500} fz={14}>
-                          {dayjs(announcement.date).format("MMM DD YYYY")}
-                        </Text>
-                      </Pill>
-                      <Image
-                        src={announcement.image_url}
-                        w="100%"
-                        h={200}
-                        radius="md"
-                      />
-                    </Paper>
-                    <Box>
-                      <Text mt={10} mb={6} fw={700}>
-                        {announcement.title}
-                      </Text>
-                      <Text c="longText" fz={14}>
-                        {announcement.description}
-                      </Text>
-                    </Box>
-                  </Grid.Col>
+                  <PublicAnnouncementCard key={i} announcement={announcement} />
                 ),
               )}
         </Grid>
+
+        <Box py="lg">
+          <Flex direction="column" align="center">
+            <Button mb={20} onClick={toggle} variant="white">
+              Show {expanded ? "less" : "more"}
+            </Button>
+            <Collapse expanded={expanded}>
+              <Grid>
+                {data.results.public
+                  .slice(3)
+                  .map((announcement: Announcement, i: number) => (
+                    <PublicAnnouncementCard
+                      key={i}
+                      announcement={announcement}
+                    />
+                  ))}
+              </Grid>
+            </Collapse>
+          </Flex>
+        </Box>
       </Card>
 
       <Card
@@ -96,7 +106,7 @@ const AnnouncementTab = () => {
             ? [1, 2, 3].map((i) => (
                 <Skeleton key={i} h={200} radius="lg" w="100%" />
               ))
-            : data.results.dashboard.map(
+            : data?.results?.dashboard.map(
                 (announcement: Announcement, i: number) => (
                   <Card withBorder key={i}>
                     <Flex gap="lg">

@@ -58,13 +58,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
               hiddenFrom="sm"
               size="sm"
             />
-            {/* <Tooltip
-              label={`${desktopOpened ? "Minimize" : "Expand"} sidebar`}
-              style={{ fontSize: "13px" }}
-              position="right"
-              withArrow
-              color="rgba(17, 16, 23, 0.7)"
-            > */}
             <ActionIcon
               onClick={toggleDesktop}
               visibleFrom="sm"
@@ -73,7 +66,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             >
               <Sidebar size={22} />
             </ActionIcon>
-            {/* </Tooltip> */}
           </Group>
 
           <Group>

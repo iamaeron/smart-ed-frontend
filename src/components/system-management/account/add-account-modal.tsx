@@ -32,8 +32,6 @@ const AddAccountModal = () => {
   const schoolList =
     data?.results?.schools.map((school: any) => school.school_name) || [];
 
-  console.log(data?.results?.schools);
-
   const { control, handleSubmit, formState, setError, reset } =
     useForm<AccountData>({
       resolver: zodResolver(accountSchema),

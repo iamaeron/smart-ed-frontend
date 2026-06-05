@@ -1,3 +1,4 @@
+import useImagePreview from "@/hooks/use-image-preview";
 import { api } from "@/lib/api";
 import {
   Button,
@@ -12,32 +13,15 @@ import {
 import { UploadMinimalistic } from "@solar-icons/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Check, Pen, X } from "lucide-react";
-import { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const SchoolLogoCard = ({ school }: { school: { [k: string]: any } }) => {
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [image, setImage] = useState<string | null>(null);
-  const [file, setFile] = useState<File | null>(null);
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const foundFile = acceptedFiles[0];
-    if (!foundFile) return;
-
-    setFile(foundFile);
-
-    const localUrl = URL.createObjectURL(foundFile);
-    setImage(localUrl);
-  }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
-    },
-    multiple: false,
-  });
+  const { getRootProps, getInputProps, isDragActive, file, image, resetImage } =
+    useImagePreview();
 
   const handleImageUpload = async () => {
     if (!file) return;
@@ -58,7 +42,7 @@ const SchoolLogoCard = ({ school }: { school: { [k: string]: any } }) => {
           queryKey: ["school", String(school.id)],
         });
         toast(res.data.message);
-        setImage(null);
+        resetImage();
         setIsEditing(false);
       }
     } catch (err) {
@@ -143,7 +127,7 @@ const SchoolLogoCard = ({ school }: { school: { [k: string]: any } }) => {
           onClick={() => {
             setIsEditing(!isEditing);
 
-            if (image) setImage(null);
+            if (image) resetImage();
           }}
           variant="outline"
           color={isEditing ? "dark" : "primary"}
