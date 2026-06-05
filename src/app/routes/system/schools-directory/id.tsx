@@ -7,6 +7,7 @@ import {
   Flex,
   FloatingIndicator,
   Grid,
+  Skeleton,
   Tabs,
   Text,
   Title,
@@ -94,147 +95,158 @@ const SystemAdminSchoolDirectory = () => {
 
   return (
     <AppLayout>
-      {isPending ? (
-        <div>Wait ..</div>
-      ) : (
-        <>
-          <Flex mb={30} align="flex-end" justify="space-between">
-            <Box>
-              <Button
-                ml={-16}
-                variant="transparent"
-                onClick={() =>
-                  window.history.length > 1
-                    ? navigate(-1)
-                    : navigate(`/system-admin/schools-directory`, {
-                        replace: true,
-                      })
-                }
-                leftSection={<ChevronLeft stroke="#192D7C" size={20} />}
+      <>
+        <Flex mb={30} align="flex-end" justify="space-between">
+          <Box>
+            <Button
+              ml={-16}
+              variant="transparent"
+              onClick={() =>
+                window.history.length > 1
+                  ? navigate(-1)
+                  : navigate(`/system-admin/schools-directory`, {
+                      replace: true,
+                    })
+              }
+              leftSection={<ChevronLeft stroke="#192D7C" size={20} />}
+            >
+              <Text c="primary2">BACK TO SCHOOLS DIRECTORY</Text>
+            </Button>
+            {isPending ? (
+              <>
+                <Skeleton h={44} w={400} my={6} radius="sm" />
+                <Skeleton h={25} w={80} radius="sm" />
+              </>
+            ) : (
+              <>
+                <Title order={1} my={6}>
+                  {data.results.school.school_name}
+                </Title>
+                <Text c="grey">ID: {data.results.school.school_code}</Text>
+              </>
+            )}
+          </Box>
+
+          <AcademicYearPicker theme="default" />
+        </Flex>
+
+        <Tabs
+          variant="none"
+          value={value}
+          onChange={(val) => {
+            const nextVal = val ?? "All";
+            setValue(nextVal);
+            setSearchParams({ tab: nextVal }, { replace: true });
+          }}
+        >
+          <TabListScroller>
+            <Tabs.List ref={setRootRef} className={classes.list}>
+              <Tabs.Tab
+                value="1"
+                ref={setControlRef("1")}
+                className={classes.tab}
               >
-                <Text c="primary2">BACK TO SCHOOLS DIRECTORY</Text>
-              </Button>
-              <Title order={1} my={6}>
-                {data.results.school.school_name}
-              </Title>
-              <Text c="grey">ID: {data.results.school.school_code}</Text>
-            </Box>
+                Enrollment
+              </Tabs.Tab>
+              <Tabs.Tab
+                value="2"
+                ref={setControlRef("2")}
+                className={classes.tab}
+              >
+                Resources
+              </Tabs.Tab>
+              <Tabs.Tab
+                value="3"
+                ref={setControlRef("3")}
+                className={classes.tab}
+              >
+                General Information
+              </Tabs.Tab>
 
-            <AcademicYearPicker theme="default" />
-          </Flex>
+              <FloatingIndicator
+                target={value ? controlsRefs[value] : null}
+                parent={rootRef}
+                className={classes.indicator}
+              />
+            </Tabs.List>
+          </TabListScroller>
 
-          <Tabs
-            variant="none"
-            value={value}
-            onChange={(val) => {
-              const nextVal = val ?? "All";
-              setValue(nextVal);
-              setSearchParams({ tab: nextVal }, { replace: true });
-            }}
-          >
-            <TabListScroller>
-              <Tabs.List ref={setRootRef} className={classes.list}>
-                <Tabs.Tab
-                  value="1"
-                  ref={setControlRef("1")}
-                  className={classes.tab}
-                >
-                  Enrollment
-                </Tabs.Tab>
-                <Tabs.Tab
-                  value="2"
-                  ref={setControlRef("2")}
-                  className={classes.tab}
-                >
-                  Resources
-                </Tabs.Tab>
-                <Tabs.Tab
-                  value="3"
-                  ref={setControlRef("3")}
-                  className={classes.tab}
-                >
-                  General Information
-                </Tabs.Tab>
-
-                <FloatingIndicator
-                  target={value ? controlsRefs[value] : null}
-                  parent={rootRef}
-                  className={classes.indicator}
+          <Tabs.Panel value="1">
+            <Grid rowGap={40}>
+              <Grid.Col span={4}>
+                <OverviewCol
+                  label="Total Students"
+                  value="35,420"
+                  icon={UsersGroupRounded}
                 />
-              </Tabs.List>
-            </TabListScroller>
+              </Grid.Col>
+              <Grid.Col span={4}>
+                <OverviewCol label="Male" value="17,200" icon={Men} />
+              </Grid.Col>
+              <Grid.Col span={4}>
+                <OverviewCol label="Female" value="18,220" icon={Women} />
+              </Grid.Col>
 
-            <Tabs.Panel value="1">
-              <Grid rowGap={40}>
-                <Grid.Col span={4}>
-                  <OverviewCol
-                    label="Total Students"
-                    value="35,420"
-                    icon={UsersGroupRounded}
-                  />
-                </Grid.Col>
-                <Grid.Col span={4}>
-                  <OverviewCol label="Male" value="17,200" icon={Men} />
-                </Grid.Col>
-                <Grid.Col span={4}>
-                  <OverviewCol label="Female" value="18,220" icon={Women} />
-                </Grid.Col>
+              <Grid.Col span={6}>
+                <EnrollmentTrend data={dummyData} />
+              </Grid.Col>
 
-                <Grid.Col span={6}>
-                  <EnrollmentTrend data={dummyData} />
-                </Grid.Col>
+              <Grid.Col span={6}>
+                <EnrollmentByEducationalLevel data={anotherDummyData} />
+              </Grid.Col>
 
-                <Grid.Col span={6}>
-                  <EnrollmentByEducationalLevel data={anotherDummyData} />
-                </Grid.Col>
+              <Grid.Col span={12}>
+                <EnrollmentByGradeLevel />
+              </Grid.Col>
+            </Grid>
+          </Tabs.Panel>
+          {isPending ? (
+            <Skeleton w="100%" h={300} radius="lg" />
+          ) : (
+            <>
+              <Tabs.Panel value="2">
+                <Grid rowGap={40}>
+                  <Grid.Col span={3}>
+                    <OverviewCol
+                      label="Total Classrooms"
+                      value="960"
+                      icon={Buildings}
+                    />
+                  </Grid.Col>
+                  <Grid.Col span={3}>
+                    <OverviewCol
+                      label="Total Teachers"
+                      value="1,215"
+                      icon={UserHandUp}
+                    />
+                  </Grid.Col>
+                  <Grid.Col span={3}>
+                    <OverviewCol
+                      label="Functional Seats"
+                      value="27,000"
+                      icon={Chair}
+                    />
+                  </Grid.Col>
+                  <Grid.Col span={3}>
+                    <OverviewCol
+                      label="Learning Materials"
+                      value="31,000"
+                      icon={NotebookBookmark}
+                    />
+                  </Grid.Col>
 
-                <Grid.Col span={12}>
-                  <EnrollmentByGradeLevel />
-                </Grid.Col>
-              </Grid>
-            </Tabs.Panel>
-            <Tabs.Panel value="2">
-              <Grid rowGap={40}>
-                <Grid.Col span={3}>
-                  <OverviewCol
-                    label="Total Classrooms"
-                    value="960"
-                    icon={Buildings}
-                  />
-                </Grid.Col>
-                <Grid.Col span={3}>
-                  <OverviewCol
-                    label="Total Teachers"
-                    value="1,215"
-                    icon={UserHandUp}
-                  />
-                </Grid.Col>
-                <Grid.Col span={3}>
-                  <OverviewCol
-                    label="Functional Seats"
-                    value="27,000"
-                    icon={Chair}
-                  />
-                </Grid.Col>
-                <Grid.Col span={3}>
-                  <OverviewCol
-                    label="Learning Materials"
-                    value="31,000"
-                    icon={NotebookBookmark}
-                  />
-                </Grid.Col>
-
-                <Grid.Col span={12}>
-                  <ResourceSummary summary={false} />
-                </Grid.Col>
-              </Grid>
-            </Tabs.Panel>
-            <Tabs.Panel value="3">
-              <SchoolInfo school={data.results.school} />
-            </Tabs.Panel>
-          </Tabs>
-        </>
-      )}
+                  <Grid.Col span={12}>
+                    <ResourceSummary summary={false} />
+                  </Grid.Col>
+                </Grid>
+              </Tabs.Panel>
+              <Tabs.Panel value="3">
+                <SchoolInfo school={data.results.school} />
+              </Tabs.Panel>
+            </>
+          )}
+        </Tabs>
+      </>
     </AppLayout>
   );
 };
