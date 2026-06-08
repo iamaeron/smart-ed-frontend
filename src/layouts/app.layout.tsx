@@ -1,4 +1,4 @@
-import { ActionIcon, AppShell, Burger, Group } from "@mantine/core";
+import { ActionIcon, AppShell, Burger, Container, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Sidebar, UserCircle } from "@solar-icons/react";
 import AppSidebar from "@/components/sidebar";

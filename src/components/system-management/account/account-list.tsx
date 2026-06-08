@@ -13,6 +13,7 @@ import {
 } from "@mantine/core";
 import { Letter, MenuDots, Phone } from "@solar-icons/react";
 import Show from "../../show";
+import AccountListItemOptions from "./account-list-item-options";
 
 const AccountList = ({ data }: { data: any }) => {
   const badgeColors = {
@@ -93,9 +94,7 @@ const AccountList = ({ data }: { data: any }) => {
         </Box>
       </Table.Td>
       <Table.Td>
-        <ActionIcon variant="subtle" color="gray">
-          <MenuDots weight="Bold" size={20} />
-        </ActionIcon>
+        <AccountListItemOptions item={element} />
       </Table.Td>
     </Table.Tr>
   ));

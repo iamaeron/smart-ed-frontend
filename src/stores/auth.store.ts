@@ -3,7 +3,7 @@ import { createStore } from "zustand";
 export type User = {
   name: string;
   role: any;
-  school: School;
+  assignment: School;
   username: string;
   email: string;
   password: string;
@@ -14,7 +14,8 @@ export type User = {
 };
 
 export type School = {
-  id: number;
+  type: String;
+  school_id: number;
   school_name: string;
   school_code: string;
 };

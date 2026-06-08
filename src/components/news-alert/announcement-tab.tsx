@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   Collapse,
+  Divider,
   Flex,
   Grid,
   Group,
@@ -22,8 +23,6 @@ import { useDisclosure } from "@mantine/hooks";
 const AnnouncementTab = () => {
   const { data, isPending } = useFetchAnnouncements();
   const [expanded, { toggle }] = useDisclosure(false);
-
-  console.log(data);
 
   const latestPublicAnnouncements =
     data?.results?.public.length > 3
@@ -64,23 +63,23 @@ const AnnouncementTab = () => {
         </Grid>
 
         <Box py="lg">
-          <Flex direction="column" align="center">
-            <Button mb={20} onClick={toggle} variant="white">
-              Show {expanded ? "less" : "more"}
-            </Button>
-            <Collapse expanded={expanded}>
-              <Grid>
-                {data.results.public
-                  .slice(3)
-                  .map((announcement: Announcement, i: number) => (
-                    <PublicAnnouncementCard
-                      key={i}
-                      announcement={announcement}
-                    />
-                  ))}
-              </Grid>
-            </Collapse>
-          </Flex>
+          <Divider
+            mb={20}
+            label={
+              <Button onClick={toggle} variant="white">
+                Show {expanded ? "less" : "more"}
+              </Button>
+            }
+          />
+          <Collapse expanded={expanded}>
+            <Grid>
+              {data?.results?.public
+                .slice(3)
+                .map((announcement: Announcement, i: number) => (
+                  <PublicAnnouncementCard key={i} announcement={announcement} />
+                ))}
+            </Grid>
+          </Collapse>
         </Box>
       </Card>
 
