@@ -29,6 +29,9 @@ importers:
       '@million/lint':
         specifier: ^1.0.14
         version: 1.0.14
+      '@mingcute/react':
+        specifier: ^1.4.1
+        version: 1.4.1(react@19.2.6)
       '@solar-icons/react':
         specifier: ^1.1.1
         version: 1.1.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -546,6 +549,11 @@ packages:
     resolution: {integrity: sha512-u6/kglVwZRu5+GMmtkNlGLqJVkgTl0TtM+hLa9rBg7pldx+5NG5bk45NvL37uZmAr2Xfa1C6qHb7GrFwfP372g==}
     deprecated: This package is no longer maintained
     hasBin: true
+
+  '@mingcute/react@1.4.1':
+    resolution: {integrity: sha512-efVOsE6P2+w75tUudBYNAcB7LhXUVeKoGrAAaxOUgs+wLHKZxzLLq4swes7uf9qnMdtACGt10TKusFVxj4hC8A==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
 
   '@napi-rs/nice-android-arm-eabi@1.1.1':
     resolution: {integrity: sha512-kjirL3N6TnRPv5iuHw36wnucNqXAO46dzK9oPb0wj076R5Xm8PfUVA9nAFB5ZNMmfJQJVKACAPd/Z2KYMppthw==}
@@ -2932,6 +2940,10 @@ snapshots:
       - rollup
       - supports-color
       - utf-8-validate
+
+  '@mingcute/react@1.4.1(react@19.2.6)':
+    dependencies:
+      react: 19.2.6
 
   '@napi-rs/nice-android-arm-eabi@1.1.1':
     optional: true

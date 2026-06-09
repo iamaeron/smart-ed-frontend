@@ -2,7 +2,7 @@ import ConfirmPopupUI from "@/components/confirm-popup-ui";
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
-const EditSYConfirmModal = () => {
+const EditAccountPasswordConfirmModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -15,10 +15,10 @@ const EditSYConfirmModal = () => {
         centered
       >
         <ConfirmPopupUI
-          title="Save Changes?"
-          description="You are about to update this school year's information. Please review all details carefully."
-          confirmText="Confirm"
-          formId="edit-academic-year-form"
+          title="Change Password?"
+          description="You are about to change your password. Please review all changes carefully before proceeding"
+          confirmText="Save"
+          formId="edit-account-password-form"
           onClose={close}
           type="info"
         />
@@ -30,10 +30,10 @@ const EditSYConfirmModal = () => {
         fullWidth
         type="button"
       >
-        Save
+        Save changes
       </Button>
     </>
   );
 };
 
-export default EditSYConfirmModal;
+export default EditAccountPasswordConfirmModal;

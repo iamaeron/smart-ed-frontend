@@ -7,6 +7,7 @@ export type User = {
   username: string;
   email: string;
   password: string;
+  user_id: string;
   phone_number: string;
   is_active: boolean;
   created_at: string;

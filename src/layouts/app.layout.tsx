@@ -2,6 +2,7 @@ import { ActionIcon, AppShell, Burger, Container, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Sidebar, UserCircle } from "@solar-icons/react";
 import AppSidebar from "@/components/sidebar";
+import UserProfile from "@/components/sidebar/user-profile";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const sidebarLSKey = "sme-sidebar-state";
@@ -68,11 +69,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             </ActionIcon>
           </Group>
 
-          <Group>
-            <ActionIcon variant="subtle" color="gray">
-              <UserCircle size={22} />
-            </ActionIcon>
-          </Group>
+          <UserProfile />
         </Group>
       </AppShell.Header>
       <AppSidebar

@@ -1,11 +1,12 @@
 import Show from "@/components/show";
 import type { AcademicYear } from "@/types/data/academic-year.type";
 import { ActionIcon, Menu } from "@mantine/core";
-import { Archive, CheckCircle, MenuDots, Pen } from "@solar-icons/react";
+import { MenuDots } from "@solar-icons/react";
 import EditSYModal from "./edit-sy-modal";
 import { useState } from "react";
 import ArchiveSYConfirmModal from "./archive-sy-confirm-modal";
-import ActivateSYConfirmModal from "./active-sy-confirm-modal";
+import ActivateSYConfirmModal from "./activate-sy-confirm-modal";
+import { ArchiveLine, CheckCircleLine, Edit2Line } from "@mingcute/react";
 
 type Modals = "edit" | "archive" | "activate";
 
@@ -25,7 +26,7 @@ const SYManagementListItemOptions = ({ item }: { item: AcademicYear }) => {
           <Menu.Label>{item.academic_year}</Menu.Label>
           <Menu.Item
             onClick={() => setActiveModal("edit")}
-            leftSection={<Pen size={16} />}
+            leftSection={<Edit2Line size={18} />}
           >
             Edit School Year
           </Menu.Item>
@@ -33,16 +34,16 @@ const SYManagementListItemOptions = ({ item }: { item: AcademicYear }) => {
             <Menu.Item
               onClick={() => setActiveModal("archive")}
               color="red"
-              leftSection={<Archive size={16} />}
+              leftSection={<ArchiveLine size={18} />}
             >
-              Archive
+              Archive Year
             </Menu.Item>
           </Show>
           <Show when={item.status === "archived"}>
             <Menu.Item
               onClick={() => setActiveModal("activate")}
               color="red"
-              leftSection={<CheckCircle size={16} />}
+              leftSection={<CheckCircleLine size={18} />}
             >
               Set as Active Year
             </Menu.Item>

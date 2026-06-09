@@ -29,6 +29,9 @@ const AnnouncementTab = () => {
       ? data?.results?.public.slice(0, 3)
       : data?.results?.public;
 
+  const morePublicAnnouncements =
+    data?.results?.public.length > 3 ? data?.results?.public.slice(3) : [];
+
   return (
     <>
       <Card
@@ -62,25 +65,31 @@ const AnnouncementTab = () => {
               )}
         </Grid>
 
-        <Box py="lg">
-          <Divider
-            mb={20}
-            label={
-              <Button onClick={toggle} variant="white">
-                Show {expanded ? "less" : "more"}
-              </Button>
-            }
-          />
-          <Collapse expanded={expanded}>
-            <Grid>
-              {data?.results?.public
-                .slice(3)
-                .map((announcement: Announcement, i: number) => (
-                  <PublicAnnouncementCard key={i} announcement={announcement} />
-                ))}
-            </Grid>
-          </Collapse>
-        </Box>
+        {morePublicAnnouncements.length > 0 ? (
+          <Box py="lg">
+            <Divider
+              mb={20}
+              label={
+                <Button onClick={toggle} variant="white">
+                  Show{" "}
+                  {expanded ? "less" : `${morePublicAnnouncements.length} more`}
+                </Button>
+              }
+            />
+            <Collapse expanded={expanded}>
+              <Grid>
+                {morePublicAnnouncements.map(
+                  (announcement: Announcement, i: number) => (
+                    <PublicAnnouncementCard
+                      key={i}
+                      announcement={announcement}
+                    />
+                  ),
+                )}
+              </Grid>
+            </Collapse>
+          </Box>
+        ) : null}
       </Card>
 
       <Card

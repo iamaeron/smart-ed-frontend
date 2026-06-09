@@ -22,4 +22,19 @@ export const accountSchema = z.object({
     .min(8, { message: "This field is required." }),
 });
 
+export const editAccountSchema = accountSchema.pick({
+  username: true,
+  name: true,
+  email: true,
+  phone_number: true,
+});
+
+export const accountPasswordSchema = z.object({
+  new_pass: z.string().min(8, { message: "This field is required." }),
+  confirm_new_pass: z.string().min(8, { message: "This field is required." }),
+});
+
+// TypeScript types (optional but recommended)
 export type AccountData = z.infer<typeof accountSchema>;
+export type EditAccountData = z.infer<typeof editAccountSchema>;
+export type AccountPasswordData = z.infer<typeof accountPasswordSchema>;

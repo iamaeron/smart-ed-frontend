@@ -1,5 +1,4 @@
 import {
-  ActionIcon,
   Badge,
   Box,
   Center,
@@ -11,7 +10,7 @@ import {
   Text,
   VisuallyHidden,
 } from "@mantine/core";
-import { Letter, MenuDots, Phone } from "@solar-icons/react";
+import { Letter, Phone } from "@solar-icons/react";
 import Show from "../../show";
 import AccountListItemOptions from "./account-list-item-options";
 
