@@ -38,21 +38,17 @@ const DivisionLeadershipListItemOptions = ({ item }: { item: Personnel }) => {
         </Menu.Dropdown>
       </Menu>
 
-      {activeModal === "edit" && (
-        <EditPersonnelModal
-          personnel={item}
-          onClose={() => setActiveModal(null)}
-          opened={true}
-        />
-      )}
+      <EditPersonnelModal
+        personnel={item}
+        onClose={() => setActiveModal(null)}
+        opened={activeModal === "edit"}
+      />
 
-      {activeModal === "delete" && (
-        <DeletePersonnelConfirmModal
-          personnel={item}
-          onClose={() => setActiveModal(null)}
-          opened={true}
-        />
-      )}
+      <DeletePersonnelConfirmModal
+        personnel={item}
+        onClose={() => setActiveModal(null)}
+        opened={activeModal === "delete"}
+      />
     </>
   );
 };

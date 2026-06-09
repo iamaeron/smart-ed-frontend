@@ -65,21 +65,17 @@ const AccountListItemOptions = ({ item }: { item: User }) => {
         opened={activeModal === "edit"}
       />
 
-      {activeModal === "change_pass" && (
-        <EditAccountPasswordModal
-          account={item}
-          onClose={() => setActiveModal(null)}
-          opened={true}
-        />
-      )}
+      <EditAccountPasswordModal
+        account={item}
+        onClose={() => setActiveModal(null)}
+        opened={activeModal === "change_pass"}
+      />
 
-      {activeModal === "toggle_status" && (
-        <ToggleAccountStatusConfirmModal
-          account={item}
-          onClose={() => setActiveModal(null)}
-          opened={true}
-        />
-      )}
+      <ToggleAccountStatusConfirmModal
+        account={item}
+        onClose={() => setActiveModal(null)}
+        opened={activeModal === "toggle_status"}
+      />
     </>
   );
 };

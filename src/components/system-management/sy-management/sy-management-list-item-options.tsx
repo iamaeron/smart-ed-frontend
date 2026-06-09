@@ -51,29 +51,23 @@ const SYManagementListItemOptions = ({ item }: { item: AcademicYear }) => {
         </Menu.Dropdown>
       </Menu>
 
-      {activeModal === "edit" && (
-        <EditSYModal
-          sy={item}
-          onClose={() => setActiveModal(null)}
-          opened={true}
-        />
-      )}
+      <EditSYModal
+        sy={item}
+        onClose={() => setActiveModal(null)}
+        opened={activeModal === "edit"}
+      />
 
-      {activeModal === "archive" && (
-        <ArchiveSYConfirmModal
-          sy={item}
-          opened={true}
-          onClose={() => setActiveModal(null)}
-        />
-      )}
+      <ArchiveSYConfirmModal
+        sy={item}
+        opened={activeModal === "archive"}
+        onClose={() => setActiveModal(null)}
+      />
 
-      {activeModal === "activate" && (
-        <ActivateSYConfirmModal
-          sy={item}
-          opened={true}
-          onClose={() => setActiveModal(null)}
-        />
-      )}
+      <ActivateSYConfirmModal
+        sy={item}
+        opened={activeModal === "activate"}
+        onClose={() => setActiveModal(null)}
+      />
     </>
   );
 };
