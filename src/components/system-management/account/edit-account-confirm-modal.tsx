@@ -1,6 +1,7 @@
 import ConfirmPopupUI from "@/components/confirm-popup-ui";
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { InboxIn } from "@solar-icons/react";
 
 const EditAccountConfirmModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -18,6 +19,7 @@ const EditAccountConfirmModal = () => {
           title="Apply Changes?"
           description="Changes made to this account will be saved and applied across the system."
           confirmText="Save"
+          PopupIcon={InboxIn}
           formId="edit-account-form"
           onClose={close}
           type="info"

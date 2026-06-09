@@ -3,7 +3,7 @@ import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { InboxIn } from "@solar-icons/react";
 
-const EditSYConfirmModal = () => {
+const EditPersonnelConfirmModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -17,14 +17,15 @@ const EditSYConfirmModal = () => {
       >
         <ConfirmPopupUI
           title="Save Changes?"
-          description="You are about to update this school year's information. Please review all details carefully."
-          confirmText="Confirm"
+          description="You are about to update this personnel’s information. Please review all details carefully."
+          confirmText="Save"
           PopupIcon={InboxIn}
-          formId="edit-academic-year-form"
+          formId="edit-personnel-form"
           onClose={close}
           type="info"
         />
       </Modal>
+
       <Button
         onClick={open}
         tt="uppercase"
@@ -32,10 +33,10 @@ const EditSYConfirmModal = () => {
         fullWidth
         type="button"
       >
-        Save
+        Save changes
       </Button>
     </>
   );
 };
 
-export default EditSYConfirmModal;
+export default EditPersonnelConfirmModal;

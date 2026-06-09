@@ -25,6 +25,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import ErrorMessage from "@/components/form/error-message";
 import type { AcademicYear } from "@/types/data/academic-year.type";
+import { useEffect } from "react";
 
 export type EditSYModalProps = {
   sy: AcademicYear;
@@ -35,14 +36,22 @@ export type EditSYModalProps = {
 const EditSYModal = ({ sy, opened, onClose }: EditSYModalProps) => {
   const queryClient = useQueryClient();
 
+  const defValues = {
+    start_date: dayjs(sy.start_date).toDate(),
+    end_date: dayjs(sy.end_date).toDate(),
+  };
+
   const { control, handleSubmit, formState, watch, setError, reset } =
     useForm<AcademicYearData>({
       resolver: zodResolver(academicYearSchema),
-      defaultValues: {
-        start_date: dayjs(sy.start_date).toDate(),
-        end_date: dayjs(sy.end_date).toDate(),
-      },
+      defaultValues: defValues,
     });
+
+  useEffect(() => {
+    if (sy) {
+      reset(defValues);
+    }
+  }, [sy, reset]);
 
   // Watch the form values instead of maintaining duplicate local state
   const startDate = watch("start_date");

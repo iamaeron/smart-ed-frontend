@@ -31,7 +31,7 @@ const PublicAnnouncementCard = ({
         <Text mb={6} fw={700}>
           {announcement.title}
         </Text>
-        <Text c="longText" fz={14}>
+        <Text c="longText" lineClamp={3} fz={14}>
           {announcement.description}
         </Text>
       </Box>

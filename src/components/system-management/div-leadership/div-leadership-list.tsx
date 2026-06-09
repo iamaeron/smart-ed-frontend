@@ -1,11 +1,10 @@
 import {
-  ActionIcon,
   Table,
   TableScrollContainer,
   Text,
   VisuallyHidden,
 } from "@mantine/core";
-import { MenuDots } from "@solar-icons/react";
+import DivisionLeadershipListItemOptions from "./div-leadership-list-item-options";
 
 const DivisionLeadershipList = ({
   data,
@@ -36,9 +35,7 @@ const DivisionLeadershipList = ({
         </Table.Td>
         <Table.Td>{element.description}</Table.Td>
         <Table.Td>
-          <ActionIcon variant="subtle" color="gray">
-            <MenuDots weight="Bold" size={20} />
-          </ActionIcon>
+          <DivisionLeadershipListItemOptions item={element} />
         </Table.Td>
       </Table.Tr>
     );

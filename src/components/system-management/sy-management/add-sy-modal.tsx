@@ -44,11 +44,7 @@ const AddSYModal = () => {
   const endDate = watch("end_date");
 
   const onSubmit: SubmitHandler<AcademicYearData> = async (data) => {
-    const startYear = dayjs(data.start_date).format("YYYY");
-    const endYear = dayjs(data.end_date).format("YYYY");
-
     const payload = {
-      academic_year: `S.Y. ${startYear}-${endYear}`,
       start_date: dayjs(data.start_date).format("YYYY-MM-DD HH:mm:ss"),
       end_date: dayjs(data.end_date).format("YYYY-MM-DD HH:mm:ss"),
     };

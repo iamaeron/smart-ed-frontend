@@ -23,6 +23,7 @@ import { X } from "lucide-react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import EditAccountConfirmModal from "./edit-account-confirm-modal";
+import { useEffect } from "react";
 
 export type EditAccountModalProps = {
   account: User;
@@ -37,16 +38,24 @@ const EditAccountModal = ({
 }: EditAccountModalProps) => {
   const queryClient = useQueryClient();
 
+  const defValues = {
+    name: account.name,
+    username: account.username,
+    email: account.email,
+    phone_number: account.phone_number,
+  };
+
   const { control, handleSubmit, formState, setError, reset } =
     useForm<EditAccountData>({
       resolver: zodResolver(editAccountSchema),
-      defaultValues: {
-        name: account.name,
-        username: account.username,
-        email: account.email,
-        phone_number: account.phone_number,
-      },
+      defaultValues: defValues,
     });
+
+  useEffect(() => {
+    if (account) {
+      reset(defValues);
+    }
+  }, [account, reset]);
 
   const onSubmit: SubmitHandler<EditAccountData> = async (data) => {
     const payload = data;

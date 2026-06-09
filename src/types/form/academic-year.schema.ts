@@ -14,8 +14,6 @@ export const academicYearSchema = z.object({
       message: "End date is required",
     })
     .transform((val) => new Date(val)),
-
-  academic_year: z.string().optional(),
 });
 
 // This creates one unified type that plays nicely with both the inputs and outputs
