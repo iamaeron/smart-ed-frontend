@@ -3,6 +3,11 @@
   --mantine-font-family-headings: "Inter" !important;
 }
 
+.custom-duotone path[opacity],
+.custom-duotone circle[opacity] {
+  opacity: 0.25 !important;
+}
+
 .mantine-Input-input[data-variant="default"] {
   border-color: #9c9c9c;
 }

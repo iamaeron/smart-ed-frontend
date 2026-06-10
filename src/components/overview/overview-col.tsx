@@ -58,7 +58,12 @@ const OverviewCol = ({
           w={50}
           h={50}
         >
-          <Icon color="#2C68FF" weight="BoldDuotone" size={30} />
+          <Icon
+            color="#2C68FF"
+            className="custom-duotone"
+            weight="BoldDuotone"
+            size={30}
+          />
         </Center>
       </Group>
     </Card>

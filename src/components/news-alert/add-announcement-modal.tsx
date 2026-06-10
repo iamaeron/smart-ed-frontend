@@ -30,7 +30,11 @@ import useImagePreview from "@/hooks/use-image-preview";
 import { UploadMinimalistic } from "@solar-icons/react";
 import AddAnnouncementConfirmModal from "./add-announcement-confirm-modal";
 
-const AddAnnouncementModal = () => {
+const AddAnnouncementModal = ({
+  type = "public",
+}: {
+  type?: "public" | "dashboard";
+}) => {
   const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -44,18 +48,20 @@ const AddAnnouncementModal = () => {
         title: "",
         description: "",
         image: undefined,
-        type: "public",
+        type,
       },
     });
 
   const onSubmit: SubmitHandler<AnnouncementData> = async (data) => {
     const payload = new FormData();
 
-    if (!file) return;
+    if (type === "public") {
+      if (!file) return;
+      payload.append("image", file);
+    }
 
     payload.append("title", data.title);
     payload.append("description", data.description);
-    payload.append("image", file);
     payload.append("type", data.type);
 
     try {
@@ -88,7 +94,7 @@ const AddAnnouncementModal = () => {
         <Card py="md" style={{ borderBottom: "1px solid #EAEAFF" }} px="lg">
           <Group justify="space-between">
             <Text size="lg" fw={600}>
-              Add Personnel
+              Add Announcement
             </Text>
 
             <ActionIcon
@@ -155,64 +161,68 @@ const AddAnnouncementModal = () => {
               )}
             />
 
-            <Divider mb={12} />
+            {type === "public" ? (
+              <>
+                <Divider mb={12} />
 
-            <Text fw={600} fz={14} mb={4}>
-              Add Media
-            </Text>
-            <Card
-              bg="gray.1"
-              h={230}
-              shadow="none"
-              className={["drop-box", isDragActive && "dragging"].join(" ")}
-              {...getRootProps()}
-            >
-              <Center h="100%">
-                <input
-                  {...getInputProps({
-                    style: { display: "none" },
-                    id: "image-picker",
-                  })}
-                />
-                {image ? (
-                  <Image
-                    src={image}
-                    h={"95%"}
-                    w={"95%"}
-                    fit="contain"
-                    radius="md"
-                  />
-                ) : (
-                  <Flex direction={"column"} align={"center"}>
-                    <Paper
-                      bg="transparent"
-                      shadow="md"
-                      h="max-content"
-                      w="max-content"
-                    >
-                      <Button
-                        component="label"
-                        htmlFor="image-picker"
-                        variant="white"
-                        color="dark"
-                        leftSection={<UploadMinimalistic size={16} />}
-                      >
-                        Upload
-                      </Button>
-                    </Paper>
-                    <Divider
-                      w="100%"
-                      my="xs"
-                      label="Or"
-                      labelPosition="center"
+                <Text fw={600} fz={14} mb={4}>
+                  Add Media
+                </Text>
+                <Card
+                  bg="gray.1"
+                  h={230}
+                  shadow="none"
+                  className={["drop-box", isDragActive && "dragging"].join(" ")}
+                  {...getRootProps()}
+                >
+                  <Center h="100%">
+                    <input
+                      {...getInputProps({
+                        style: { display: "none" },
+                        id: "image-picker",
+                      })}
                     />
-                    <Text fz={14} c="longText">
-                      Drag an image file here
-                    </Text>
-                  </Flex>
-                )}
-              </Center>
-            </Card>
+                    {image ? (
+                      <Image
+                        src={image}
+                        h={"95%"}
+                        w={"95%"}
+                        fit="contain"
+                        radius="md"
+                      />
+                    ) : (
+                      <Flex direction={"column"} align={"center"}>
+                        <Paper
+                          bg="transparent"
+                          shadow="md"
+                          h="max-content"
+                          w="max-content"
+                        >
+                          <Button
+                            component="label"
+                            htmlFor="image-picker"
+                            variant="white"
+                            color="dark"
+                            leftSection={<UploadMinimalistic size={16} />}
+                          >
+                            Upload
+                          </Button>
+                        </Paper>
+                        <Divider
+                          w="100%"
+                          my="xs"
+                          label="Or"
+                          labelPosition="center"
+                        />
+                        <Text fz={14} c="longText">
+                          Drag an image file here
+                        </Text>
+                      </Flex>
+                    )}
+                  </Center>
+                </Card>
+              </>
+            ) : null}
 
             <Flex mt={30} gap={16}>
               <Button

@@ -1,10 +1,10 @@
+import AddSchoolModal from "@/components/schools-directory/add-school-modal";
 import SchoolsDirectoryTabs from "@/components/schools-directory/schools-directory-tabs";
 import ListFilter from "@/components/system-management/list-filter";
 import TabSearchBar from "@/components/system-management/tab-search-bar";
 import AppLayout from "@/layouts/app.layout";
 import { useFetchSchools } from "@/lib/fetcher/school.fetcher";
-import { Group, Box, Button, Flex, Skeleton, Text, Title } from "@mantine/core";
-import { Plus } from "lucide-react";
+import { Group, Box, Flex, Skeleton, Text, Title } from "@mantine/core";
 import { useState } from "react";
 
 const SystemAdminSchoolsDirectory = () => {
@@ -63,7 +63,7 @@ const SystemAdminSchoolsDirectory = () => {
           </Group>
         )}
 
-        <Button leftSection={<Plus size={16} />}>Add School</Button>
+        <AddSchoolModal />
       </Flex>
 
       <SchoolsDirectoryTabs schools={displayList} />

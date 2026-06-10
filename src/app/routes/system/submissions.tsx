@@ -4,10 +4,8 @@ import { Box, Grid, Text, Title } from "@mantine/core";
 import {
   Alarm,
   CheckCircle,
-  ListCheck,
   PenNewRound,
-  Upload,
-  UploadSquare,
+  UploadMinimalistic,
 } from "@solar-icons/react";
 
 const SystemAdminSubmissions = () => {
@@ -27,7 +25,7 @@ const SystemAdminSubmissions = () => {
             highlighted
             label="Total Submissions"
             value="12"
-            icon={Upload}
+            icon={UploadMinimalistic}
           />
         </Grid.Col>
         <Grid.Col span={3}>

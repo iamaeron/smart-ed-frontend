@@ -15,7 +15,6 @@ import {
   Text,
 } from "@mantine/core";
 import dayjs from "dayjs";
-import { Plus } from "lucide-react";
 import AddAnnouncementModal from "./add-announcement-modal";
 import PublicAnnouncementCard from "./public-announcement-card";
 import { useDisclosure } from "@mantine/hooks";
@@ -48,7 +47,7 @@ const AnnouncementTab = () => {
             Public Announcements
           </Text>
 
-          <AddAnnouncementModal />
+          <AddAnnouncementModal type="public" />
         </Group>
 
         <Grid gap={30}>
@@ -106,7 +105,7 @@ const AnnouncementTab = () => {
             Dashboard Announcements
           </Text>
 
-          <Button leftSection={<Plus size={16} />}>New Announcement</Button>
+          <AddAnnouncementModal type="dashboard" />
         </Group>
 
         <Stack gap={20}>

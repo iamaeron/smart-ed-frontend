@@ -1,9 +1,4 @@
-import SystemAdminDashboard from "@/app/routes/system/dashboard";
-import SystemAdminDivisionOverview from "@/app/routes/system/division-overview";
 import SystemAdminNews from "@/app/routes/system/news-alert";
-import SystemAdminSchoolsDirectory from "@/app/routes/system/schools-directory";
-import SystemAdminSubmissions from "@/app/routes/system/submissions";
-import SystemAdminSystemManagement from "@/app/routes/system/system-management";
 import {
   Bell,
   Chart,
