@@ -48,14 +48,18 @@ const AccountList = ({ data }: { data: any }) => {
       </Table.Td>
       <Table.Td c="longText">
         <Box>
-          <Group gap={8}>
+          <Flex align="center" gap={8}>
             <Letter size={16} />
-            <Text fz={14}>{element.email}</Text>
-          </Group>
-          <Group gap={8}>
+            <Text truncate fz={14}>
+              {element.email}
+            </Text>
+          </Flex>
+          <Flex align="center" gap={8}>
             <Phone size={16} />
-            <Text fz={14}>{element.phone_number}</Text>
-          </Group>
+            <Text truncate fz={14}>
+              {element.phone_number}
+            </Text>
+          </Flex>
         </Box>
       </Table.Td>
       <Table.Td>

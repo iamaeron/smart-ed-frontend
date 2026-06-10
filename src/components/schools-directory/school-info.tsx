@@ -46,10 +46,10 @@ const SchoolInfo = ({ school }: { school: { [k: string]: any } }) => {
           </Text>
           <Divider mb={20} />
           <Grid rowGap={20}>
-            <Info label="Name" value={school.school_head} />
-            <Info label="Phone No." value={school.phone_number} />
+            <Info label="Name" value={school.school_head.name} />
+            <Info label="Phone No." value={school.school_head.phone_number} />
             <Grid.Col span={6} />
-            <Info label="Email" value={school.head_email} />
+            <Info label="Email" value={school.school_head.head_email} />
           </Grid>
         </Card>
       </Grid.Col>

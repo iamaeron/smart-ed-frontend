@@ -1,44 +1,50 @@
 import { Box, Button, Card, Group, Table, Text } from "@mantine/core";
 
-const ResourceSummary = ({ summary = true }: { summary?: boolean }) => {
+const ResourceSummary = ({
+  summary = true,
+  data,
+}: {
+  summary?: boolean;
+  data?: { [k: string]: any };
+}) => {
   const dummyTableData = [
     {
-      resource: "Classrooms",
-      inventory: 960,
-      requirement: 1050,
-      need: 90,
+      resource_name: "Classrooms",
+      total_inventory: 960,
+      total_requirement: 1050,
+      total_need: 90,
     },
     {
-      resource: "Teachers",
-      inventory: 1215,
-      requirement: 1250,
-      need: 35,
+      resource_name: "Teachers",
+      total_inventory: 1215,
+      total_requirement: 1250,
+      total_need: 35,
     },
     {
-      resource: "Seats",
-      inventory: 27000,
-      requirement: 35420,
-      need: 8420,
+      resource_name: "Seats",
+      total_inventory: 27000,
+      total_requirement: 35420,
+      total_need: 8420,
     },
     {
-      resource: "Learning Materials",
-      inventory: 31000,
-      requirement: 35420,
-      need: 4420,
+      resource_name: "Learning Materials",
+      total_inventory: 31000,
+      total_requirement: 35420,
+      total_need: 4420,
     },
   ];
 
-  const rows = dummyTableData.map((element) => (
-    <Table.Tr key={element.resource}>
-      <Table.Td w={summary ? "auto" : "100%"}>{element.resource}</Table.Td>
+  const rows = (data ? data : dummyTableData).map((element: any) => (
+    <Table.Tr key={element.resource_name}>
+      <Table.Td w={summary ? "auto" : "100%"}>{element.resource_name}</Table.Td>
       <Table.Td pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
-        {element.inventory}
+        {element.total_inventory}
       </Table.Td>
       <Table.Td pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
-        {element.requirement}
+        {element.total_requirement}
       </Table.Td>
       <Table.Td pr={summary ? 0 : 40} pl={summary ? 0 : 50} fw={600}>
-        {element.need}
+        {element.total_need}
       </Table.Td>
     </Table.Tr>
   ));

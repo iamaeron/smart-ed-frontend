@@ -121,15 +121,15 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                   </div>
                   <Box>
                     <AppTooltip
-                      label={school.school_head}
+                      label={school.school_head.name}
                       position="bottom-start"
                     >
                       <Text lineClamp={1} fz={14} c="mainText" fw={600}>
-                        {school.school_head}
+                        {school.school_head.name}
                       </Text>
                     </AppTooltip>
                     <Text fz={12} c="longText">
-                      {school.position}
+                      {school.school_head.position}
                     </Text>
                   </Box>
                 </Flex>
@@ -146,7 +146,7 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                   </div>
                   <Box>
                     <Text lineClamp={1} fz={14} c="longText">
-                      {school.phone_number}
+                      {school.school_head.phone_number}
                     </Text>
                   </Box>
                 </Flex>
