@@ -30,12 +30,12 @@ const OverviewCol = ({
       shadow="xl"
     >
       <Group justify="space-between">
-        <Box>
+        <Box flex={1}>
           <Text mt={2} mb={20} fw={600}>
             {label}
           </Text>
           {loading ? (
-            <Skeleton h={40} w="80%" />
+            <Skeleton h={40} w="80%" opacity={highlighted ? 0.5 : undefined} />
           ) : (
             <Text
               style={{

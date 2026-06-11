@@ -20,6 +20,7 @@ import { Controller, useForm } from "react-hook-form";
 import ErrorMessage from "../form/error-message";
 import { useFetchSchoolTypes } from "@/lib/fetcher/school.fetcher";
 import SchoolHeadPicker from "./school-head-picker";
+import FormMap from "./form-map";
 
 const AddSchoolModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -193,7 +194,12 @@ const AddSchoolModal = () => {
               <SchoolHeadPicker control={control} formState={formState} />
             </Box>
 
-            <Box flex={1}></Box>
+            <Box flex={1}>
+              <Title order={5} mb={14}>
+                Address
+              </Title>
+              <FormMap />
+            </Box>
           </Flex>
         </Paper>
       </Modal>

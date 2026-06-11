@@ -1,14 +1,78 @@
+import ListPending from "@/components/list-pending";
 import OverviewCol from "@/components/overview/overview-col";
+import SubmissionList from "@/components/submission/submission-list";
+import SubmissionListItem from "@/components/submission/submission-list-item";
+import ListFilter from "@/components/system-management/list-filter";
+import TabSearchBar from "@/components/system-management/tab-search-bar";
 import AppLayout from "@/layouts/app.layout";
-import { Box, Grid, Text, Title } from "@mantine/core";
+import { useFetchSubmissions } from "@/lib/fetcher/submission.fetcher";
+import type { Submission } from "@/types/data/submission.type";
+import {
+  Box,
+  Center,
+  Flex,
+  Grid,
+  Group,
+  Pagination,
+  Skeleton,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import {
   Alarm,
   CheckCircle,
   PenNewRound,
   UploadMinimalistic,
 } from "@solar-icons/react";
+import { keepPreviousData } from "@tanstack/react-query";
+import { useRef, useState } from "react";
 
 const SystemAdminSubmissions = () => {
+  const [page, setPage] = useState(1);
+
+  const {
+    data,
+    isPending: isSubmissionsPending,
+    isPlaceholderData: isSubmissionsPlaceholderData,
+  } = useFetchSubmissions(
+    { page },
+    {
+      placeholderData: keepPreviousData,
+    },
+  );
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const baseList =
+    (data?.results?.data?.submissions as Submission[])?.sort(
+      (a, b) => b.id - a.id,
+    ) || [];
+
+  const displayList = baseList.filter((act: Submission) => {
+    // Search Filter
+    const matchesSearch = searchQuery
+      ? act.school.name.toLowerCase().includes(searchQuery.toLowerCase())
+      : true;
+
+    // Role Filter
+    const matchesRole =
+      !typeFilter || typeFilter.toLowerCase().includes("all")
+        ? true
+        : act?.type === typeFilter;
+
+    return matchesSearch && matchesRole; // && matchesAction;
+  });
+
+  const handlePageChange = (newPage: number) => {
+    containerRef?.current?.scrollIntoView();
+    setSearchQuery("");
+    setTypeFilter("");
+    setPage(newPage);
+  };
+
   return (
     <AppLayout>
       <Box mb={30}>
@@ -19,25 +83,91 @@ const SystemAdminSubmissions = () => {
         <Text c="grey">Schools Division of Mabalacat City</Text>
       </Box>
 
-      <Grid rowGap={40}>
+      <Grid mb={30} rowGap={40}>
         <Grid.Col span={3}>
           <OverviewCol
             highlighted
             label="Total Submissions"
-            value="12"
+            value={data?.results?.data?.counts?.submissions}
+            loading={isSubmissionsPending}
             icon={UploadMinimalistic}
           />
         </Grid.Col>
         <Grid.Col span={3}>
-          <OverviewCol label="Approved" value="8" icon={CheckCircle} />
+          <OverviewCol
+            label="Approved"
+            value={data?.results?.data?.counts?.approved}
+            loading={isSubmissionsPending}
+            icon={CheckCircle}
+          />
         </Grid.Col>
         <Grid.Col span={3}>
-          <OverviewCol label="Pending Reviews" value="3" icon={Alarm} />
+          <OverviewCol
+            label="Pending Reviews"
+            value={data?.results?.data?.counts?.pending}
+            loading={isSubmissionsPending}
+            icon={Alarm}
+          />
         </Grid.Col>
         <Grid.Col span={3}>
-          <OverviewCol label="Returned" value="1" icon={PenNewRound} />
+          <OverviewCol
+            label="Returned"
+            value={data?.results?.data?.counts?.returned}
+            loading={isSubmissionsPending}
+            icon={PenNewRound}
+          />
         </Grid.Col>
       </Grid>
+
+      {isSubmissionsPending ? (
+        <>
+          <Flex mb={20} gap={10}>
+            <Skeleton h={36} width={200} />
+            <Skeleton h={36} width={200} />
+            <Skeleton h={36} width={200} />
+          </Flex>
+
+          <Stack>
+            <Skeleton h={200} width="100%" />
+            <Skeleton h={200} width="100%" />
+            <Skeleton h={200} width="100%" />
+          </Stack>
+        </>
+      ) : (
+        <>
+          <Group>
+            <TabSearchBar
+              bg="white"
+              placeholder="Search accounts ..."
+              callbackFn={(v) => setSearchQuery(v)}
+            />
+
+            <ListFilter
+              bg="white"
+              all="All Districts"
+              data={baseList}
+              accessor="type"
+              callbackFn={(v) => setTypeFilter(v)}
+            />
+          </Group>
+
+          <SubmissionList
+            data={displayList}
+            pending={isSubmissionsPlaceholderData}
+            ref={containerRef}
+          />
+
+          <Center my={20}>
+            {isSubmissionsPending ? null : (
+              <Pagination
+                value={page}
+                onChange={handlePageChange}
+                total={data.results.pagination.last_page}
+              />
+            )}
+          </Center>
+        </>
+      )}
     </AppLayout>
   );
 };

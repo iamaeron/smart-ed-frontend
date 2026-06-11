@@ -7,6 +7,7 @@ const EnrollmentByEducationalLevel = ({
 }: {
   data: Record<string, any>[];
 }) => {
+  console.log(data);
   return (
     <Card w="100%" bg="white" p="lg" c="mainText" radius="lg" shadow="xl">
       <Stack gap={0} align="center">
@@ -33,16 +34,28 @@ const EnrollmentByEducationalLevel = ({
         <ResponsiveContainer debounce={250} height={300}>
           <AreaChart
             data={data}
-            dataKey="year"
+            dataKey="academic_year"
             // withDots={false}
             dotProps={{
               r: 2.5,
+            }}
+            xAxisProps={{
+              tickFormatter: (value, index) => {
+                // 1. Always show the first item
+                if (index === 0) return value;
+
+                // 2. Always show the last item
+                if (index === data.length - 1) return value;
+
+                // 3. For any item in the middle, mask it with "..."
+                return "...";
+              },
             }}
             curveType="linear"
             series={[
               { name: "Elementary", color: "#2c68ff" },
               { name: "Junior High", color: "#ff9500" },
-              { name: "Kindergarten", color: "#3cbb54" },
+              { name: "Kinder", color: "#3cbb54" },
               { name: "Senior High", color: "#DB3237" },
             ]}
           />

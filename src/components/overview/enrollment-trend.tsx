@@ -17,7 +17,7 @@ const EnrollmentTrend = ({ data }: { data: Record<string, any>[] }) => {
     >
       <Stack gap={0} align="center">
         <Text mt={2} fw={600}>
-          Three-Year Enrollment Trend
+          Five-Year Enrollment Trend
         </Text>
         <Text mt={2} size="sm" c="longText">
           Public vs. Private School Enrollment (2023-2025)
@@ -33,7 +33,7 @@ const EnrollmentTrend = ({ data }: { data: Record<string, any>[] }) => {
               }}
             ></div>
             <Text size="sm" fw={500} c="primary">
-              Public
+              Male
             </Text>
           </Group>
 
@@ -47,7 +47,7 @@ const EnrollmentTrend = ({ data }: { data: Record<string, any>[] }) => {
               }}
             ></div>
             <Text size="sm" fw={500} c="accent1">
-              Private
+              Female
             </Text>
           </Group>
         </Group>
@@ -57,14 +57,14 @@ const EnrollmentTrend = ({ data }: { data: Record<string, any>[] }) => {
             h={300}
             w="100%"
             data={data}
-            dataKey="year"
+            dataKey="academic_year"
             barProps={{
               strokeLinecap: "round",
               radius: [99, 999, 5, 5],
             }}
             series={[
-              { name: "public", color: "primary" },
-              { name: "private", color: "accent1" },
+              { name: "total_male", label: "Male", color: "primary" },
+              { name: "total_female", label: "Female", color: "accent1" },
             ]}
             tickLine="none"
           />

@@ -89,26 +89,6 @@ const AccountTab = () => {
               accessor="role"
               callbackFn={(v) => setRoleFilter(v)}
             />
-
-            {/* <ListFilter
-              all="All Schools"
-              data={baseList}
-              accessor="user.school"
-              callbackFn={(v) => setSchoolFilter(v)}
-            /> */}
-
-            {/* <Select
-              placeholder="Pick value"
-              variant="filled"
-              leftSection={<Filter size={16} />}
-              rightSection={<AltArrowDown size={16} />}
-              data={["React", "Angular", "Vue", "Svelte"]}
-              styles={{
-                input: {
-                  backgroundColor: "#F3F5FF",
-                },
-              }}
-            /> */}
           </Group>
         )}
 
