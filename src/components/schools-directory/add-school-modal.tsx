@@ -21,6 +21,7 @@ import ErrorMessage from "../form/error-message";
 import { useFetchSchoolTypes } from "@/lib/fetcher/school.fetcher";
 import SchoolHeadPicker from "./school-head-picker";
 import FormMap from "./form-map";
+import AddressPicker from "./address-picker/address-form";
 
 const AddSchoolModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -199,6 +200,8 @@ const AddSchoolModal = () => {
                 Address
               </Title>
               <FormMap />
+
+              <AddressPicker />
             </Box>
           </Flex>
         </Paper>
