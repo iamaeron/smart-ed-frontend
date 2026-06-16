@@ -1,6 +1,6 @@
 import { Box, Button, Card, Group, Table, Text } from "@mantine/core";
 
-const EnrollmentByGradeLevel = () => {
+const EnrollmentByGradeLevel = ({ data }: { data: any }) => {
   const dummyTableData = [
     {
       gradeLevel: "Kinder",
@@ -48,11 +48,11 @@ const EnrollmentByGradeLevel = () => {
       <Group justify="space-between">
         <Box>
           <Text mb={2} fw={600}>
-            Resource Summary
+            Enrollment By Grade Level
           </Text>
           <Text mb={18} c="longText" size="sm">
-            A summary of classrooms, teachers, seats, and learning materials
-            across all schools in the division.
+            Detailed breakdown of student enrollment per school and educational
+            level
           </Text>
         </Box>
 

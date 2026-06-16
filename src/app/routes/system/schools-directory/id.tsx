@@ -6,7 +6,6 @@ import {
   Button,
   Flex,
   FloatingIndicator,
-  Grid,
   Skeleton,
   Tabs,
   Text,
@@ -16,52 +15,10 @@ import { ChevronLeft } from "lucide-react";
 import { useCallback, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router";
 import classes from "@/css/Tab.module.css";
-import OverviewCol from "@/components/overview/overview-col";
-import {
-  Buildings,
-  Chair,
-  Men,
-  NotebookBookmark,
-  UserHandUp,
-  UsersGroupRounded,
-  Women,
-} from "@solar-icons/react";
-import EnrollmentTrend from "@/components/overview/enrollment-trend";
-import EnrollmentByEducationalLevel from "@/components/overview/enrollment-educational-level";
-import EnrollmentByGradeLevel from "@/components/overview/enrollment-grade-level";
-import ResourceSummary from "@/components/dashboard/resource-summary";
 import AcademicYearPicker from "@/components/dashboard/academic-year-picker";
 import SchoolInfo from "@/components/schools-directory/school-info";
-
-const dummyData = [
-  { year: 2023, public: 12500, private: 6900 },
-  { year: 2024, public: 14200, private: 7210 },
-  { year: 2025, public: 15320, private: 5120 },
-];
-
-const anotherDummyData = [
-  {
-    year: "2023",
-    Elementary: 6800,
-    "Junior High": 4000,
-    Kindergarten: 3300,
-    "Senior High": 2400,
-  },
-  {
-    year: "2024",
-    Elementary: 7200,
-    "Junior High": 4300,
-    Kindergarten: 3150,
-    "Senior High": 2500,
-  },
-  {
-    year: "2025",
-    Elementary: 7600,
-    "Junior High": 4550,
-    Kindergarten: 3550,
-    "Senior High": 2600,
-  },
-];
+import EnrollmentTab from "@/components/schools-directory/school-enrollment-tab";
+import SchoolResourceTab from "@/components/schools-directory/school-resource-tab";
 
 const SystemAdminSchoolDirectory = () => {
   const { id } = useParams();
@@ -171,74 +128,17 @@ const SystemAdminSchoolDirectory = () => {
             </Tabs.List>
           </TabListScroller>
 
-          <Tabs.Panel value="1">
-            <Grid rowGap={40}>
-              <Grid.Col span={4}>
-                <OverviewCol
-                  label="Total Students"
-                  value="35,420"
-                  icon={UsersGroupRounded}
-                />
-              </Grid.Col>
-              <Grid.Col span={4}>
-                <OverviewCol label="Male" value="17,200" icon={Men} />
-              </Grid.Col>
-              <Grid.Col span={4}>
-                <OverviewCol label="Female" value="18,220" icon={Women} />
-              </Grid.Col>
-
-              <Grid.Col span={6}>
-                <EnrollmentTrend data={dummyData} />
-              </Grid.Col>
-
-              <Grid.Col span={6}>
-                <EnrollmentByEducationalLevel data={anotherDummyData} />
-              </Grid.Col>
-
-              <Grid.Col span={12}>
-                <EnrollmentByGradeLevel />
-              </Grid.Col>
-            </Grid>
-          </Tabs.Panel>
           {isPending ? (
             <Skeleton w="100%" h={300} radius="lg" />
           ) : (
             <>
+              <Tabs.Panel value="1">
+                <EnrollmentTab schoolName={data.results.school.school_name} />
+              </Tabs.Panel>
               <Tabs.Panel value="2">
-                <Grid rowGap={40}>
-                  <Grid.Col span={3}>
-                    <OverviewCol
-                      label="Total Classrooms"
-                      value="960"
-                      icon={Buildings}
-                    />
-                  </Grid.Col>
-                  <Grid.Col span={3}>
-                    <OverviewCol
-                      label="Total Teachers"
-                      value="1,215"
-                      icon={UserHandUp}
-                    />
-                  </Grid.Col>
-                  <Grid.Col span={3}>
-                    <OverviewCol
-                      label="Functional Seats"
-                      value="27,000"
-                      icon={Chair}
-                    />
-                  </Grid.Col>
-                  <Grid.Col span={3}>
-                    <OverviewCol
-                      label="Learning Materials"
-                      value="31,000"
-                      icon={NotebookBookmark}
-                    />
-                  </Grid.Col>
-
-                  <Grid.Col span={12}>
-                    <ResourceSummary summary={false} />
-                  </Grid.Col>
-                </Grid>
+                <SchoolResourceTab
+                  schoolName={data.results.school.school_name}
+                />
               </Tabs.Panel>
               <Tabs.Panel value="3">
                 <SchoolInfo school={data.results.school} />

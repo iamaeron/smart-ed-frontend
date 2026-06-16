@@ -1,0 +1,67 @@
+import { Grid } from "@mantine/core";
+import OverviewCol from "../overview/overview-col";
+import { Men, UsersGroupRounded, Women } from "@solar-icons/react";
+import EnrollmentTrend from "../overview/enrollment-trend";
+import EnrollmentByEducationalLevel from "../overview/enrollment-educational-level";
+import EnrollmentByGradeLevel from "../overview/enrollment-grade-level";
+import { useFetchEnrollmentData } from "@/lib/fetcher/enrollment.fetcher";
+import useTransformChartData from "@/hooks/use-transform-chart-data";
+import useTransformGradeLevelData from "@/hooks/use-transform-grade-level-data";
+
+const EnrollmentTab = ({ schoolName }: { schoolName: string }) => {
+  const { data, isPending } = useFetchEnrollmentData({
+    school_name: schoolName,
+  });
+  const transformedDataChart = useTransformChartData(
+    data?.results?.data?.enrollment_by_level,
+  );
+
+  const transformedGradeLevelData = useTransformGradeLevelData(
+    data?.results?.data?.enrollment_by_level,
+  );
+
+  const schoolEnrollmentData = data?.results?.data;
+
+  return (
+    <Grid rowGap={40}>
+      <Grid.Col span={4}>
+        <OverviewCol
+          label="Total Students"
+          value={schoolEnrollmentData?.school_totals?.total_students}
+          loading={isPending}
+          icon={UsersGroupRounded}
+        />
+      </Grid.Col>
+      <Grid.Col span={4}>
+        <OverviewCol
+          label="Male"
+          value={schoolEnrollmentData?.school_totals?.total_male}
+          loading={isPending}
+          icon={Men}
+        />
+      </Grid.Col>
+      <Grid.Col span={4}>
+        <OverviewCol
+          label="Female"
+          value={schoolEnrollmentData?.school_totals?.total_female}
+          loading={isPending}
+          icon={Women}
+        />
+      </Grid.Col>
+
+      <Grid.Col span={6}>
+        <EnrollmentTrend data={schoolEnrollmentData?.five_year_trend || []} />
+      </Grid.Col>
+
+      <Grid.Col span={6}>
+        <EnrollmentByEducationalLevel data={transformedDataChart || []} />
+      </Grid.Col>
+
+      <Grid.Col span={12}>
+        <EnrollmentByGradeLevel data={transformedGradeLevelData} />
+      </Grid.Col>
+    </Grid>
+  );
+};
+
+export default EnrollmentTab;

@@ -8,6 +8,16 @@ const EnrollmentByEducationalLevel = ({
   data: Record<string, any>[];
 }) => {
   console.log(data);
+
+  const series = [
+    { name: "Kinder", color: "#3cbb54" },
+    { name: "Elementary", color: "#2c68ff" },
+    { name: "Junior High", color: "#f4c10d" },
+    { name: "Senior High", color: "#DB3237" },
+  ];
+
+  const legendData = data.length > 0 ? Object.entries(data[0]) : [];
+
   return (
     <Card w="100%" bg="white" p="lg" c="mainText" radius="lg" shadow="xl">
       <Stack gap={0} align="center">
@@ -17,20 +27,6 @@ const EnrollmentByEducationalLevel = ({
         <Text mt={2} mb={30} size="sm" c="longText">
           Student distribution across grade levels (2023-2025)
         </Text>
-        {/* <LineChart
-                  h={300}
-                  data={anotherDummyData}
-                  dataKey="year"
-                  series={[
-                    { name: "Elementary", color: "blue" },
-                    { name: "Junior High", color: "orange" },
-                    { name: "Kindergarten", color: "green" },
-                    { name: "Senior High", color: "red" },
-                  ]}
-                  curveType="linear"
-                  withDots
-                /> */}
-
         <ResponsiveContainer debounce={250} height={300}>
           <AreaChart
             data={data}
@@ -62,61 +58,28 @@ const EnrollmentByEducationalLevel = ({
         </ResponsiveContainer>
 
         <Group mt={20} gap={14}>
-          <Group gap={6}>
-            <div
-              style={{
-                height: 4,
-                width: 12,
-                backgroundColor: "#3cbb54",
-                borderRadius: 2,
-              }}
-            ></div>
-            <Text size="sm" fw={500} c="subGreen">
-              Kindergarten
-            </Text>
-          </Group>
+          {legendData.map(([k, v], i) => {
+            console.log(k, v);
+            const educLevel = series.find((s) => s.name === k);
 
-          <Group gap={6}>
-            <div
-              style={{
-                height: 4,
-                width: 12,
-                backgroundColor: "#2c68ff",
-                borderRadius: 2,
-              }}
-            ></div>
-            <Text size="sm" fw={500} c="primary">
-              Elementary
-            </Text>
-          </Group>
+            if (!educLevel) return null;
 
-          <Group gap={6}>
-            <div
-              style={{
-                height: 4,
-                width: 12,
-                backgroundColor: "#ff9500",
-                borderRadius: 2,
-              }}
-            ></div>
-            <Text size="sm" fw={500} c="accent1">
-              Junior High
-            </Text>
-          </Group>
-
-          <Group gap={6}>
-            <div
-              style={{
-                height: 4,
-                width: 12,
-                backgroundColor: "#DB3237",
-                borderRadius: 2,
-              }}
-            ></div>
-            <Text size="sm" fw={500} c="subRed">
-              Senior High
-            </Text>
-          </Group>
+            return (
+              <Group key={i} gap={6}>
+                <div
+                  style={{
+                    height: 4,
+                    width: 12,
+                    backgroundColor: educLevel?.color,
+                    borderRadius: 2,
+                  }}
+                ></div>
+                <Text size="sm" fw={500} c={educLevel?.color}>
+                  {educLevel.name}
+                </Text>
+              </Group>
+            );
+          })}
         </Group>
       </Stack>
     </Card>

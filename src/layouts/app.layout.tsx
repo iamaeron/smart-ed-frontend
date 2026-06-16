@@ -65,7 +65,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
               variant="subtle"
               color="gray"
             >
-              <Sidebar size={22} />
+              <Sidebar style={{ transform: "scaleX(-1)" }} size={22} />
             </ActionIcon>
           </Group>
 

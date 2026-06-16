@@ -1,33 +1,61 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import ProvincePicker from "./province-picker";
 import CityPicker from "./city-picker";
 import BarangayPicker from "./barangay-picker";
-import { Group } from "@mantine/core";
+import { Box, Grid, Text, TextInput } from "@mantine/core";
+import { useAddressStore } from "@/stores/address.store";
+import { useDebouncedValue } from "@mantine/hooks";
 
 const AddressForm = () => {
+  const street = useAddressStore((state) => state.street);
+  const setId = useAddressStore((state) => state.setId);
+  const [streetValue, setStreetValue] = useState("");
+  const [debounced] = useDebouncedValue(streetValue, 1000);
+
+  useEffect(() => {
+    setId("street", debounced);
+  }, [streetValue]);
+
   return (
-    <div>
-      <div className="flex gap-4">
-        <Group>
-          {/* <InputLabel className="font-semibold mb-1">
-                        Province
-                        <span className="inline ml-1 text-rose-600">*</span>
-                    </InputLabel> */}
+    <Box mt="md">
+      <Grid>
+        <Grid.Col span={6}>
+          <Text mb={4} fw={600} fz={14}>
+            Province
+          </Text>
           <ProvincePicker />
-          {/* <InputLabel className="font-semibold mb-1">
-                        City
-                        <span className="inline ml-1 text-rose-600">*</span>
-                    </InputLabel> */}
+        </Grid.Col>
+        <Grid.Col span={6}>
+          <Text mb={4} fw={600} fz={14}>
+            City
+          </Text>
           <CityPicker />
-        </Group>
-        <div className="flex-1">
-          {/* <InputLabel className="font-semibold mb-1">
-                        Barangay
-                    </InputLabel> */}
+        </Grid.Col>
+        <Grid.Col span={6}>
+          <Text mb={4} fw={600} fz={14}>
+            Barangay
+          </Text>
           <BarangayPicker />
-        </div>
-      </div>
-    </div>
+        </Grid.Col>
+        <Grid.Col span={6}>
+          <TextInput
+            value={streetValue}
+            onChange={(e) => setStreetValue(e.target.value)}
+            labelProps={{
+              mb: 2,
+              fw: 400,
+              c: "dark",
+              // c: formState.errors.school_name?.message
+              //   ? "subRed"
+              //   : "dark",
+            }}
+            label="Street"
+            radius="sm"
+            required
+          />
+        </Grid.Col>
+      </Grid>
+    </Box>
   );
 };
 

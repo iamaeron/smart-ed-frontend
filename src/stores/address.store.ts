@@ -11,6 +11,8 @@ type AddressStore = {
   provinces: { [k: string]: any }[];
   cities: { [k: string]: any }[];
   barangays: { [k: string]: any }[];
+  street: string;
+  region: string;
   setId: (key: string, val: any) => void;
 };
 
@@ -23,6 +25,8 @@ export const useAddressStore = create<AddressStore>((set) => ({
   barangay: "",
   provinces: [...provincesJson],
   cities: [],
+  street: "",
+  region: "",
   barangays: [...provincesJson],
   setId: (key: string, val: string) => set({ [key]: val }),
 }));
