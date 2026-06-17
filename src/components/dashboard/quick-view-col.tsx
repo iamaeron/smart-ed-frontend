@@ -1,14 +1,20 @@
 import { Box, Card, Center, Group, Text } from "@mantine/core";
 import type { Icon } from "@solar-icons/react/lib/types";
 
-type QuickViewColProps = { label: string; value: string; icon: Icon };
+type QuickViewColProps = {
+  label: string;
+  value: string;
+  icon: Icon;
+  onClick?: () => void;
+};
 
-const QuickViewCol = ({ label, value, icon }: QuickViewColProps) => {
+const QuickViewCol = ({ label, value, icon, onClick }: QuickViewColProps) => {
   const Icon = icon;
 
   return (
     <Card
       w="100%"
+      onClick={onClick ? onClick : undefined}
       bg="rgba(255,255,255,0.3)"
       withBorder
       p="lg"

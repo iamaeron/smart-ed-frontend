@@ -59,6 +59,9 @@ const EnrollmentTrend = ({ data }: { data: Record<string, any>[] }) => {
             data={data}
             dataKey="academic_year"
             barProps={{
+              isAnimationActive: true,
+              animationDuration: 1200,
+              animationEasing: "ease-out",
               strokeLinecap: "round",
               radius: [99, 999, 5, 5],
             }}

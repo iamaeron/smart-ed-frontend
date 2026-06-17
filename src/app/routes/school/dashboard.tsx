@@ -45,12 +45,17 @@ const SchoolAdminDashboard = () => {
         </Grid.Col>
 
         {/* 2nd row */}
-        <Grid.Col span={3}>
-          <Grid>
-            <Grid.Col span={12}>
-              <NotificationsCol />
-            </Grid.Col>
-          </Grid>
+        <Grid.Col span={3} style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+            }}
+          >
+            <NotificationsCol />
+          </div>
         </Grid.Col>
       </Grid>
     </AppLayout>

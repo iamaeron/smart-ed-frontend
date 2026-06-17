@@ -7,8 +7,6 @@ const EnrollmentByEducationalLevel = ({
 }: {
   data: Record<string, any>[];
 }) => {
-  console.log(data);
-
   const series = [
     { name: "Kinder", color: "#3cbb54" },
     { name: "Elementary", color: "#2c68ff" },
@@ -35,6 +33,11 @@ const EnrollmentByEducationalLevel = ({
             dotProps={{
               r: 2.5,
             }}
+            areaProps={{
+              isAnimationActive: true,
+              animationDuration: 1200,
+              animationEasing: "ease-out",
+            }}
             xAxisProps={{
               tickFormatter: (value, index) => {
                 // 1. Always show the first item
@@ -59,7 +62,6 @@ const EnrollmentByEducationalLevel = ({
 
         <Group mt={20} gap={14}>
           {legendData.map(([k, v], i) => {
-            console.log(k, v);
             const educLevel = series.find((s) => s.name === k);
 
             if (!educLevel) return null;

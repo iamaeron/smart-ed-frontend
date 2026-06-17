@@ -1,6 +1,6 @@
 import type { Submission } from "@/types/data/submission.type";
 import ListPending from "../list-pending";
-import { Stack } from "@mantine/core";
+import { Center, Stack } from "@mantine/core";
 import type { RefObject } from "react";
 import SubmissionListItem from "./submission-list-item";
 
@@ -22,7 +22,7 @@ const SubmissionList = ({
       </Stack>
     </ListPending>
   ) : (
-    <div>No submissions found.</div>
+    <Center py={80}>No submissions found.</Center>
   );
 };
 

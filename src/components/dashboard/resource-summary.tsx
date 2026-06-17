@@ -1,4 +1,6 @@
+import { useAuth } from "@/contexts/auth.context";
 import { Box, Button, Card, Group, Table, Text } from "@mantine/core";
+import { Link } from "react-router";
 
 const ResourceSummary = ({
   summary = true,
@@ -7,6 +9,7 @@ const ResourceSummary = ({
   summary?: boolean;
   data?: { [k: string]: any };
 }) => {
+  const { user } = useAuth();
   const dummyTableData = [
     {
       resource_name: "Classrooms",
@@ -64,7 +67,14 @@ const ResourceSummary = ({
         </Box>
 
         {summary ? (
-          <Button mt={-12} p={0} variant="white" c="primary">
+          <Button
+            component={Link}
+            to={`/${user?.role.toLowerCase().replace(" ", "-")}/${user?.role.split(" ")[0].toLowerCase()}-overview?tab=2`}
+            mt={-12}
+            p={0}
+            variant="white"
+            c="primary"
+          >
             View all
           </Button>
         ) : null}

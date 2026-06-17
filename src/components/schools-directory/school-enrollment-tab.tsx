@@ -6,7 +6,6 @@ import EnrollmentByEducationalLevel from "../overview/enrollment-educational-lev
 import EnrollmentByGradeLevel from "../overview/enrollment-grade-level";
 import { useFetchEnrollmentData } from "@/lib/fetcher/enrollment.fetcher";
 import useTransformChartData from "@/hooks/use-transform-chart-data";
-import useTransformGradeLevelData from "@/hooks/use-transform-grade-level-data";
 
 const EnrollmentTab = ({ schoolName }: { schoolName: string }) => {
   const { data, isPending } = useFetchEnrollmentData({
@@ -16,11 +15,12 @@ const EnrollmentTab = ({ schoolName }: { schoolName: string }) => {
     data?.results?.data?.enrollment_by_level,
   );
 
-  const transformedGradeLevelData = useTransformGradeLevelData(
-    data?.results?.data?.enrollment_by_level,
-  );
-
   const schoolEnrollmentData = data?.results?.data;
+
+  const enrollmentByGradeData = schoolEnrollmentData?.enrollmentByGrade?.find(
+    (item: any) =>
+      item.academic_year === schoolEnrollmentData?.academic_year.name,
+  ) || { levels: [] };
 
   return (
     <Grid rowGap={40}>
@@ -58,7 +58,7 @@ const EnrollmentTab = ({ schoolName }: { schoolName: string }) => {
       </Grid.Col>
 
       <Grid.Col span={12}>
-        <EnrollmentByGradeLevel data={transformedGradeLevelData} />
+        <EnrollmentByGradeLevel data={enrollmentByGradeData} />
       </Grid.Col>
     </Grid>
   );

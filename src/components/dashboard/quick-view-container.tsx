@@ -1,15 +1,7 @@
-import {
-  BackgroundImage,
-  Box,
-  Flex,
-  Paper,
-  Select,
-  Text,
-  Title,
-} from "@mantine/core";
+import { BackgroundImage, Box, Flex, Paper, Text, Title } from "@mantine/core";
 import bg from "@/assets/dashboard-bg.jpg";
-import { AltArrowDown } from "@solar-icons/react";
 import AcademicYearPicker from "./academic-year-picker";
+import { useAuth } from "@/contexts/auth.context";
 
 type QuickViewContainerType = {
   schoolYearData?: {
@@ -20,6 +12,10 @@ type QuickViewContainerType = {
 };
 
 const QuickViewContainer = ({ children }: QuickViewContainerType) => {
+  const { user } = useAuth();
+
+  console.log(user);
+
   return (
     <Paper>
       <BackgroundImage src={bg} c="white" p="xl" radius="lg">
@@ -29,7 +25,11 @@ const QuickViewContainer = ({ children }: QuickViewContainerType) => {
             <Title order={1} my={6}>
               Welcome Back!
             </Title>
-            <Text fw={300}>Schools Division of Mabalacat City</Text>
+            <Text fw={300}>
+              {user?.role === "School Account"
+                ? user?.assignment.school_name
+                : "Schools Division of Mabalacat City"}
+            </Text>
           </Box>
           <AcademicYearPicker />
         </Flex>

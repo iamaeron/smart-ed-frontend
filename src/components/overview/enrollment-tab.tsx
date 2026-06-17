@@ -13,14 +13,22 @@ const EnrollmentTab = () => {
     data?.results?.data?.enrollment_by_level,
   );
 
-  console.log(data);
+  const enrollmentData = data?.results?.data;
+
+  const enrollmentByGradeData = enrollmentData?.enrollment_by_grade?.find(
+    (item: any) => item.academic_year === enrollmentData?.academic_year.name,
+  ) || { levels: [] };
+
+  const totals =
+    data?.results?.data?.enrollments_totals ??
+    data?.results?.data?.school_totals;
 
   return (
     <Grid rowGap={40}>
       <Grid.Col span={4}>
         <OverviewCol
           label="Total Students"
-          value={data?.results?.data?.enrollments_totals?.total_students}
+          value={totals?.total_students}
           loading={isEnrollmentDataPending}
           icon={UsersGroupRounded}
         />
@@ -28,7 +36,7 @@ const EnrollmentTab = () => {
       <Grid.Col span={4}>
         <OverviewCol
           label="Male"
-          value={data?.results?.data?.enrollments_totals?.total_male}
+          value={totals?.total_male}
           loading={isEnrollmentDataPending}
           icon={Men}
         />
@@ -36,7 +44,7 @@ const EnrollmentTab = () => {
       <Grid.Col span={4}>
         <OverviewCol
           label="Female"
-          value={data?.results?.data?.enrollments_totals?.total_female}
+          value={totals?.total_female}
           loading={isEnrollmentDataPending}
           icon={Women}
         />
@@ -54,7 +62,7 @@ const EnrollmentTab = () => {
       </Grid.Col>
 
       <Grid.Col span={12}>
-        <EnrollmentByGradeLevel data={[]} />
+        <EnrollmentByGradeLevel data={enrollmentByGradeData} />
       </Grid.Col>
     </Grid>
   );

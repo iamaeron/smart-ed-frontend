@@ -5,6 +5,7 @@ type QuickViewColProps = {
   label: string;
   value: string;
   icon: Icon;
+  handleClick?: () => void;
   highlighted?: boolean;
   loading?: boolean;
 };
@@ -15,6 +16,7 @@ const OverviewCol = ({
   icon,
   highlighted,
   loading = false,
+  handleClick,
 }: QuickViewColProps) => {
   const Icon = icon;
 
@@ -24,6 +26,9 @@ const OverviewCol = ({
       bg={highlighted ? "primary" : "white"}
       // withBorder
       p="lg"
+      style={{ cursor: handleClick ? "pointer" : "auto" }}
+      // onClick={() => console.log("clicked")}
+      onClick={handleClick ? handleClick : undefined}
       c={highlighted ? "white" : "mainText"}
       radius="lg"
       // bd="1px solid rgba(0,0,0,0.1)"
@@ -54,14 +59,14 @@ const OverviewCol = ({
 
         <Center
           style={{ borderRadius: "999px" }}
-          bg="lightBackground"
+          bg={highlighted ? "white" : "lightBackground"}
           w={50}
           h={50}
         >
           <Icon
             color="#2C68FF"
             className="custom-duotone"
-            weight="BoldDuotone"
+            weight={highlighted ? "Bold" : "BoldDuotone"}
             size={30}
           />
         </Center>

@@ -14,10 +14,10 @@ const PublicAnnouncementCard = ({
           style={{ position: "absolute", top: 14, left: 14 }}
           bg="rgba(255,255,255,0.3)"
           shadow="none"
-          p="4px"
-          radius="999px"
+          p={4}
+          radius={999}
         >
-          <Paper shadow="md" radius="999px">
+          <Paper shadow="md" radius={999}>
             <Pill size="md" bg="mainText">
               <Text c="white" fw={500} fz={14}>
                 {dayjs(announcement.date).format("MMM DD YYYY")}

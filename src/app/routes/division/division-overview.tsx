@@ -3,7 +3,7 @@ import OverviewTabs from "@/components/overview/overview-tabs";
 import AppLayout from "@/layouts/app.layout";
 import { Box, Flex, Text, Title } from "@mantine/core";
 
-const SystemAdminDivisionOverview = () => {
+const DivisionAdminDivisionOverview = () => {
   return (
     <AppLayout>
       <Flex mb={30} align="flex-end" justify="space-between">
@@ -23,4 +23,4 @@ const SystemAdminDivisionOverview = () => {
   );
 };
 
-export default SystemAdminDivisionOverview;
+export default DivisionAdminDivisionOverview;

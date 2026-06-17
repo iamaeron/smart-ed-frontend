@@ -1,44 +1,24 @@
 import { Box, Button, Card, Group, Table, Text } from "@mantine/core";
 
-const EnrollmentByGradeLevel = ({ data }: { data: any }) => {
-  const dummyTableData = [
-    {
-      gradeLevel: "Kinder",
-      male: 1390,
-      female: 1460,
-      total: 2850,
-    },
-    {
-      gradeLevel: "Elementary",
-      male: 10150,
-      female: 10750,
-      total: 20900,
-    },
-    {
-      gradeLevel: "Junior High School",
-      male: 4050,
-      female: 4300,
-      total: 8350,
-    },
-    {
-      gradeLevel: "Senior High School",
-      male: 1610,
-      female: 1710,
-      total: 3320,
-    },
-  ];
+export interface EnrollmentByGradeData {
+  grade_level: string;
+  total_female: string;
+  total_male: string;
+  total_students: string;
+}
 
-  const rows = dummyTableData.map((element) => (
-    <Table.Tr key={element.gradeLevel}>
-      <Table.Td width="100%">{element.gradeLevel}</Table.Td>
+const EnrollmentByGradeLevel = ({ data }: { data: any }) => {
+  const rows = data.levels.map((element: EnrollmentByGradeData) => (
+    <Table.Tr key={element.grade_level}>
+      <Table.Td width="100%">{element.grade_level}</Table.Td>
       <Table.Td pr={40} pl={50}>
-        {element.male}
+        {element.total_male}
       </Table.Td>
       <Table.Td pr={40} pl={50}>
-        {element.female}
+        {element.total_female}
       </Table.Td>
       <Table.Td pr={40} pl={50} fw={600}>
-        {element.total}
+        {element.total_students}
       </Table.Td>
     </Table.Tr>
   ));

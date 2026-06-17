@@ -10,6 +10,14 @@ import SystemAdminSystemManagement from "./system/system-management";
 import SchoolAdminDashboard from "./school/dashboard";
 import DivisionAdminDashboard from "./division/dashboard";
 import SystemAdminSchoolDirectory from "./system/schools-directory/id";
+import DivisionAdminDivisionOverview from "./division/division-overview";
+import DivisionAdminSchoolsDirectory from "./division/schools-directory";
+import DivisionAdminSchoolDirectory from "./division/schools-directory/id";
+import DivisionAdminNews from "./division/news-alert";
+import DivisionAdminSubmissions from "./division/submissions";
+import SchoolAdminSchoolOverview from "./school/school-overview";
+import SchoolAdminSubmissions from "./school/submissions";
+import SchoolAdminNews from "./school/news-alert";
 
 const AppRoutes = () => {
   return (
@@ -22,6 +30,18 @@ const AppRoutes = () => {
           path="/school-account/dashboard"
           element={<SchoolAdminDashboard />}
         />
+
+        <Route
+          path="/school-account/school-overview"
+          element={<SchoolAdminSchoolOverview />}
+        />
+
+        <Route
+          path="/school-account/submissions"
+          element={<SchoolAdminSubmissions />}
+        />
+
+        <Route path="/school-account/news" element={<SchoolAdminNews />} />
       </Route>
 
       {/* System Admin Routes */}
@@ -60,6 +80,26 @@ const AppRoutes = () => {
         <Route
           path="/division-admin/dashboard"
           element={<DivisionAdminDashboard />}
+        />
+        <Route
+          path="/division-admin/division-overview"
+          element={<DivisionAdminDivisionOverview />}
+        />
+
+        <Route
+          path="/division-admin/schools-directory"
+          element={<DivisionAdminSchoolsDirectory />}
+        />
+        <Route
+          path="/division-admin/schools-directory/:id"
+          element={<DivisionAdminSchoolDirectory />}
+        />
+
+        <Route path="/division-admin/news" element={<DivisionAdminNews />} />
+
+        <Route
+          path="/division-admin/submissions"
+          element={<DivisionAdminSubmissions />}
         />
       </Route>
     </Routes>

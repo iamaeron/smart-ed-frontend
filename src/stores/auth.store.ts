@@ -16,7 +16,7 @@ export type User = {
 
 export type School = {
   type: String;
-  school_id: number;
+  school_id: string;
   school_name: string;
   school_code: string;
 };

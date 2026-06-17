@@ -1,5 +1,5 @@
 export type AcademicYear = {
-  year_id: number;
+  year_id: string;
   start_date: string;
   end_date: string;
   academic_year: string;

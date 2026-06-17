@@ -11,7 +11,6 @@ import OverviewCol from "../overview/overview-col";
 
 const SchoolResourceTab = ({ schoolName }: { schoolName: string }) => {
   const { data, isPending } = useFetchResources({ school_name: schoolName });
-  console.log(data);
 
   const resourceData = data?.results?.data?.totals_by_resource || [];
 

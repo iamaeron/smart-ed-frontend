@@ -52,7 +52,7 @@ const SidebarLink = ({
         variant={isActive ? "light" : "default"}
         active={isActive}
         className={["nv sidebar-link", collapsed ? "hidden" : ""].join(" ")}
-        py="6px"
+        py={6}
       />
     </Tooltip>
   );
