@@ -6,25 +6,31 @@ import {
   Table,
   Group,
   Flex,
-  Select,
   Button,
+  Skeleton,
 } from "@mantine/core";
-import { AltArrowDown } from "@solar-icons/react";
 import AcademicYearPicker from "../dashboard/academic-year-picker";
 import { useAcademicYearStore } from "@/stores/academic-year.store";
 import { keepPreviousData } from "@tanstack/react-query";
 import ListPending from "../list-pending";
+import { useState } from "react";
+import KPISchoolTypePicker from "./kpi-school-type-picker";
+import { useFetchSchoolTypes } from "@/lib/fetcher/school.fetcher";
 
 const KPIManagement = () => {
+  const { data: schoolTypes, isPending: isSchoolTypesPending } =
+    useFetchSchoolTypes();
+  const [schoolType, setSchoolType] = useState("");
   const selectedYear = useAcademicYearStore((state) => state.selectedYear);
-  const { data, isPlaceholderData } = useFetchKPI(
-    { academic_year_id: selectedYear },
+  const { data, isPending, isPlaceholderData } = useFetchKPI(
+    {
+      academic_year_id: selectedYear,
+      school_type: schoolType,
+    },
     { placeholderData: keepPreviousData },
   );
 
   const kpiManagementData = data?.results?.data;
-
-  console.log(kpiManagementData);
 
   const rows = kpiManagementData?.map((kpi: any) => (
     <Table.Tr key={kpi.id}>
@@ -48,12 +54,14 @@ const KPIManagement = () => {
         </Box>
 
         <Group>
-          <Select
-            placeholder="Pick value"
-            defaultValue="Elementary"
-            rightSection={<AltArrowDown size={16} />}
-            data={["Elementary", "Angular", "Vue", "Svelte"]}
-          />
+          {isSchoolTypesPending ? (
+            <Skeleton h={36} w={150} radius="sm" />
+          ) : (
+            <KPISchoolTypePicker
+              data={schoolTypes.results.school_types}
+              callbackFn={(v) => setSchoolType(v)}
+            />
+          )}
 
           <AcademicYearPicker theme="outlined" />
 
@@ -62,20 +70,24 @@ const KPIManagement = () => {
           </Button>
         </Group>
       </Flex>
-      <ListPending pending={isPlaceholderData}>
-        <Table layout="fixed" horizontalSpacing={0}>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th w={"60%"}>KPI</Table.Th>
-              <Table.Th w={"13%"}>Male</Table.Th>
-              <Table.Th w={"13%"}>Female</Table.Th>
-              <Table.Th w={"13%"}>Total</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
+      {isPending ? (
+        <Skeleton h={330} w="100%" />
+      ) : (
+        <ListPending pending={isPlaceholderData}>
+          <Table layout="fixed" horizontalSpacing={0}>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th w={"60%"}>KPI</Table.Th>
+                <Table.Th w={"13%"}>Male</Table.Th>
+                <Table.Th w={"13%"}>Female</Table.Th>
+                <Table.Th w={"13%"}>Total</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
 
-          <Table.Tbody>{rows}</Table.Tbody>
-        </Table>
-      </ListPending>
+            <Table.Tbody>{rows}</Table.Tbody>
+          </Table>
+        </ListPending>
+      )}
     </Card>
   );
 };

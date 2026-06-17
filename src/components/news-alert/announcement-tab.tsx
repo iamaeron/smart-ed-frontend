@@ -23,15 +23,6 @@ import { useAuth } from "@/contexts/auth.context";
 const AnnouncementTab = () => {
   const { user } = useAuth();
   const { data, isPending } = useFetchAnnouncements();
-  const [expanded, { toggle }] = useDisclosure(false);
-
-  const latestPublicAnnouncements =
-    data?.results?.public.length > 3
-      ? data?.results?.public.slice(0, 3)
-      : data?.results?.public;
-
-  const morePublicAnnouncements =
-    data?.results?.public.length > 3 ? data?.results?.public.slice(3) : [];
 
   return user?.role === "School Account" ? (
     <Box>
@@ -84,6 +75,30 @@ const AnnouncementTab = () => {
       </Stack>
     </Box>
   ) : (
+    <FullAnnouncementSections data={data} isPending={isPending} />
+  );
+};
+
+export default AnnouncementTab;
+
+const FullAnnouncementSections = ({
+  data,
+  isPending,
+}: {
+  data: Record<any, any>;
+  isPending: boolean;
+}) => {
+  const [expanded, { toggle }] = useDisclosure(false);
+
+  const latestPublicAnnouncements =
+    data?.results?.public.length > 3
+      ? data?.results?.public.slice(0, 3)
+      : data?.results?.public;
+
+  const morePublicAnnouncements =
+    data?.results?.public.length > 3 ? data?.results?.public.slice(3) : [];
+
+  return (
     <>
       <Card
         w="100%"
@@ -205,5 +220,3 @@ const AnnouncementTab = () => {
     </>
   );
 };
-
-export default AnnouncementTab;
