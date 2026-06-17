@@ -1,3 +1,4 @@
+import { useAuth } from "@/contexts/auth.context";
 import { Box, Button, Card, Group, Table, Text } from "@mantine/core";
 
 export interface EnrollmentByGradeData {
@@ -8,6 +9,8 @@ export interface EnrollmentByGradeData {
 }
 
 const EnrollmentByGradeLevel = ({ data }: { data: any }) => {
+  const { user } = useAuth();
+
   const rows = data.levels.map((element: EnrollmentByGradeData) => (
     <Table.Tr key={element.grade_level}>
       <Table.Td width="100%">{element.grade_level}</Table.Td>
@@ -25,20 +28,28 @@ const EnrollmentByGradeLevel = ({ data }: { data: any }) => {
 
   return (
     <Card radius="lg" p="lg" shadow="sm">
-      <Group justify="space-between">
+      <Group mb={18} justify="space-between">
         <Box>
           <Text mb={2} fw={600}>
             Enrollment By Grade Level
           </Text>
-          <Text mb={18} c="longText" size="sm">
+          <Text c="longText" size="sm">
             Detailed breakdown of student enrollment per school and educational
             level
           </Text>
         </Box>
 
-        <Button mt={-12} p={0} variant="white" c="primary">
-          View all
-        </Button>
+        {user?.role === "School Account" && (
+          <Button
+            size="compact-sm"
+            radius="sm"
+            px="md"
+            variant="outline"
+            color="blue"
+          >
+            Edit
+          </Button>
+        )}
       </Group>
 
       <Table horizontalSpacing={0}>
