@@ -1,6 +1,7 @@
 import { useAuth } from "@/contexts/auth.context";
 import { Box, Button, Card, Group, Skeleton, Table, Text } from "@mantine/core";
 import { Link } from "react-router";
+import EditSchoolResourcesDataModal from "../school/edit-school-resources-data-modal";
 
 const ResourceSummary = ({
   summary = true,
@@ -11,6 +12,7 @@ const ResourceSummary = ({
   data?: { [k: string]: any };
   loading?: boolean;
 }) => {
+  console.log(data);
   const { user } = useAuth();
   const dummyTableData = [
     {
@@ -101,16 +103,8 @@ const ResourceSummary = ({
           </Button>
         ) : null}
 
-        {user?.role === "School Account" && (
-          <Button
-            size="compact-sm"
-            radius="sm"
-            px="md"
-            variant="outline"
-            color="blue"
-          >
-            Edit
-          </Button>
+        {user?.role === "School Account" && typeof loading === "boolean" && (
+          <EditSchoolResourcesDataModal data={data} loading={loading} />
         )}
       </Group>
 

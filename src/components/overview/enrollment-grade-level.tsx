@@ -1,5 +1,6 @@
 import { useAuth } from "@/contexts/auth.context";
-import { Box, Button, Card, Group, Skeleton, Table, Text } from "@mantine/core";
+import { Box, Card, Group, Skeleton, Table, Text } from "@mantine/core";
+import EditSchoolEnrollmentDataModal from "../school/edit-school-enrollment-data-modal";
 
 export interface EnrollmentByGradeData {
   grade_level: string;
@@ -65,15 +66,7 @@ const EnrollmentByGradeLevel = ({
         </Box>
 
         {user?.role === "School Account" && (
-          <Button
-            size="compact-sm"
-            radius="sm"
-            px="md"
-            variant="outline"
-            color="blue"
-          >
-            Edit
-          </Button>
+          <EditSchoolEnrollmentDataModal data={data.levels} loading={loading} />
         )}
       </Group>
 

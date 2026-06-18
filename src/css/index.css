@@ -8,8 +8,14 @@
   opacity: 0.25 !important;
 }
 
-.mantine-Input-input[data-variant="default"] {
+.mantine-Input-input[data-variant="default"]:not(.custom-data-input) {
   border-color: #9c9c9c;
+}
+
+.custom-data-input {
+  border-color: #bbbbbb;
+  padding: 0px 12px !important;
+  font-weight: 600;
 }
 
 .mantine-Input-input[data-variant="default"]:focus {
