@@ -53,7 +53,10 @@ const EnrollmentTab = ({ schoolName }: { schoolName: string }) => {
 
       {user?.role === "School Account" && (
         <Grid.Col span={12}>
-          <EnrollmentByGradeLevel data={enrollmentByGradeData} />
+          <EnrollmentByGradeLevel
+            data={enrollmentByGradeData}
+            loading={isPending}
+          />
         </Grid.Col>
       )}
 
@@ -67,7 +70,10 @@ const EnrollmentTab = ({ schoolName }: { schoolName: string }) => {
 
       {user?.role !== "School Account" && (
         <Grid.Col span={12}>
-          <EnrollmentByGradeLevel data={enrollmentByGradeData} />
+          <EnrollmentByGradeLevel
+            data={enrollmentByGradeData}
+            loading={isPending}
+          />
         </Grid.Col>
       )}
     </Grid>

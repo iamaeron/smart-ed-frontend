@@ -1,7 +1,10 @@
-import { Card, Divider, Grid, Text } from "@mantine/core";
+import { Button, Card, Divider, Flex, Grid, Text } from "@mantine/core";
 import SchoolLogoCard from "./school-logo-card";
+import { useAuth } from "@/contexts/auth.context";
 
 const SchoolInfo = ({ school }: { school: { [k: string]: any } }) => {
+  const { user } = useAuth();
+
   return (
     <Grid>
       <Grid.Col span={8}>
@@ -17,9 +20,23 @@ const SchoolInfo = ({ school }: { school: { [k: string]: any } }) => {
           shadow="xl"
           pb={40}
         >
-          <Text fw={600} fz={18} mt={2} mb={10}>
-            School Information
-          </Text>
+          <Flex mt={2} mb={10} align="center" justify="space-between">
+            <Text fw={600} fz={18}>
+              School Information
+            </Text>
+
+            {user?.role === "School Account" && (
+              <Button
+                size="compact-sm"
+                radius="sm"
+                px="md"
+                variant="outline"
+                color="blue"
+              >
+                Edit
+              </Button>
+            )}
+          </Flex>
           <Divider mb={20} />
           <Grid rowGap={20}>
             <Info label="School Name" value={school.school_name} />

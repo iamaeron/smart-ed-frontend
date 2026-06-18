@@ -1,13 +1,15 @@
 import { useAuth } from "@/contexts/auth.context";
-import { Box, Button, Card, Group, Table, Text } from "@mantine/core";
+import { Box, Button, Card, Group, Skeleton, Table, Text } from "@mantine/core";
 import { Link } from "react-router";
 
 const ResourceSummary = ({
   summary = true,
   data,
+  loading,
 }: {
   summary?: boolean;
   data?: { [k: string]: any };
+  loading?: boolean;
 }) => {
   const { user } = useAuth();
   const dummyTableData = [
@@ -37,16 +39,36 @@ const ResourceSummary = ({
     },
   ];
 
+  const paddingStyles = {
+    pr: summary ? 0 : 40,
+    pl: summary ? 0 : 50,
+  };
+
+  const skeleton = Array(4)
+    .fill(1)
+    .map((_, i) => (
+      <Table.Tr key={i}>
+        <Table.Td w={summary ? "auto" : "100%"}>
+          <Skeleton h={22} w={150} />
+        </Table.Td>
+        <Table.Td {...paddingStyles}>
+          <Skeleton h={22} w={50} />
+        </Table.Td>
+        <Table.Td {...paddingStyles}>
+          <Skeleton h={22} w={50} />
+        </Table.Td>
+        <Table.Td {...paddingStyles} fw={600}>
+          <Skeleton h={22} w={50} />
+        </Table.Td>
+      </Table.Tr>
+    ));
+
   const rows = (data ? data : dummyTableData).map((element: any) => (
     <Table.Tr key={element.resource_name}>
       <Table.Td w={summary ? "auto" : "100%"}>{element.resource_name}</Table.Td>
-      <Table.Td pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
-        {element.total_inventory}
-      </Table.Td>
-      <Table.Td pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
-        {element.total_requirement}
-      </Table.Td>
-      <Table.Td pr={summary ? 0 : 40} pl={summary ? 0 : 50} fw={600}>
+      <Table.Td {...paddingStyles}>{element.total_inventory}</Table.Td>
+      <Table.Td {...paddingStyles}>{element.total_requirement}</Table.Td>
+      <Table.Td {...paddingStyles} fw={600}>
         {element.total_need}
       </Table.Td>
     </Table.Tr>
@@ -54,12 +76,12 @@ const ResourceSummary = ({
 
   return (
     <Card radius="lg" p="lg" shadow="sm">
-      <Group justify="space-between">
+      <Group mb={18} justify="space-between">
         <Box>
           <Text mb={2} fw={600}>
             {summary ? "Resource Summary" : "Resource Management"}
           </Text>
-          <Text mb={18} c="longText" size="sm">
+          <Text c="longText" size="sm">
             {summary
               ? "A summary of classrooms, teachers, seats, and learning materials across all schools in the division."
               : "Monitor and manage school resources"}
@@ -78,6 +100,18 @@ const ResourceSummary = ({
             View all
           </Button>
         ) : null}
+
+        {user?.role === "School Account" && (
+          <Button
+            size="compact-sm"
+            radius="sm"
+            px="md"
+            variant="outline"
+            color="blue"
+          >
+            Edit
+          </Button>
+        )}
       </Group>
 
       <Table horizontalSpacing={0}>
@@ -95,7 +129,7 @@ const ResourceSummary = ({
             </Table.Th>
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
+        <Table.Tbody>{loading ? skeleton : rows}</Table.Tbody>
       </Table>
     </Card>
   );

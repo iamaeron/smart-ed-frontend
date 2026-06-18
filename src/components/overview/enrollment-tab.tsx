@@ -62,7 +62,10 @@ const EnrollmentTab = () => {
       </Grid.Col>
 
       <Grid.Col span={12}>
-        <EnrollmentByGradeLevel data={enrollmentByGradeData} />
+        <EnrollmentByGradeLevel
+          data={enrollmentByGradeData}
+          loading={isEnrollmentDataPending}
+        />
       </Grid.Col>
     </Grid>
   );

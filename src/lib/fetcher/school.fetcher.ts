@@ -19,7 +19,7 @@ export const useFetchSchools = (
 };
 
 export const useFetchSchool = (
-  schoolId: string,
+  schoolId: string | number,
   params: Param | {} = {},
   options?: FetcherOptions,
 ) => {

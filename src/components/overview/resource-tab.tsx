@@ -50,7 +50,11 @@ const ResourceTab = () => {
       </Grid.Col>
 
       <Grid.Col span={12}>
-        <ResourceSummary data={resourceData} summary={false} />
+        <ResourceSummary
+          data={resourceData}
+          summary={false}
+          loading={isPending}
+        />
       </Grid.Col>
     </Grid>
   );

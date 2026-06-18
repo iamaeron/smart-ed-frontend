@@ -1,5 +1,5 @@
 import { useAuth } from "@/contexts/auth.context";
-import { Box, Button, Card, Group, Table, Text } from "@mantine/core";
+import { Box, Button, Card, Group, Skeleton, Table, Text } from "@mantine/core";
 
 export interface EnrollmentByGradeData {
   grade_level: string;
@@ -8,7 +8,13 @@ export interface EnrollmentByGradeData {
   total_students: string;
 }
 
-const EnrollmentByGradeLevel = ({ data }: { data: any }) => {
+const EnrollmentByGradeLevel = ({
+  data,
+  loading,
+}: {
+  data: any;
+  loading: boolean;
+}) => {
   const { user } = useAuth();
 
   const rows = data.levels.map((element: EnrollmentByGradeData) => (
@@ -25,6 +31,25 @@ const EnrollmentByGradeLevel = ({ data }: { data: any }) => {
       </Table.Td>
     </Table.Tr>
   ));
+
+  const skeleton = Array(5)
+    .fill(1)
+    .map((_, i) => (
+      <Table.Tr key={i}>
+        <Table.Td width="100%">
+          <Skeleton h={22} w={150} />
+        </Table.Td>
+        <Table.Td pr={40} pl={50}>
+          <Skeleton h={22} w={50} />
+        </Table.Td>
+        <Table.Td pr={40} pl={50}>
+          <Skeleton h={22} w={50} />
+        </Table.Td>
+        <Table.Td pr={40} pl={50} fw={600}>
+          <Skeleton h={22} w={50} />
+        </Table.Td>
+      </Table.Tr>
+    ));
 
   return (
     <Card radius="lg" p="lg" shadow="sm">
@@ -67,7 +92,7 @@ const EnrollmentByGradeLevel = ({ data }: { data: any }) => {
             </Table.Th>
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>{rows}</Table.Tbody>
+        <Table.Tbody>{loading ? skeleton : rows}</Table.Tbody>
       </Table>
     </Card>
   );

@@ -21,7 +21,9 @@ import { useAuth } from "@/contexts/auth.context";
 
 const DivisionAdminSchoolDirectory = () => {
   const { user } = useAuth();
-  const { data, isPending } = useFetchSchool(user?.assignment?.school_id ?? "");
+  const { data, isPending } = useFetchSchool(
+    String(user?.assignment?.school_id) ?? "",
+  );
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [value, setValue] = useState<string | null>(
