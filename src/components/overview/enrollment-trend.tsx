@@ -65,6 +65,18 @@ const EnrollmentTrend = ({ data }: { data: Record<string, any>[] }) => {
               strokeLinecap: "round",
               radius: [99, 999, 5, 5],
             }}
+            xAxisProps={{
+              tickFormatter: (value, index) => {
+                // 1. Always show the first item
+                if (index === 0) return value;
+
+                // 2. Always show the last item
+                if (index === data.length - 1) return value;
+
+                // 3. For any item in the middle, mask it with "..."
+                return "...";
+              },
+            }}
             series={[
               { name: "total_male", label: "Male", color: "primary" },
               { name: "total_female", label: "Female", color: "accent1" },

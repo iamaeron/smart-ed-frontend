@@ -93,7 +93,7 @@ const ResourceSummary = ({
         {summary ? (
           <Button
             component={Link}
-            to={`/${user?.role.toLowerCase().replace(" ", "-")}/${user?.role.split(" ")[0].toLowerCase()}-overview?tab=2`}
+            to={`/${user?.role.toLowerCase().replace(" ", "-")}/${user?.role === "School Account" ? "school" : "division"}-overview?tab=2`}
             mt={-12}
             p={0}
             variant="white"

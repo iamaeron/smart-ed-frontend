@@ -22,17 +22,6 @@ const ActivityList = ({ data, page }: { data: any; page: number }) => {
         </Table.Td>
         <Table.Td>
           <Flex align="center" gap={8}>
-            <Center
-              component={Paper}
-              bdrs={999}
-              bg="#DBEAFE"
-              c="#1447E6"
-              fw={600}
-              w={30}
-              h={30}
-            >
-              {element.user.name[0]}
-            </Center>
             <Box>
               <Text fz={14} fw={500}>
                 {element.user.name}

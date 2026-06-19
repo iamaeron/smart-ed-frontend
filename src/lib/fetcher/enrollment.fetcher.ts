@@ -1,16 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../api";
 import type { FetcherOptions, Param } from "@/types/form/req.type";
+import { useAcademicYearStore } from "@/stores/academic-year.store";
 
 export const useFetchEnrollmentData = (
   params: Param | {} = {},
   options?: FetcherOptions,
 ) => {
-  const urlParams = new URLSearchParams(params).toString();
+  const selectedYear = useAcademicYearStore((state) => state.yearLabel);
+
+  const p = {
+    academic_year: selectedYear,
+    ...params,
+  };
+  const urlParams = new URLSearchParams(p).toString();
 
   return useQuery({
     ...options,
-    queryKey: ["enrollment_data", params],
+    queryKey: ["enrollment_data", p],
     queryFn: async () => {
       const res = await api.get(`/api/enrollment-data?${urlParams}`);
       return res.data;

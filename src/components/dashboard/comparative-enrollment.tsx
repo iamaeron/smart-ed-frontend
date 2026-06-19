@@ -46,6 +46,9 @@ const ComparativeEnrollment = () => {
         barProps={{
           strokeLinecap: "round",
           radius: [2, 999, 999, 2],
+          isAnimationActive: true,
+          animationDuration: 1200,
+          animationEasing: "ease-out",
         }}
         valueFormatter={(value) => new Intl.NumberFormat("en-US").format(value)}
         withBarValueLabel

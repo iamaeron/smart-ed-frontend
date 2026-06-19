@@ -13,19 +13,21 @@ const AcademicYearPicker = ({
   callbackFn?: () => void;
   theme?: "light" | "default" | "outlined";
 }) => {
-  const setAcademicYear = useAcademicYearStore((state) => state.setYear);
-  const { data, isPending } = useFetchAcademicYears();
+  const setAcademicYearId = useAcademicYearStore((state) => state.setYearId);
+  const setAcademicYearLabel = useAcademicYearStore((state) => state.setLabel);
+  const { data, isPending } = useFetchAcademicYears({ withoutUA: true });
   const [_value, setValue] = useState<string | null>(null);
 
   const defaultAcademicYear = data?.results?.data?.filter(
     (v: AcademicYear) => v.status === "default",
-  )[0].year_id;
+  )[0];
 
   useEffect(() => {
     if (defaultAcademicYear) {
-      setAcademicYear(defaultAcademicYear);
+      setAcademicYearId(defaultAcademicYear.year_id);
+      setAcademicYearLabel(defaultAcademicYear.academic_year);
     }
-  }, [defaultAcademicYear, setAcademicYear]);
+  }, [defaultAcademicYear, setAcademicYearId, setAcademicYearLabel]);
 
   if (isPending || !data) return <Skeleton h={36} w={150} radius="sm" />;
 
@@ -39,11 +41,14 @@ const AcademicYearPicker = ({
   const selectProps: SelectProps = {
     data: filterList,
     onChange: (val) => {
-      setAcademicYear(val);
+      setAcademicYearId(val);
+      const selectedItem = filterList.find((f) => f.value === val);
+      setAcademicYearLabel(selectedItem?.label);
+
       setValue(val);
       callbackFn ? callbackFn() : null;
     },
-    defaultValue: defaultAcademicYear ?? "",
+    defaultValue: defaultAcademicYear.year_id ?? "",
     allowDeselect: false,
     comboboxProps: {
       shadow: "xl",

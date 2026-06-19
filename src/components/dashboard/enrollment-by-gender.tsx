@@ -21,8 +21,11 @@ const EnrollmentByGender = () => {
             thickness={12}
             size={130}
             pieProps={{
-              paddingAngle: 2,
+              isAnimationActive: true,
+              animationDuration: 1200,
+              animationEasing: "ease-out",
               strokeLinecap: "round",
+              paddingAngle: 2,
               cornerRadius: 12,
             }}
           />

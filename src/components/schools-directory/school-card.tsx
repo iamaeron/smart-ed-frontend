@@ -39,11 +39,11 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
     <MotionGridCol layout variants={itemVariants} key={school.id} span={6}>
       <Card p="lg" radius="lg" shadow="sm">
         <Flex align="start" gap="md">
-          <Box>
+          <Box w={90} h={90}>
             <Image
               src={school.image ?? "/spcf-logo.png"}
-              width={90}
-              height={90}
+              width="100%"
+              height="100%"
               radius="md"
               loading="lazy"
               decoding="async"

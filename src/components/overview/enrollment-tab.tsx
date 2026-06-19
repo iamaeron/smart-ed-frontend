@@ -19,6 +19,12 @@ const EnrollmentTab = () => {
     (item: any) => item.academic_year === enrollmentData?.academic_year.name,
   ) || { levels: [] };
 
+  const enrollmentTrendData = enrollmentData?.five_year_trend
+    ? [...enrollmentData.five_year_trend].sort((a: any, b: any) =>
+        a.academic_year.localeCompare(b.academic_year),
+      )
+    : [];
+
   const totals =
     data?.results?.data?.enrollments_totals ??
     data?.results?.data?.school_totals;
@@ -51,14 +57,11 @@ const EnrollmentTab = () => {
       </Grid.Col>
 
       <Grid.Col span={6}>
-        <EnrollmentTrend data={data?.results?.data?.five_year_trend || []} />
+        <EnrollmentTrend data={enrollmentTrendData} />
       </Grid.Col>
 
       <Grid.Col span={6}>
-        <EnrollmentByEducationalLevel
-          // data={anotherDummyData}
-          data={transformedDataChart || []}
-        />
+        <EnrollmentByEducationalLevel data={transformedDataChart || []} />
       </Grid.Col>
 
       <Grid.Col span={12}>

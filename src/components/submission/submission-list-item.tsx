@@ -19,6 +19,7 @@ import {
 } from "@mingcute/react";
 import { User } from "@solar-icons/react";
 import dayjs from "dayjs";
+import ViewSubmissionModal from "./view-submission-modal";
 
 const SubmissionListItem = ({ submission }: { submission: Submission }) => {
   const statusColors = {
@@ -68,15 +69,7 @@ const SubmissionListItem = ({ submission }: { submission: Submission }) => {
         </Box>
 
         <div>
-          <Button
-            size="compact-sm"
-            variant="outline"
-            radius="sm"
-            px="sm"
-            leftSection={<Eye2Line size={18} />}
-          >
-            Review
-          </Button>
+          <ViewSubmissionModal submission={submission} />
         </div>
       </Flex>
 
@@ -113,7 +106,7 @@ const SubmissionListItem = ({ submission }: { submission: Submission }) => {
 
         <Grid.Col span={3}>
           <Text c="longText" fz={14}>
-            Submitted By
+            Date Submitted
           </Text>
           <Text fw={600} fz={14}>
             {dayjs(submission.date_submitted).format("MM/DD/YYYY")}
