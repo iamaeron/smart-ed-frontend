@@ -13,6 +13,7 @@ const SchoolResourceTab = ({ schoolName }: { schoolName: string }) => {
   const { data, isPending } = useFetchResources({ school_name: schoolName });
 
   const resourceData = data?.results?.data?.totals_by_resource || [];
+  const resourceDataItems = data?.results?.data?.items || [];
 
   return (
     <Grid rowGap={40}>
@@ -51,7 +52,7 @@ const SchoolResourceTab = ({ schoolName }: { schoolName: string }) => {
 
       <Grid.Col span={12}>
         <ResourceSummary
-          data={resourceData}
+          data={resourceDataItems}
           summary={false}
           loading={isPending}
         />

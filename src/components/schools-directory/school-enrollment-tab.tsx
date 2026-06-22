@@ -19,6 +19,12 @@ const EnrollmentTab = ({ schoolName }: { schoolName: string }) => {
 
   const schoolEnrollmentData = data?.results?.data;
 
+  const enrollmentTrendData = schoolEnrollmentData?.five_year_trend
+    ? [...schoolEnrollmentData.five_year_trend].sort((a: any, b: any) =>
+        a.academic_year.localeCompare(b.academic_year),
+      )
+    : [];
+
   const enrollmentByGradeData = schoolEnrollmentData?.enrollmentByGrade?.find(
     (item: any) =>
       item.academic_year === schoolEnrollmentData?.academic_year.name,
@@ -61,7 +67,7 @@ const EnrollmentTab = ({ schoolName }: { schoolName: string }) => {
       )}
 
       <Grid.Col span={6}>
-        <EnrollmentTrend data={schoolEnrollmentData?.five_year_trend || []} />
+        <EnrollmentTrend data={enrollmentTrendData} />
       </Grid.Col>
 
       <Grid.Col span={6}>

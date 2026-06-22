@@ -30,9 +30,11 @@ const KPITrend = () => {
   const { data: schoolTypes, isPending: isSchoolTypesPending } =
     useFetchSchoolTypes();
   const [schoolType, setSchoolType] = useState("Elementary");
+  const [kpiRate, setKpiRate] = useState("Gross Enrollment Rate");
   const { data, isPending, isPlaceholderData } = useFetchKPI(
     {
       school_type: schoolType,
+      kpi_rate: kpiRate,
     },
     { placeholderData: keepPreviousData },
   );
@@ -55,12 +57,26 @@ const KPITrend = () => {
           <Text c="longText" size="sm">
             TOTAL
           </Text>
-          <Text mb={2} fz={30} fw={700}>
-            88.4%
-          </Text>
-          <Text c="longText" size="sm">
-            Gross Enrollment Rate
-          </Text>
+          {isPending ? (
+            <>
+              <Skeleton my={6} w={150} h={38} />
+              <Skeleton w={250} h={20} />
+            </>
+          ) : (
+            <>
+              <Text mb={2} fz={30} fw={700}>
+                {
+                  data?.results?.data?.kpi_trends_total.find(
+                    (k: any) => k.kpirate === kpiRate,
+                  ).total_five_year_avg
+                }
+                %
+              </Text>
+              <Text c="longText" size="sm">
+                {kpiRate}
+              </Text>
+            </>
+          )}
         </Box>
 
         <Group>
@@ -75,9 +91,7 @@ const KPITrend = () => {
           {isPending ? (
             <Skeleton h={36} w={150} radius="sm" />
           ) : (
-            <KPIRatePicker
-            //   callbackFn={(v) => setSchoolType(v)}
-            />
+            <KPIRatePicker callbackFn={(v) => setKpiRate(v)} />
           )}
         </Group>
       </Flex>

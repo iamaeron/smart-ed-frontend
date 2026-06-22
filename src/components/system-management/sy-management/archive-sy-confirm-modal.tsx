@@ -10,13 +10,12 @@ const ArchiveSYConfirmModal = ({ sy, onClose, opened }: EditSYModalProps) => {
 
   const handleArchive = async () => {
     try {
-      const res = await api.post(
+      const res = await api.put(
         `/api/academic-years/${sy.year_id}/change-status`,
-        { status: "archived" },
       );
       if (res.data.code === 200) {
         queryClient.invalidateQueries({ queryKey: ["academic_years", {}] });
-        toast(res.data.message);
+        toast(res.data.results.action);
         onClose();
       }
     } catch (error) {

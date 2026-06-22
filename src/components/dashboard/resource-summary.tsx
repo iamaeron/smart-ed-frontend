@@ -66,12 +66,12 @@ const ResourceSummary = ({
     ));
 
   const rows = (data ? data : dummyTableData).map((element: any) => (
-    <Table.Tr key={element.resource_name}>
+    <Table.Tr key={element.id}>
       <Table.Td w={summary ? "auto" : "100%"}>{element.resource_name}</Table.Td>
-      <Table.Td {...paddingStyles}>{element.total_inventory}</Table.Td>
-      <Table.Td {...paddingStyles}>{element.total_requirement}</Table.Td>
+      <Table.Td {...paddingStyles}>{element.inventory}</Table.Td>
+      <Table.Td {...paddingStyles}>{element.requirement}</Table.Td>
       <Table.Td {...paddingStyles} fw={600}>
-        {element.total_need}
+        {element.need}
       </Table.Td>
     </Table.Tr>
   ));

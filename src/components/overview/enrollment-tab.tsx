@@ -25,6 +25,8 @@ const EnrollmentTab = () => {
       )
     : [];
 
+  // const enrollmentTrendData = enrollmentData?.five_year_trend || [];
+
   const totals =
     data?.results?.data?.enrollments_totals ??
     data?.results?.data?.school_totals;

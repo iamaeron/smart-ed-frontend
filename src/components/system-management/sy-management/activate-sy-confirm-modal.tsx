@@ -10,9 +10,8 @@ const ActivateSYConfirmModal = ({ sy, onClose, opened }: EditSYModalProps) => {
 
   const handleActivate = async () => {
     try {
-      const res = await api.post(
+      const res = await api.put(
         `/api/academic-years/${sy.year_id}/change-status`,
-        { status: "active" },
       );
       if (res.data.code === 200) {
         queryClient.invalidateQueries({ queryKey: ["academic_years", {}] });
