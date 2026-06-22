@@ -13,7 +13,7 @@ const ProtectedRoutes = () => {
   const setYear = useAcademicYearStore((state) => state.setYear);
 
   const defaultAcademicYear = data?.results?.data?.filter(
-    (v: AcademicYear) => v.status === "default",
+    (v: AcademicYear) => v.status === "active",
   )[0];
 
   useEffect(() => {

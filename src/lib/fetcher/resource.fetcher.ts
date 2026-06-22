@@ -13,6 +13,7 @@ export const useFetchResources = (
     academic_year: selectedYear,
     ...params,
   };
+
   const urlParams = new URLSearchParams(p).toString();
 
   return useQuery({

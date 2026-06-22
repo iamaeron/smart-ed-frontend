@@ -17,7 +17,7 @@ const EnrollmentTrend = ({ data }: { data: Record<string, any>[] }) => {
     >
       <Stack gap={0} align="center">
         <Text mt={2} fw={600}>
-          Five-Year Enrollment Trend
+          Three-Year Enrollment Trend
         </Text>
         <Text mt={2} size="sm" c="longText">
           Public vs. Private School Enrollment (2023-2025)

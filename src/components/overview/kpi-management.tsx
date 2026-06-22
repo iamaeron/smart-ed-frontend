@@ -10,7 +10,6 @@ import {
   Skeleton,
 } from "@mantine/core";
 import AcademicYearPicker from "../dashboard/academic-year-picker";
-import { useAcademicYearStore } from "@/stores/academic-year.store";
 import { keepPreviousData } from "@tanstack/react-query";
 import ListPending from "../list-pending";
 import { useState } from "react";
@@ -21,16 +20,14 @@ const KPIManagement = () => {
   const { data: schoolTypes, isPending: isSchoolTypesPending } =
     useFetchSchoolTypes();
   const [schoolType, setSchoolType] = useState("Elementary");
-  const selectedYearId = useAcademicYearStore((state) => state.selectedYearId);
   const { data, isPending, isPlaceholderData } = useFetchKPI(
     {
-      academic_year_id: selectedYearId,
       school_type: schoolType,
     },
     { placeholderData: keepPreviousData },
   );
 
-  const kpiManagementData = data?.results?.data;
+  const kpiManagementData = data?.results?.data?.items || [];
 
   const rows = kpiManagementData?.map((kpi: any) => (
     <Table.Tr key={kpi.id}>
@@ -84,7 +81,17 @@ const KPIManagement = () => {
               </Table.Tr>
             </Table.Thead>
 
-            <Table.Tbody>{rows}</Table.Tbody>
+            <Table.Tbody>
+              {kpiManagementData.length > 0 ? (
+                rows
+              ) : (
+                <Table.Tr>
+                  <Table.Td py="xl" colSpan={4} style={{ textAlign: "center" }}>
+                    No KPI data available at the moment.
+                  </Table.Td>
+                </Table.Tr>
+              )}
+            </Table.Tbody>
           </Table>
         </ListPending>
       )}
