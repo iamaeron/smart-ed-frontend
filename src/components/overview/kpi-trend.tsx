@@ -1,4 +1,4 @@
-import { useFetchKPI } from "@/lib/fetcher/kpi.fetcher";
+import { useFetchKPI, useFetchKPITrends } from "@/lib/fetcher/kpi.fetcher";
 import { useFetchSchoolTypes } from "@/lib/fetcher/school.fetcher";
 import { AreaChart } from "@mantine/charts";
 import { Box, Card, Flex, Group, Skeleton, Text } from "@mantine/core";
@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ResponsiveContainer } from "recharts";
 import KPISchoolTypePicker from "./kpi-school-type-picker";
 import KPIRatePicker from "./kpi-rate-picker";
+import ListPending from "../list-pending";
 
 const dummyData = [
   {
@@ -31,13 +32,16 @@ const KPITrend = () => {
     useFetchSchoolTypes();
   const [schoolType, setSchoolType] = useState("Elementary");
   const [kpiRate, setKpiRate] = useState("Gross Enrollment Rate");
-  const { data, isPending, isPlaceholderData } = useFetchKPI(
+  const { data, isPending, isPlaceholderData } = useFetchKPITrends(
     {
       school_type: schoolType,
       kpi_rate: kpiRate,
     },
     { placeholderData: keepPreviousData },
   );
+
+  const kpiTrendTotal = data?.results?.data?.kpi_trends_total;
+  const kpiTrends = data?.results?.data?.kpi_trends || [];
 
   console.log(data);
 
@@ -65,11 +69,9 @@ const KPITrend = () => {
           ) : (
             <>
               <Text mb={2} fz={30} fw={700}>
-                {
-                  data?.results?.data?.kpi_trends_total.find(
-                    (k: any) => k.kpirate === kpiRate,
-                  ).total_five_year_avg
-                }
+                {kpiTrendTotal.length > 0
+                  ? kpiTrendTotal[0].total_five_year_avg
+                  : "Gross Enrollment Rate"}
                 %
               </Text>
               <Text c="longText" size="sm">
@@ -96,30 +98,37 @@ const KPITrend = () => {
         </Group>
       </Flex>
 
-      <ResponsiveContainer debounce={250} height={300}>
-        <AreaChart
-          data={dummyData}
-          dataKey="year"
-          dotProps={{
-            r: 2.5,
-          }}
-          series={[
-            { name: "Male", color: "blue.5" },
-            { name: "Female", color: "red.4" },
-          ]}
-          legendProps={{
-            align: "center",
-            verticalAlign: "bottom",
-          }}
-          curveType="linear"
-          withDots
-          withLegend
-          gridAxis="xy"
-          yAxisProps={{
-            domain: [85, 100],
-          }}
-        />
-      </ResponsiveContainer>
+      <ListPending pending={isPlaceholderData}>
+        <ResponsiveContainer debounce={250} height={300}>
+          <AreaChart
+            data={kpiTrends}
+            dataKey="academic_year.name"
+            dotProps={{
+              r: 2.5,
+            }}
+            series={[
+              { name: "male", color: "blue.5" },
+              { name: "female", color: "red.4" },
+            ]}
+            areaProps={{
+              isAnimationActive: true,
+              animationDuration: 700,
+              animationEasing: "ease-out",
+            }}
+            legendProps={{
+              align: "center",
+              verticalAlign: "bottom",
+            }}
+            curveType="linear"
+            withDots
+            withLegend
+            gridAxis="xy"
+            yAxisProps={{
+              domain: [85, 100],
+            }}
+          />
+        </ResponsiveContainer>
+      </ListPending>
     </Card>
   );
 };

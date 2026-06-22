@@ -22,7 +22,7 @@ const EnrollmentByGender = () => {
             size={130}
             pieProps={{
               isAnimationActive: true,
-              animationDuration: 1200,
+              animationDuration: 700,
               animationEasing: "ease-out",
               strokeLinecap: "round",
               paddingAngle: 2,

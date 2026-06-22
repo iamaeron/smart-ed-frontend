@@ -20,7 +20,7 @@ const SchoolResourceTab = ({ schoolName }: { schoolName: string }) => {
       <Grid.Col span={3}>
         <OverviewCol
           label="Total Classrooms"
-          value={resourceData[0]?.total_inventory}
+          value={resourceData[0]?.inventory}
           icon={Buildings}
           loading={isPending}
         />
@@ -28,7 +28,7 @@ const SchoolResourceTab = ({ schoolName }: { schoolName: string }) => {
       <Grid.Col span={3}>
         <OverviewCol
           label="Total Teachers"
-          value={resourceData[1]?.total_inventory}
+          value={resourceData[1]?.inventory}
           icon={UserHandUp}
           loading={isPending}
         />
@@ -36,7 +36,7 @@ const SchoolResourceTab = ({ schoolName }: { schoolName: string }) => {
       <Grid.Col span={3}>
         <OverviewCol
           label="Functional Seats"
-          value={resourceData[2]?.total_inventory}
+          value={resourceData[2]?.inventory}
           icon={Chair}
           loading={isPending}
         />
@@ -44,7 +44,7 @@ const SchoolResourceTab = ({ schoolName }: { schoolName: string }) => {
       <Grid.Col span={3}>
         <OverviewCol
           label="Learning Materials"
-          value={resourceData[3]?.total_inventory}
+          value={resourceData[3]?.inventory}
           icon={NotebookBookmark}
           loading={isPending}
         />

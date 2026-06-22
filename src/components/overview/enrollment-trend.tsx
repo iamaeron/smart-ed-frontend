@@ -1,6 +1,7 @@
 import { BarChart } from "@mantine/charts";
 import { Card, Group, Stack, Text } from "@mantine/core";
 import { ResponsiveContainer } from "recharts";
+import ListPending from "../list-pending";
 
 const EnrollmentTrend = ({ data }: { data: Record<string, any>[] }) => {
   return (
@@ -60,7 +61,7 @@ const EnrollmentTrend = ({ data }: { data: Record<string, any>[] }) => {
             dataKey="academic_year"
             barProps={{
               isAnimationActive: true,
-              animationDuration: 1200,
+              animationDuration: 700,
               animationEasing: "ease-out",
               strokeLinecap: "round",
               radius: [99, 999, 5, 5],

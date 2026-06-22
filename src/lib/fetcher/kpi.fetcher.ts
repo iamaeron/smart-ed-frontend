@@ -25,3 +25,26 @@ export const useFetchKPI = (
     },
   });
 };
+
+export const useFetchKPITrends = (
+  params: Param | {} = {},
+  options?: FetcherOptions,
+) => {
+  const selectedYear = useAcademicYearStore((state) => state.yearLabel);
+
+  const p = {
+    academic_year: selectedYear,
+    ...params,
+  };
+
+  const urlParams = new URLSearchParams(p).toString();
+
+  return useQuery({
+    ...options,
+    queryKey: ["kpi", p],
+    queryFn: async () => {
+      const res = await api.get(`/api/kpi-data-trends?${urlParams}`);
+      return res.data;
+    },
+  });
+};

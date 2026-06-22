@@ -35,7 +35,7 @@ const EnrollmentByEducationalLevel = ({
             }}
             areaProps={{
               isAnimationActive: true,
-              animationDuration: 1200,
+              animationDuration: 700,
               animationEasing: "ease-out",
             }}
             xAxisProps={{
