@@ -17,7 +17,7 @@ export const useFetchResources = (
 
   return useQuery({
     ...options,
-    queryKey: ["resources", params],
+    queryKey: ["resources", p],
     queryFn: async () => {
       const res = await api.get(`/api/resource-data?${urlParams}`);
       return res.data;

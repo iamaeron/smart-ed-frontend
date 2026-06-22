@@ -9,19 +9,18 @@ import { Navigate, Outlet } from "react-router";
 const ProtectedRoutes = () => {
   const { isLoading, user } = useAuth();
   const { data, isPending } = useFetchAcademicYears({ withoutUA: true });
-  const setAcademicYearId = useAcademicYearStore((state) => state.setYearId);
-  const setAcademicYearLabel = useAcademicYearStore((state) => state.setLabel);
+  const selectedYearId = useAcademicYearStore((state) => state.selectedYearId);
+  const setYear = useAcademicYearStore((state) => state.setYear);
 
   const defaultAcademicYear = data?.results?.data?.filter(
     (v: AcademicYear) => v.status === "default",
   )[0];
 
   useEffect(() => {
-    if (defaultAcademicYear) {
-      setAcademicYearId(defaultAcademicYear.year_id);
-      setAcademicYearLabel(defaultAcademicYear.academic_year);
+    if (defaultAcademicYear && !selectedYearId) {
+      setYear(defaultAcademicYear.year_id, defaultAcademicYear.academic_year);
     }
-  }, [defaultAcademicYear, setAcademicYearId, setAcademicYearLabel]);
+  }, [selectedYearId, defaultAcademicYear, setYear]);
 
   if (isLoading || isPending) return <Loader />;
 

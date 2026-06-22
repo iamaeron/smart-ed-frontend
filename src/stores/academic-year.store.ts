@@ -5,16 +5,14 @@ type AcademicYearStore = {
   selectedYearId: string;
   yearLabel: string;
   academicYears: AcademicYear[];
-  setYearId: (value: any) => void;
-  setLabel: (label: any) => void;
-  setAcademicYears: (data: any) => void;
+  setYear: (id: string, label: string) => void;
+  setAcademicYears: (data: AcademicYear[]) => void;
 };
 
 export const useAcademicYearStore = create<AcademicYearStore>((set) => ({
   selectedYearId: "",
   yearLabel: "",
   academicYears: [],
-  setYearId: (value: any) => set({ selectedYearId: value }),
-  setLabel: (label: any) => set({ yearLabel: label }),
-  setAcademicYears: (data: any) => set({ academicYears: data }),
+  setYear: (id, label) => set({ selectedYearId: id, yearLabel: label }),
+  setAcademicYears: (data) => set({ academicYears: data }),
 }));

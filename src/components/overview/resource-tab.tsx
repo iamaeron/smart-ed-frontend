@@ -12,8 +12,6 @@ import { useFetchResources } from "@/lib/fetcher/resource.fetcher";
 const ResourceTab = () => {
   const { data, isPending } = useFetchResources();
 
-  console.log(data);
-
   const resourceData = data?.results?.data?.totals_by_resource || [];
 
   return (

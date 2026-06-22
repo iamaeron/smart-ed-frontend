@@ -11,7 +11,12 @@ const OverviewTabs = () => {
     useTabs("1");
 
   return (
-    <Tabs variant="none" value={value} onChange={handleSwitchTab}>
+    <Tabs
+      keepMounted={true}
+      variant="none"
+      value={value}
+      onChange={handleSwitchTab}
+    >
       <TabListScroller>
         <Tabs.List ref={setRootRef} className={classes.list}>
           <Tabs.Tab value="1" ref={setControlRef("1")} className={classes.tab}>

@@ -20,11 +20,11 @@ import { useFetchSchoolTypes } from "@/lib/fetcher/school.fetcher";
 const KPIManagement = () => {
   const { data: schoolTypes, isPending: isSchoolTypesPending } =
     useFetchSchoolTypes();
-  const [schoolType, setSchoolType] = useState("");
-  const selectedYear = useAcademicYearStore((state) => state.selectedYear);
+  const [schoolType, setSchoolType] = useState("Elementary");
+  const selectedYearId = useAcademicYearStore((state) => state.selectedYearId);
   const { data, isPending, isPlaceholderData } = useFetchKPI(
     {
-      academic_year_id: selectedYear,
+      academic_year_id: selectedYearId,
       school_type: schoolType,
     },
     { placeholderData: keepPreviousData },

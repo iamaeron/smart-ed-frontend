@@ -2,7 +2,6 @@ import { Select, Skeleton, type SelectProps } from "@mantine/core";
 import selectClasses from "@/css/select.module.css";
 import { AltArrowDown } from "@solar-icons/react";
 import { useFetchAcademicYears } from "@/lib/fetcher/academic-year.fetcher";
-import { useEffect, useState } from "react";
 import type { AcademicYear } from "@/types/data/academic-year.type";
 import { useAcademicYearStore } from "@/stores/academic-year.store";
 
@@ -13,21 +12,9 @@ const AcademicYearPicker = ({
   callbackFn?: () => void;
   theme?: "light" | "default" | "outlined";
 }) => {
-  const setAcademicYearId = useAcademicYearStore((state) => state.setYearId);
-  const setAcademicYearLabel = useAcademicYearStore((state) => state.setLabel);
+  const selectedYearId = useAcademicYearStore((state) => state.selectedYearId);
+  const setYear = useAcademicYearStore((state) => state.setYear);
   const { data, isPending } = useFetchAcademicYears({ withoutUA: true });
-  const [_value, setValue] = useState<string | null>(null);
-
-  const defaultAcademicYear = data?.results?.data?.filter(
-    (v: AcademicYear) => v.status === "default",
-  )[0];
-
-  useEffect(() => {
-    if (defaultAcademicYear) {
-      setAcademicYearId(defaultAcademicYear.year_id);
-      setAcademicYearLabel(defaultAcademicYear.academic_year);
-    }
-  }, [defaultAcademicYear, setAcademicYearId, setAcademicYearLabel]);
 
   if (isPending || !data) return <Skeleton h={36} w={150} radius="sm" />;
 
@@ -40,19 +27,14 @@ const AcademicYearPicker = ({
 
   const selectProps: SelectProps = {
     data: filterList,
+    value: selectedYearId || null,
     onChange: (val) => {
-      setAcademicYearId(val);
+      if (!val) return;
       const selectedItem = filterList.find((f) => f.value === val);
-      setAcademicYearLabel(selectedItem?.label);
-
-      setValue(val);
-      callbackFn ? callbackFn() : null;
+      setYear(val, selectedItem?.label ?? "");
     },
-    defaultValue: defaultAcademicYear.year_id ?? "",
     allowDeselect: false,
-    comboboxProps: {
-      shadow: "xl",
-    },
+    comboboxProps: { shadow: "xl" },
   };
 
   return theme === "outlined" ? (
