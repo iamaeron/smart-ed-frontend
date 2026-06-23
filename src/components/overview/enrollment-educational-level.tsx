@@ -61,7 +61,7 @@ const EnrollmentByEducationalLevel = ({
         </ResponsiveContainer>
 
         <Group mt={20} gap={14}>
-          {legendData.map(([k, v], i) => {
+          {legendData.map(([k, _], i) => {
             const educLevel = series.find((s) => s.name === k);
 
             if (!educLevel) return null;

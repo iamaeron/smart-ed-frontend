@@ -18,7 +18,11 @@ const ProtectedRoutes = () => {
 
   useEffect(() => {
     if (defaultAcademicYear && !selectedYearId) {
-      setYear(defaultAcademicYear.year_id, defaultAcademicYear.academic_year);
+      setYear(
+        defaultAcademicYear.year_id,
+        defaultAcademicYear.academic_year,
+        defaultAcademicYear.status,
+      );
     }
   }, [selectedYearId, defaultAcademicYear, setYear]);
 

@@ -6,10 +6,8 @@ import type { AcademicYear } from "@/types/data/academic-year.type";
 import { useAcademicYearStore } from "@/stores/academic-year.store";
 
 const AcademicYearPicker = ({
-  callbackFn,
   theme = "light",
 }: {
-  callbackFn?: () => void;
   theme?: "light" | "default" | "outlined";
 }) => {
   const selectedYearId = useAcademicYearStore((state) => state.selectedYearId);
@@ -22,6 +20,7 @@ const AcademicYearPicker = ({
     return {
       value: academic.year_id,
       label: academic.academic_year,
+      status: academic.status,
     };
   });
 
@@ -31,7 +30,7 @@ const AcademicYearPicker = ({
     onChange: (val) => {
       if (!val) return;
       const selectedItem = filterList.find((f) => f.value === val);
-      setYear(val, selectedItem?.label ?? "");
+      setYear(val, selectedItem?.label ?? "", selectedItem?.status ?? "active");
     },
     allowDeselect: false,
     comboboxProps: { shadow: "xl" },

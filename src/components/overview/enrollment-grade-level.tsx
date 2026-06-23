@@ -1,6 +1,7 @@
 import { useAuth } from "@/contexts/auth.context";
 import { Box, Card, Group, Skeleton, Table, Text } from "@mantine/core";
 import EditSchoolEnrollmentDataModal from "../school/edit-school-enrollment-data-modal";
+import { useAcademicYearStore } from "@/stores/academic-year.store";
 
 export interface EnrollmentByGradeData {
   grade_level: string;
@@ -17,6 +18,7 @@ const EnrollmentByGradeLevel = ({
   loading: boolean;
 }) => {
   const { user } = useAuth();
+  const selectedYearStatus = useAcademicYearStore((state) => state.yearStatus);
 
   const rows = data.levels.map((element: EnrollmentByGradeData) => (
     <Table.Tr key={element.grade_level}>
@@ -65,9 +67,13 @@ const EnrollmentByGradeLevel = ({
           </Text>
         </Box>
 
-        {user?.role === "School Account" && (
-          <EditSchoolEnrollmentDataModal data={data.levels} loading={loading} />
-        )}
+        {user?.role === "School Account" &&
+          selectedYearStatus === "default" && (
+            <EditSchoolEnrollmentDataModal
+              data={data.levels}
+              loading={loading}
+            />
+          )}
       </Group>
 
       <Table horizontalSpacing={0}>

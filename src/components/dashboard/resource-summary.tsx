@@ -2,6 +2,7 @@ import { useAuth } from "@/contexts/auth.context";
 import { Box, Button, Card, Group, Skeleton, Table, Text } from "@mantine/core";
 import { Link } from "react-router";
 import EditSchoolResourcesDataModal from "../school/edit-school-resources-data-modal";
+import { useAcademicYearStore } from "@/stores/academic-year.store";
 
 const ResourceSummary = ({
   summary = true,
@@ -12,8 +13,9 @@ const ResourceSummary = ({
   data?: { [k: string]: any };
   loading?: boolean;
 }) => {
-  console.log(data);
   const { user } = useAuth();
+  const selectedYearStatus = useAcademicYearStore((state) => state.yearStatus);
+
   const dummyTableData = [
     {
       resource_name: "Classrooms",
@@ -103,9 +105,11 @@ const ResourceSummary = ({
           </Button>
         ) : null}
 
-        {user?.role === "School Account" && typeof loading === "boolean" && (
-          <EditSchoolResourcesDataModal data={data} loading={loading} />
-        )}
+        {user?.role === "School Account" &&
+          selectedYearStatus === "default" &&
+          typeof loading === "boolean" && (
+            <EditSchoolResourcesDataModal data={data} loading={loading} />
+          )}
       </Group>
 
       <Table horizontalSpacing={0}>
