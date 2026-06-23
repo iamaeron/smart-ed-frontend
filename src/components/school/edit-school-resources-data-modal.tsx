@@ -35,7 +35,9 @@ const EditSchoolResourcesDataModal = ({
           classNames={{
             input: "custom-data-input",
           }}
-          defaultValue={element.total_inventory}
+          type="number"
+          onFocus={(e) => e.target.select()}
+          defaultValue={element.inventory}
           className="w-full"
         />
       </Table.Td>
@@ -44,7 +46,9 @@ const EditSchoolResourcesDataModal = ({
           classNames={{
             input: "custom-data-input",
           }}
-          defaultValue={element.total_requirement}
+          type="number"
+          onFocus={(e) => e.target.select()}
+          defaultValue={element.requirement}
           className="w-full"
         />
       </Table.Td>

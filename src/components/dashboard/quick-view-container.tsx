@@ -17,7 +17,7 @@ const QuickViewContainer = ({ children }: QuickViewContainerType) => {
   console.log(user);
 
   return (
-    <Paper>
+    <Paper bg="#0d4fe2" radius="lg">
       <BackgroundImage src={bg} c="white" p="xl" radius="lg">
         <Flex mb={30} align="flex-end" justify="space-between">
           <Box>

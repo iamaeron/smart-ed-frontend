@@ -1,16 +1,21 @@
 import { useAuth } from "@/contexts/auth.context";
+import { useFetchSubmission } from "@/lib/fetcher/submission.fetcher";
 import type { Submission } from "@/types/data/submission.type";
 import {
   ActionIcon,
   Box,
   Button,
   Card,
+  Divider,
   Flex,
   Grid,
   Group,
   Modal,
   Paper,
+  Skeleton,
+  Table,
   Text,
+  Title,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -22,10 +27,15 @@ import {
 } from "@mingcute/react";
 import dayjs from "dayjs";
 import { User, X } from "lucide-react";
+import ReturnSubmissionModal from "./return-submission-modal";
+import ApproveSubmissionConfirmModal from "./approve-submission-confirm-modal";
 
 const ViewSubmissionModal = ({ submission }: { submission: Submission }) => {
   const { user } = useAuth();
+  const { data, isPending } = useFetchSubmission(String(submission.id));
   const [opened, { open, close }] = useDisclosure(false);
+
+  const submissionData = data?.results?.data;
 
   const statusColors = {
     pending: {
@@ -42,7 +52,37 @@ const ViewSubmissionModal = ({ submission }: { submission: Submission }) => {
     },
   };
 
-  console.log(submission);
+  const rows = submissionData?.details?.items.map((element: any) => (
+    <Table.Tr key={element.grade_level}>
+      <Table.Td fw={600} ta="left">
+        {element.grade_level}
+      </Table.Td>
+      <Table.Td pl={10} ta="left">
+        <Paper
+          withBorder
+          px="xs"
+          py={2}
+          style={{ borderColor: "#d5d5d5" }}
+          fw={600}
+          radius="sm"
+        >
+          {element.female_count}
+        </Paper>
+      </Table.Td>
+      <Table.Td pl={10} ta="left">
+        <Paper
+          withBorder
+          px="xs"
+          py={2}
+          style={{ borderColor: "#d5d5d5" }}
+          fw={600}
+          radius="sm"
+        >
+          {element.female_count}
+        </Paper>
+      </Table.Td>
+    </Table.Tr>
+  ));
 
   return (
     <>
@@ -91,7 +131,7 @@ const ViewSubmissionModal = ({ submission }: { submission: Submission }) => {
             <Box>
               <Box>
                 <Group>
-                  <Text fw={600}>{submission.school.name}</Text>
+                  <Text fw={600}>{submission.school.school_name}</Text>
                   <Paper
                     c="white"
                     bg={statusColors[submission.status].bg}
@@ -113,7 +153,7 @@ const ViewSubmissionModal = ({ submission }: { submission: Submission }) => {
                   </Group>
                 </Group>
                 <Text c="longText" fz={14}>
-                  School ID: {submission.school.code}
+                  School ID: {submission.school.school_code}
                 </Text>
               </Box>
 
@@ -157,11 +197,62 @@ const ViewSubmissionModal = ({ submission }: { submission: Submission }) => {
                   </Text>
                 </Grid.Col>
               </Grid>
+
+              <Divider my="md" />
+
+              <Box>
+                <Title order={5} mb="sm">
+                  Submission Data
+                </Title>
+                {isPending ? (
+                  <Skeleton h={300} w="100%" />
+                ) : (
+                  <Paper radius="sm" bg="white" p="lg">
+                    <Title order={6} mb="xs" tt="capitalize">
+                      {submissionData.type} Data
+                    </Title>
+
+                    <Table layout="fixed" horizontalSpacing={0}>
+                      <Table.Thead>
+                        <Table.Tr>
+                          <Table.Th w="60%" fw="400" fz={14} c="longText">
+                            Grade Level
+                          </Table.Th>
+                          <Table.Th
+                            w="20%"
+                            fw="400"
+                            fz={14}
+                            c="longText"
+                            pr={10}
+                            pl={10}
+                          >
+                            Male
+                          </Table.Th>
+                          <Table.Th
+                            w="20%"
+                            fw="400"
+                            fz={14}
+                            c="longText"
+                            pr={10}
+                            pl={10}
+                          >
+                            Female
+                          </Table.Th>
+                        </Table.Tr>
+                      </Table.Thead>
+                      <Table.Tbody>{rows}</Table.Tbody>
+                    </Table>
+                  </Paper>
+                )}
+              </Box>
             </Box>
 
-            {user?.role !== "School Account" && (
-              <Flex justify="flex-end" mt={20} gap={8}>
-                <Button
+            {user?.role !== "School Account" &&
+              submission.status === "pending" && (
+                <Flex justify="flex-end" mt={20} gap={8}>
+                  <ReturnSubmissionModal submission={submission} />
+                  <ApproveSubmissionConfirmModal submission={submission} />
+                  {/* <Button
                   onClick={close}
                   tt="uppercase"
                   variant="outline"
@@ -170,10 +261,10 @@ const ViewSubmissionModal = ({ submission }: { submission: Submission }) => {
                   type="button"
                 >
                   Cancel
-                </Button>
-                {/* <EditSchoolDataConfirmModal /> */}
-              </Flex>
-            )}
+                </Button> */}
+                  {/* <EditSchoolDataConfirmModal /> */}
+                </Flex>
+              )}
           </Paper>
         </form>
       </Modal>

@@ -1,22 +1,6 @@
 import type { Submission } from "@/types/data/submission.type";
-import {
-  Grid,
-  Box,
-  Button,
-  Card,
-  Flex,
-  Group,
-  Pill,
-  Text,
-  Paper,
-} from "@mantine/core";
-import {
-  Back2Line,
-  Comment2Line,
-  Eye2Line,
-  TimeLine,
-  CheckFill,
-} from "@mingcute/react";
+import { Grid, Box, Card, Flex, Group, Text, Paper } from "@mantine/core";
+import { Back2Line, Comment2Line, TimeLine, CheckFill } from "@mingcute/react";
 import { User } from "@solar-icons/react";
 import dayjs from "dayjs";
 import ViewSubmissionModal from "./view-submission-modal";
@@ -42,7 +26,7 @@ const SubmissionListItem = ({ submission }: { submission: Submission }) => {
       <Flex justify="space-between">
         <Box>
           <Group>
-            <Text fw={600}>{submission.school.name}</Text>
+            <Text fw={600}>{submission.school.school_name}</Text>
             <Paper
               c="white"
               bg={statusColors[submission.status].bg}
@@ -64,7 +48,7 @@ const SubmissionListItem = ({ submission }: { submission: Submission }) => {
             </Group>
           </Group>
           <Text c="longText" fz={14}>
-            School ID: {submission.school.code}
+            School ID: {submission.school.school_code}
           </Text>
         </Box>
 

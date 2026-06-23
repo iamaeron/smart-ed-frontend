@@ -1,4 +1,4 @@
-import { Button, Flex, Paper, Stack, Text } from "@mantine/core";
+import { Box, Button, Flex, Paper, Stack, Text } from "@mantine/core";
 import type { Icon } from "@solar-icons/react/lib/types";
 
 type ConfirmPopupProps = {
@@ -10,6 +10,7 @@ type ConfirmPopupProps = {
   confirmText?: string;
   PopupIcon?: Icon;
   formId?: string;
+  bodyInput?: () => React.ReactNode;
 };
 
 const ConfirmPopupUI = ({
@@ -21,6 +22,7 @@ const ConfirmPopupUI = ({
   confirmText,
   PopupIcon,
   formId,
+  bodyInput,
 }: ConfirmPopupProps) => {
   const theme = type === "warning" ? "subRed" : "primary";
 
@@ -43,6 +45,7 @@ const ConfirmPopupUI = ({
             <span style={{ fontWeight: 600 }}>Warning:</span> {description}
           </Text>
         </Stack>
+        {bodyInput ? <Box my="lg">{bodyInput()}</Box> : null}
         <Flex mt={20} gap={8}>
           <Button
             onClick={onClose}

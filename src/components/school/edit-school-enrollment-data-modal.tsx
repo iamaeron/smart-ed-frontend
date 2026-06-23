@@ -15,6 +15,10 @@ import { useDisclosure } from "@mantine/hooks";
 import { X } from "lucide-react";
 import type { EnrollmentByGradeData } from "../overview/enrollment-grade-level";
 import EditSchoolDataConfirmModal from "./edit-school-data-confirm-modal";
+import type { SubmitEvent } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { api } from "@/lib/api";
 
 const EditSchoolEnrollmentDataModal = ({
   data,
@@ -23,15 +27,52 @@ const EditSchoolEnrollmentDataModal = ({
   data: any;
   loading: boolean;
 }) => {
+  const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
 
+  const onSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    formData.append("type", "enrollment");
+
+    const gradeLevelNodes = document.querySelectorAll("[data-grade-level]");
+    gradeLevelNodes.forEach((gradeLevelNode, index) => {
+      const maleCount = (
+        gradeLevelNode.querySelector("[data-male-count]") as HTMLInputElement
+      ).value;
+      const femaleCount = (
+        gradeLevelNode.querySelector("[data-female-count]") as HTMLInputElement
+      ).value;
+      const gradeLevel = gradeLevelNode.getAttribute("data-grade-level") ?? "";
+
+      formData.append(`details[${index}][grade_level]`, gradeLevel);
+      formData.append(`details[${index}][female_count]`, femaleCount);
+      formData.append(`details[${index}][male_count]`, maleCount);
+    });
+
+    try {
+      const res = await api.post(`/api/submissions`, formData);
+
+      if (res.data.code === 200) {
+        toast.success(res.data.message);
+        queryClient.invalidateQueries({ queryKey: ["academic_years", {}] });
+        close();
+      }
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
+
   const rows = data.map((element: EnrollmentByGradeData) => (
-    <Table.Tr key={element.grade_level}>
+    <Table.Tr data-grade-level={element.grade_level} key={element.grade_level}>
       <Table.Td fw={600} ta="left">
         {element.grade_level}
       </Table.Td>
       <Table.Td pl={10} ta="left">
         <TextInput
+          data-male-count
+          onFocus={(e) => e.target.select()}
           classNames={{
             input: "custom-data-input",
           }}
@@ -41,6 +82,8 @@ const EditSchoolEnrollmentDataModal = ({
       </Table.Td>
       <Table.Td pl={10} ta="left">
         <TextInput
+          data-female-count
+          onFocus={(e) => e.target.select()}
           classNames={{
             input: "custom-data-input",
           }}
@@ -84,10 +127,7 @@ const EditSchoolEnrollmentDataModal = ({
           </Group>
         </Card>
 
-        <form
-          id="edit-school-data-form"
-          // onSubmit={handleSubmit(onSubmit)}
-        >
+        <form id="edit-school-data-form" onSubmit={onSubmit}>
           <Paper p="lg">
             <Paper withBorder radius="md" style={{ overflow: "hidden" }}>
               <Table highlightOnHover layout="fixed" horizontalSpacing="md">

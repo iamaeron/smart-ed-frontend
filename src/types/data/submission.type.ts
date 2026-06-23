@@ -7,9 +7,9 @@ export type Submission = {
   comments_count: number;
   submitted_by: string;
   school: {
-    name: string;
+    school_name: string;
     type: string;
-    code: string;
+    school_code: string;
   };
   details: SubmissionDetails;
 };

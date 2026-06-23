@@ -1,7 +1,5 @@
-import ListPending from "@/components/list-pending";
 import OverviewCol from "@/components/overview/overview-col";
 import SubmissionList from "@/components/submission/submission-list";
-import SubmissionListItem from "@/components/submission/submission-list-item";
 import ListFilter from "@/components/system-management/list-filter";
 import TabSearchBar from "@/components/system-management/tab-search-bar";
 import AppLayout from "@/layouts/app.layout";
@@ -54,7 +52,7 @@ const SystemAdminSubmissions = () => {
   const displayList = baseList.filter((act: Submission) => {
     // Search Filter
     const matchesSearch = searchQuery
-      ? act.school.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ? act.school.school_name.toLowerCase().includes(searchQuery.toLowerCase())
       : true;
 
     // Role Filter

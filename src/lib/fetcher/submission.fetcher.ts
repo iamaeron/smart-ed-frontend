@@ -17,3 +17,20 @@ export const useFetchSubmissions = (
     },
   });
 };
+
+export const useFetchSubmission = (
+  id: string,
+  params: Param | {} = {},
+  options?: FetcherOptions,
+) => {
+  const urlParams = new URLSearchParams(params).toString();
+
+  return useQuery({
+    ...options,
+    queryKey: ["submission", id, params],
+    queryFn: async () => {
+      const res = await api.get(`/api/submissions/${id}?${urlParams}`);
+      return res.data;
+    },
+  });
+};

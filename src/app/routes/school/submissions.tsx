@@ -60,7 +60,7 @@ const SchoolAdminSubmissions = () => {
 
     // Search Filter
     const matchesSearch = searchQuery
-      ? act.school.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ? act.school.school_name.toLowerCase().includes(searchQuery.toLowerCase())
       : true;
 
     // Role Filter
