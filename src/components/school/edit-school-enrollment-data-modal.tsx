@@ -137,12 +137,14 @@ const EditSchoolEnrollmentDataModal = ({
 
         <form id="edit-school-data-form" onSubmit={onSubmit}>
           <Paper p="lg">
-            <Card bg="red.1" mb="lg">
-              <Text size="sm" c="red.9">
-                You still have a returned submission data. Please review it
-                first before submitting another one.
-              </Text>
-            </Card>
+            {hasPendingEnrollmentData ? (
+              <Card bg="red.1" mb="lg">
+                <Text size="sm" c="red.9">
+                  You still have a returned submission data. Please review it
+                  first before submitting another.
+                </Text>
+              </Card>
+            ) : null}
 
             <Paper
               withBorder

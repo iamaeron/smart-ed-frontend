@@ -19,6 +19,9 @@ const ReturnSubmissionModal = ({ submission }: { submission: Submission }) => {
       });
       if (res.data.code === 200) {
         queryClient.invalidateQueries({ queryKey: ["submissions", {}] });
+        queryClient.invalidateQueries({
+          queryKey: ["submission", submission.id, {}],
+        });
         toast(res.data.message);
         close();
       }

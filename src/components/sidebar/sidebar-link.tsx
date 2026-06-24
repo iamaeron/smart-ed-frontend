@@ -35,11 +35,29 @@ const SidebarLink = ({
           user.returned_submissions.length <= 0 ||
           label !== "Submissions"
         }
+        styles={{
+          indicator: {
+            transition: "all 200ms ease",
+            minWidth: collapsed ? 8 : 14,
+            width: collapsed ? 8 : "auto",
+            padding: collapsed ? 0 : "0 4px",
+            overflow: "hidden",
+          },
+        }}
         inline
         position={collapsed ? "top-end" : "middle-end"}
         offset={collapsed ? 3 : 20}
         size={collapsed ? 8 : 14}
-        label={collapsed ? "" : user?.returned_submissions?.length}
+        label={
+          <span
+            style={{
+              opacity: collapsed ? 0 : 1,
+              transition: "opacity 150ms ease",
+            }}
+          >
+            {user?.returned_submissions?.length}
+          </span>
+        }
         color="subRed"
       >
         <NavLink

@@ -11,7 +11,10 @@ export type Submission = {
     type: string;
     school_code: string;
   };
-  details: SubmissionDetails;
+  details: {
+    items: SubmissionDetails[];
+  };
+  comments: Record<any, any>[];
 };
 
 export type SubmissionDetails = {

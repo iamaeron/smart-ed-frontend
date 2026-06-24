@@ -6,19 +6,17 @@ import {
   Card,
   Collapse,
   Divider,
-  Flex,
   Grid,
   Group,
-  Pill,
   Skeleton,
   Stack,
   Text,
 } from "@mantine/core";
-import dayjs from "dayjs";
 import AddAnnouncementModal from "./add-announcement-modal";
 import PublicAnnouncementCard from "./public-announcement-card";
 import { useDisclosure } from "@mantine/hooks";
 import { useAuth } from "@/contexts/auth.context";
+import NotificationCard from "./notification-card";
 
 const AnnouncementTab = () => {
   const { user } = useAuth();
@@ -39,37 +37,13 @@ const AnnouncementTab = () => {
             ))
           : data?.results?.dashboard.map(
               (announcement: Announcement, i: number) => (
-                <Card withBorder key={i}>
-                  <Flex gap="lg">
-                    <Box py="sm" pl="xs">
-                      <div
-                        style={{
-                          height: "6px",
-                          width: "6px",
-                          backgroundColor: "#339af0",
-                          borderRadius: "999px",
-                        }}
-                      ></div>
-                    </Box>
-                    <Box>
-                      <Pill mb={6} fw={600} c="white" bg="blue">
-                        NEW
-                      </Pill>
-                      <Text mb={6} fw={700}>
-                        {announcement.title}
-                      </Text>
-                      <Text c="longText" fz={14}>
-                        {announcement.description}
-                      </Text>
-
-                      <Text mt={16} c="longText" fz={14}>
-                        {dayjs(announcement.date).format(
-                          "MMM DD, YYYY [at] hh:mm A",
-                        )}
-                      </Text>
-                    </Box>
-                  </Flex>
-                </Card>
+                <NotificationCard
+                  key={i}
+                  title={announcement.title}
+                  description={announcement.description}
+                  date={announcement.date}
+                  pillType={announcement.is_new ? "new" : null}
+                />
               ),
             )}
       </Stack>
@@ -182,37 +156,13 @@ const FullAnnouncementSections = ({
               ))
             : data?.results?.dashboard.map(
                 (announcement: Announcement, i: number) => (
-                  <Card withBorder key={i}>
-                    <Flex gap="lg">
-                      <Box py="sm" pl="xs">
-                        <div
-                          style={{
-                            height: "6px",
-                            width: "6px",
-                            backgroundColor: "#339af0",
-                            borderRadius: "999px",
-                          }}
-                        ></div>
-                      </Box>
-                      <Box>
-                        <Pill mb={6} fw={600} c="white" bg="blue">
-                          NEW
-                        </Pill>
-                        <Text mb={6} fw={700}>
-                          {announcement.title}
-                        </Text>
-                        <Text c="longText" fz={14}>
-                          {announcement.description}
-                        </Text>
-
-                        <Text mt={16} c="longText" fz={14}>
-                          {dayjs(announcement.date).format(
-                            "MMM DD, YYYY [at] hh:mm A",
-                          )}
-                        </Text>
-                      </Box>
-                    </Flex>
-                  </Card>
+                  <NotificationCard
+                    key={i}
+                    title={announcement.title}
+                    description={announcement.description}
+                    date={announcement.date}
+                    pillType={announcement.is_new ? "new" : null}
+                  />
                 ),
               )}
         </Stack>

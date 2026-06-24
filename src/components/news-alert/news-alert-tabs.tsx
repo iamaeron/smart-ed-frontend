@@ -3,6 +3,7 @@ import { FloatingIndicator, Tabs } from "@mantine/core";
 import classes from "@/css/Tab.module.css";
 import useTabs from "@/hooks/use-tabs";
 import AnnouncementTab from "./announcement-tab";
+import NotificationTab from "./notification-tab";
 
 const NewsAlertTabs = () => {
   const { handleSwitchTab, value, setControlRef, setRootRef, target, rootRef } =
@@ -27,7 +28,9 @@ const NewsAlertTabs = () => {
         </Tabs.List>
       </TabListScroller>
 
-      <Tabs.Panel value="1">notif</Tabs.Panel>
+      <Tabs.Panel value="1">
+        <NotificationTab />
+      </Tabs.Panel>
       <Tabs.Panel value="2">
         <AnnouncementTab />
       </Tabs.Panel>

@@ -1,11 +1,31 @@
 import type { Submission } from "@/types/data/submission.type";
-import { Grid, Box, Card, Flex, Group, Text, Paper } from "@mantine/core";
-import { Back2Line, Comment2Line, TimeLine, CheckFill } from "@mingcute/react";
+import {
+  Grid,
+  Box,
+  Card,
+  Flex,
+  Group,
+  Text,
+  Paper,
+  Button,
+} from "@mantine/core";
+import {
+  Back2Line,
+  Comment2Line,
+  TimeLine,
+  CheckFill,
+  Eye2Line,
+} from "@mingcute/react";
 import { User } from "@solar-icons/react";
 import dayjs from "dayjs";
-import ViewSubmissionModal from "./view-submission-modal";
 
-const SubmissionListItem = ({ submission }: { submission: Submission }) => {
+const SubmissionListItem = ({
+  submission,
+  openSubmission,
+}: {
+  submission: Submission;
+  openSubmission: () => void;
+}) => {
   const statusColors = {
     pending: {
       bg: "subYellow",
@@ -53,7 +73,16 @@ const SubmissionListItem = ({ submission }: { submission: Submission }) => {
         </Box>
 
         <div>
-          <ViewSubmissionModal submission={submission} />
+          <Button
+            onClick={openSubmission}
+            size="compact-sm"
+            variant="outline"
+            radius="sm"
+            px="sm"
+            leftSection={<Eye2Line size={18} />}
+          >
+            Review
+          </Button>
         </div>
       </Flex>
 
