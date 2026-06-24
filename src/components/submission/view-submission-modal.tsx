@@ -23,6 +23,7 @@ import { User, X } from "lucide-react";
 import ReturnSubmissionModal from "./return-submission-modal";
 import ApproveSubmissionConfirmModal from "./approve-submission-confirm-modal";
 import EditSchoolEnrollmentDataModal from "../school/edit-school-enrollment-data-modal";
+import EditSchoolResourcesDataModal from "../school/edit-school-resources-data-modal";
 
 type ViewSubModalProps = {
   submissionId: number | string | null;
@@ -60,38 +61,6 @@ const ViewSubmissionModal = ({
 
   const submissionData: Submission | undefined = data?.results?.data;
   const loading = isPending || isFetching || !submissionId || !submissionData;
-
-  const rows = submissionData?.details?.items.map((element: any) => (
-    <Table.Tr key={element.grade_level}>
-      <Table.Td fw={600} ta="left">
-        {element.grade_level}
-      </Table.Td>
-      <Table.Td pl={10} ta="left">
-        <Paper
-          withBorder
-          px="xs"
-          py={2}
-          style={{ borderColor: "#d5d5d5" }}
-          fw={600}
-          radius="sm"
-        >
-          {element.male_count}
-        </Paper>
-      </Table.Td>
-      <Table.Td pl={10} ta="left">
-        <Paper
-          withBorder
-          px="xs"
-          py={2}
-          style={{ borderColor: "#d5d5d5" }}
-          fw={600}
-          radius="sm"
-        >
-          {element.female_count}
-        </Paper>
-      </Table.Td>
-    </Table.Tr>
-  ));
 
   return (
     <Modal
@@ -231,43 +200,34 @@ const ViewSubmissionModal = ({
                         {submissionData.type} Data
                       </Title>
 
-                      <EditSchoolEnrollmentDataModal
-                        data={submissionData?.details?.items}
-                        loading={isPending}
-                        review
-                      />
+                      {submissionData.type === "enrollment" &&
+                      submissionData.status === "returned" ? (
+                        <EditSchoolEnrollmentDataModal
+                          data={submissionData?.details?.items}
+                          loading={isPending}
+                          review
+                        />
+                      ) : null}
+
+                      {submissionData.type === "resource" &&
+                      submissionData.status === "returned" ? (
+                        <EditSchoolResourcesDataModal
+                          data={submissionData?.details}
+                          loading={isPending}
+                          review
+                        />
+                      ) : null}
                     </Flex>
 
-                    <Table layout="fixed" horizontalSpacing={0}>
-                      <Table.Thead>
-                        <Table.Tr>
-                          <Table.Th w="60%" fw="400" fz={14} c="longText">
-                            Grade Level
-                          </Table.Th>
-                          <Table.Th
-                            w="20%"
-                            fw="400"
-                            fz={14}
-                            c="longText"
-                            pr={10}
-                            pl={10}
-                          >
-                            Male
-                          </Table.Th>
-                          <Table.Th
-                            w="20%"
-                            fw="400"
-                            fz={14}
-                            c="longText"
-                            pr={10}
-                            pl={10}
-                          >
-                            Female
-                          </Table.Th>
-                        </Table.Tr>
-                      </Table.Thead>
-                      <Table.Tbody>{rows}</Table.Tbody>
-                    </Table>
+                    {submissionData.type === "enrollment" && (
+                      <EnrollmentDataTable
+                        data={submissionData?.details?.items}
+                      />
+                    )}
+
+                    {submissionData.type === "resource" && (
+                      <ResourceDataTable data={submissionData?.details} />
+                    )}
                   </Paper>
                 </Box>
 
@@ -333,3 +293,125 @@ const ViewSubmissionModal = ({
 };
 
 export default ViewSubmissionModal;
+
+const EnrollmentDataTable = ({ data }: { data: any }) => {
+  const rows = data.map((element: any) => (
+    <Table.Tr key={element.grade_level}>
+      <Table.Td fw={600} ta="left">
+        {element.grade_level}
+      </Table.Td>
+      <Table.Td pl={10} ta="left">
+        <Paper
+          withBorder
+          px="xs"
+          py={2}
+          style={{ borderColor: "#d5d5d5" }}
+          fw={600}
+          radius="sm"
+        >
+          {element.male_count}
+        </Paper>
+      </Table.Td>
+      <Table.Td pl={10} ta="left">
+        <Paper
+          withBorder
+          px="xs"
+          py={2}
+          style={{ borderColor: "#d5d5d5" }}
+          fw={600}
+          radius="sm"
+        >
+          {element.female_count}
+        </Paper>
+      </Table.Td>
+    </Table.Tr>
+  ));
+
+  return (
+    <Table layout="fixed" horizontalSpacing={0}>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th w="60%" fw="400" fz={14} c="longText">
+            Grade Level
+          </Table.Th>
+          <Table.Th w="20%" fw="400" fz={14} c="longText" pr={10} pl={10}>
+            Male
+          </Table.Th>
+          <Table.Th w="20%" fw="400" fz={14} c="longText" pr={10} pl={10}>
+            Female
+          </Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
+    </Table>
+  );
+};
+
+const ResourceDataTable = ({ data }: { data: any }) => {
+  const rows = data.map((element: any) => (
+    <Table.Tr key={element.resource_name}>
+      <Table.Td fw={600} ta="left">
+        {element.resource_name}
+      </Table.Td>
+      <Table.Td pl={10} ta="left">
+        <Paper
+          withBorder
+          px="xs"
+          py={2}
+          style={{ borderColor: "#d5d5d5" }}
+          fw={600}
+          radius="sm"
+        >
+          {element.inventory}
+        </Paper>
+      </Table.Td>
+      <Table.Td pl={10} ta="left">
+        <Paper
+          withBorder
+          px="xs"
+          py={2}
+          style={{ borderColor: "#d5d5d5" }}
+          fw={600}
+          radius="sm"
+        >
+          {element.requirement}
+        </Paper>
+      </Table.Td>
+      <Table.Td pl={10} ta="left">
+        <Paper
+          withBorder
+          px="xs"
+          py={2}
+          style={{ borderColor: "#d5d5d5" }}
+          fw={600}
+          radius="sm"
+        >
+          {element.need}
+        </Paper>
+      </Table.Td>
+    </Table.Tr>
+  ));
+
+  return (
+    <Table layout="fixed" horizontalSpacing={0}>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th w="40%" fw="400" fz={14} c="longText">
+            Resource
+          </Table.Th>
+          <Table.Th w="20%" fw="400" fz={14} c="longText" pr={10} pl={10}>
+            Inventory
+          </Table.Th>
+          <Table.Th w="20%" fw="400" fz={14} c="longText" pr={10} pl={10}>
+            Requirement
+          </Table.Th>
+
+          <Table.Th w="20%" fw="400" fz={14} c="longText" pr={10} pl={10}>
+            Need
+          </Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
+    </Table>
+  );
+};

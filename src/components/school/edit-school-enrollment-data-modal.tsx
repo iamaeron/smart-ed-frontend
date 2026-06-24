@@ -61,7 +61,7 @@ const EditSchoolEnrollmentDataModal = ({
 
       if (res.data.code === 200) {
         toast.success(res.data.message);
-        queryClient.invalidateQueries({ queryKey: ["submissions", {}] });
+        queryClient.invalidateQueries({ queryKey: ["academic_years", {}] });
         close();
       }
     } catch (err: any) {

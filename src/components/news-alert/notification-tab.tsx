@@ -1,6 +1,6 @@
 import { useFetchNotifications } from "@/lib/fetcher/notification.fetcher";
 import type { Notification } from "@/types/data/notification.type";
-import { Box, Grid, Group, Skeleton, Stack, Text } from "@mantine/core";
+import { Box, Center, Grid, Group, Skeleton, Stack, Text } from "@mantine/core";
 import { useState } from "react";
 import { useSearchParams } from "react-router";
 import NotificationCard from "./notification-card";
@@ -59,20 +59,22 @@ const NotificationTab = () => {
       </Group>
 
       <Stack gap={20}>
-        {isPending
-          ? [1, 2, 3].map((i) => <Skeleton key={i} h={200} width="100%" />)
-          : displayList.map((notification) => (
-              <NotificationCard
-                key={notification.id}
-                title={notification.title}
-                description={notification.message}
-                date={notification.created_at}
-                pillType={
-                  notification.action_required ? "action_required" : null
-                }
-                unread={notification.is_read === "true" ? false : true}
-              />
-            ))}
+        {isPending ? (
+          [1, 2, 3].map((i) => <Skeleton key={i} h={200} width="100%" />)
+        ) : displayList.length > 0 ? (
+          displayList.map((notification) => (
+            <NotificationCard
+              key={notification.id}
+              title={notification.title}
+              description={notification.message}
+              date={notification.created_at}
+              pillType={notification.action_required ? "action_required" : null}
+              unread={notification.is_read === "true" ? false : true}
+            />
+          ))
+        ) : (
+          <Center py={80}>No notifications found.</Center>
+        )}
       </Stack>
     </Box>
   );
