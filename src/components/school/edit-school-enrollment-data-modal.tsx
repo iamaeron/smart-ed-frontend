@@ -20,13 +20,16 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth.context";
+import ReturnedWarningCard from "./returned-warning-card";
 
 const EditSchoolEnrollmentDataModal = ({
   data,
   loading,
+  review,
 }: {
   data: any;
   loading: boolean;
+  review?: boolean;
 }) => {
   const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
@@ -58,7 +61,7 @@ const EditSchoolEnrollmentDataModal = ({
 
       if (res.data.code === 200) {
         toast.success(res.data.message);
-        queryClient.invalidateQueries({ queryKey: ["academic_years", {}] });
+        queryClient.invalidateQueries({ queryKey: ["submissions", {}] });
         close();
       }
     } catch (err: any) {
@@ -66,41 +69,53 @@ const EditSchoolEnrollmentDataModal = ({
     }
   };
 
-  const rows = data.map((element: EnrollmentByGradeData) => (
-    <Table.Tr data-grade-level={element.grade_level} key={element.grade_level}>
-      <Table.Td fw={600} ta="left">
-        {element.grade_level}
-      </Table.Td>
-      <Table.Td pl={10} ta="left">
-        <TextInput
-          data-male-count
-          onFocus={(e) => e.target.select()}
-          classNames={{
-            input: "custom-data-input",
-          }}
-          defaultValue={element.total_male}
-          className="w-full"
-        />
-      </Table.Td>
-      <Table.Td pl={10} ta="left">
-        <TextInput
-          data-female-count
-          onFocus={(e) => e.target.select()}
-          classNames={{
-            input: "custom-data-input",
-          }}
-          defaultValue={element.total_female}
-          className="w-full"
-        />
-      </Table.Td>
-    </Table.Tr>
-  ));
+  const rows = data.map(
+    (
+      element: EnrollmentByGradeData & {
+        male_count: string;
+        female_count: string;
+      },
+    ) => (
+      <Table.Tr
+        data-grade-level={element.grade_level}
+        key={element.grade_level}
+      >
+        <Table.Td fw={600} ta="left">
+          {element.grade_level}
+        </Table.Td>
+        <Table.Td pl={10} ta="left">
+          <TextInput
+            data-male-count
+            onFocus={(e) => e.target.select()}
+            classNames={{
+              input: "custom-data-input",
+            }}
+            defaultValue={element.total_male ?? element.male_count}
+            className="w-full"
+          />
+        </Table.Td>
+        <Table.Td pl={10} ta="left">
+          <TextInput
+            data-female-count
+            onFocus={(e) => e.target.select()}
+            classNames={{
+              input: "custom-data-input",
+            }}
+            defaultValue={element.total_female ?? element.female_count}
+            className="w-full"
+          />
+        </Table.Td>
+      </Table.Tr>
+    ),
+  );
 
-  const hasPendingEnrollmentData = user?.returned_submissions?.find(
+  const pendingEnrollmentData = user?.returned_submissions?.find(
     (f) => f.type === "enrollment",
-  )
-    ? true
-    : false;
+  );
+
+  const hasPendingEnrollmentData = pendingEnrollmentData ? true : false;
+
+  const isDisabled = hasPendingEnrollmentData && !review;
 
   return (
     <>
@@ -137,64 +152,82 @@ const EditSchoolEnrollmentDataModal = ({
 
         <form id="edit-school-data-form" onSubmit={onSubmit}>
           <Paper p="lg">
-            {hasPendingEnrollmentData ? (
-              <Card bg="red.1" mb="lg">
-                <Text size="sm" c="red.9">
-                  You still have a returned submission data. Please review it
-                  first before submitting another.
-                </Text>
-              </Card>
+            {isDisabled ? (
+              <ReturnedWarningCard subId={pendingEnrollmentData?.id} />
             ) : null}
 
             <Paper
-              withBorder
-              radius="md"
+              h={isDisabled ? 200 : "max-content"}
               style={
-                hasPendingEnrollmentData
-                  ? {
-                      opacity: 0.7,
-                      cursor: "not-allowed",
-                    }
-                  : { overflow: "hidden" }
+                isDisabled ? { overflow: "hidden", position: "relative" } : {}
               }
             >
-              <Table
-                style={{
-                  pointerEvents: hasPendingEnrollmentData ? "none" : "all",
-                }}
-                highlightOnHover
-                layout="fixed"
-                horizontalSpacing="md"
+              <Paper
+                withBorder
+                radius="md"
+                style={
+                  isDisabled
+                    ? {
+                        opacity: 0.8,
+                        cursor: "not-allowed",
+                      }
+                    : { overflow: "hidden" }
+                }
               >
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th w="60%" fw="400" fz={14} c="longText">
-                      Grade Level
-                    </Table.Th>
-                    <Table.Th
-                      w="20%"
-                      fw="400"
-                      fz={14}
-                      c="longText"
-                      pr={10}
-                      pl={10}
-                    >
-                      Male
-                    </Table.Th>
-                    <Table.Th
-                      w="20%"
-                      fw="400"
-                      fz={14}
-                      c="longText"
-                      pr={10}
-                      pl={10}
-                    >
-                      Female
-                    </Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>{rows}</Table.Tbody>
-              </Table>
+                <Table
+                  style={{
+                    pointerEvents: isDisabled ? "none" : "all",
+                  }}
+                  highlightOnHover
+                  layout="fixed"
+                  horizontalSpacing="md"
+                >
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th w="60%" fw="400" fz={14} c="longText">
+                        Grade Level
+                      </Table.Th>
+                      <Table.Th
+                        w="20%"
+                        fw="400"
+                        fz={14}
+                        c="longText"
+                        pr={10}
+                        pl={10}
+                      >
+                        Male
+                      </Table.Th>
+                      <Table.Th
+                        w="20%"
+                        fw="400"
+                        fz={14}
+                        c="longText"
+                        pr={10}
+                        pl={10}
+                      >
+                        Female
+                      </Table.Th>
+                    </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody>{rows}</Table.Tbody>
+                </Table>
+              </Paper>
+
+              {isDisabled ? (
+                <div
+                  style={{
+                    position: "absolute",
+                    height: 100,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    cursor: "not-allowed",
+                    // background: "linear-gradient(to top, white, transparent)",
+                    backgroundImage:
+                      "linear-gradient(to top, white, transparent)",
+                  }}
+                ></div>
+              ) : null}
             </Paper>
 
             <Flex justify="flex-end" mt={20} gap={8}>
@@ -208,7 +241,7 @@ const EditSchoolEnrollmentDataModal = ({
               >
                 Cancel
               </Button>
-              <EditSchoolDataConfirmModal disabled={hasPendingEnrollmentData} />
+              <EditSchoolDataConfirmModal disabled={isDisabled} />
             </Flex>
           </Paper>
         </form>

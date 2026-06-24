@@ -22,6 +22,7 @@ import dayjs from "dayjs";
 import { User, X } from "lucide-react";
 import ReturnSubmissionModal from "./return-submission-modal";
 import ApproveSubmissionConfirmModal from "./approve-submission-confirm-modal";
+import EditSchoolEnrollmentDataModal from "../school/edit-school-enrollment-data-modal";
 
 type ViewSubModalProps = {
   submissionId: number | string | null;
@@ -225,9 +226,17 @@ const ViewSubmissionModal = ({
                     Submission Data
                   </Title>
                   <Paper shadow="sm" radius="lg" bg="white" p="lg">
-                    <Title order={6} mb="xs" tt="capitalize">
-                      {submissionData.type} Data
-                    </Title>
+                    <Flex mb="xs" justify="space-between" align="flex-end">
+                      <Title order={6} tt="capitalize">
+                        {submissionData.type} Data
+                      </Title>
+
+                      <EditSchoolEnrollmentDataModal
+                        data={submissionData?.details?.items}
+                        loading={isPending}
+                        review
+                      />
+                    </Flex>
 
                     <Table layout="fixed" horizontalSpacing={0}>
                       <Table.Thead>
