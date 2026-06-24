@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Card,
+  Center,
   Divider,
   Flex,
   Grid,
@@ -36,6 +37,7 @@ const ViewSubmissionModal = ({ submission }: { submission: Submission }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   const submissionData = data?.results?.data;
+  console.log(submissionData);
 
   const statusColors = {
     pending: {
@@ -207,7 +209,7 @@ const ViewSubmissionModal = ({ submission }: { submission: Submission }) => {
                 {isPending ? (
                   <Skeleton h={300} w="100%" />
                 ) : (
-                  <Paper radius="sm" bg="white" p="lg">
+                  <Paper shadow="sm" radius="lg" bg="white" p="lg">
                     <Title order={6} mb="xs" tt="capitalize">
                       {submissionData.type} Data
                     </Title>
@@ -243,6 +245,51 @@ const ViewSubmissionModal = ({ submission }: { submission: Submission }) => {
                       <Table.Tbody>{rows}</Table.Tbody>
                     </Table>
                   </Paper>
+                )}
+              </Box>
+
+              <Box mt="lg">
+                <Title order={5} mb="sm">
+                  Comments
+                </Title>
+                {isPending ? (
+                  <Skeleton h={300} w="100%" />
+                ) : (
+                  submissionData.comments.map((comment: any) => (
+                    <Paper shadow="sm" p="sm" radius="lg" key={comment.id}>
+                      <Group gap="sm">
+                        <Center
+                          component={Paper}
+                          bdrs={999}
+                          bg="#DBEAFE"
+                          c="#1447E6"
+                          fw={600}
+                          w={30}
+                          h={30}
+                        >
+                          {comment.user.name[0]}
+                        </Center>
+
+                        <Box>
+                          <Text size="sm" fw={600}>
+                            {comment.user.name}
+                          </Text>
+                          <Text mt={-4} c="longText" size="sm">
+                            @{comment.user.username}
+                          </Text>
+                        </Box>
+                      </Group>
+
+                      <Text my="xs" size="sm">
+                        {comment.comment}
+                      </Text>
+                      <Flex justify="flex-end">
+                        <Text size="xs" c="longText">
+                          {dayjs(comment.created_at).format("MMM DD, YYYY")}
+                        </Text>
+                      </Flex>
+                    </Paper>
+                  ))
                 )}
               </Box>
             </Box>

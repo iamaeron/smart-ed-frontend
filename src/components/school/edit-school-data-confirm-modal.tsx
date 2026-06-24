@@ -3,7 +3,11 @@ import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { InboxIn } from "@solar-icons/react";
 
-const EditSchoolDataConfirmModal = () => {
+const EditSchoolDataConfirmModal = ({
+  disabled = false,
+}: {
+  disabled?: boolean;
+}) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -25,7 +29,13 @@ const EditSchoolDataConfirmModal = () => {
           type="info"
         />
       </Modal>
-      <Button onClick={open} tt="uppercase" color="primary" type="button">
+      <Button
+        onClick={open}
+        disabled={disabled}
+        tt="uppercase"
+        color="primary"
+        type="button"
+      >
         Save Changes
       </Button>
     </>

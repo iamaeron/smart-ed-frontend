@@ -19,6 +19,7 @@ import type { SubmitEvent } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
+import { useAuth } from "@/contexts/auth.context";
 
 const EditSchoolEnrollmentDataModal = ({
   data,
@@ -29,6 +30,7 @@ const EditSchoolEnrollmentDataModal = ({
 }) => {
   const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
+  const { user } = useAuth();
 
   const onSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -94,6 +96,12 @@ const EditSchoolEnrollmentDataModal = ({
     </Table.Tr>
   ));
 
+  const hasPendingEnrollmentData = user?.returned_submissions?.find(
+    (f) => f.type === "enrollment",
+  )
+    ? true
+    : false;
+
   return (
     <>
       <Modal
@@ -129,8 +137,33 @@ const EditSchoolEnrollmentDataModal = ({
 
         <form id="edit-school-data-form" onSubmit={onSubmit}>
           <Paper p="lg">
-            <Paper withBorder radius="md" style={{ overflow: "hidden" }}>
-              <Table highlightOnHover layout="fixed" horizontalSpacing="md">
+            <Card bg="red.1" mb="lg">
+              <Text size="sm" c="red.9">
+                You still have a returned submission data. Please review it
+                first before submitting another one.
+              </Text>
+            </Card>
+
+            <Paper
+              withBorder
+              radius="md"
+              style={
+                hasPendingEnrollmentData
+                  ? {
+                      opacity: 0.7,
+                      cursor: "not-allowed",
+                    }
+                  : { overflow: "hidden" }
+              }
+            >
+              <Table
+                style={{
+                  pointerEvents: hasPendingEnrollmentData ? "none" : "all",
+                }}
+                highlightOnHover
+                layout="fixed"
+                horizontalSpacing="md"
+              >
                 <Table.Thead>
                   <Table.Tr>
                     <Table.Th w="60%" fw="400" fz={14} c="longText">
@@ -173,7 +206,7 @@ const EditSchoolEnrollmentDataModal = ({
               >
                 Cancel
               </Button>
-              <EditSchoolDataConfirmModal />
+              <EditSchoolDataConfirmModal disabled={hasPendingEnrollmentData} />
             </Flex>
           </Paper>
         </form>
