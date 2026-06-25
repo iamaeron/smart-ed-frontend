@@ -79,7 +79,7 @@ const AddSchoolModal = () => {
           </Group>
         </Card>
 
-        <Paper>
+        <Paper p="sm">
           <Flex>
             <Box p="lg" flex={1}>
               <Title order={5} mb={14}>
