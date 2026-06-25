@@ -5,7 +5,9 @@ import {
   Box,
   Button,
   Card,
+  Divider,
   Flex,
+  Grid,
   Group,
   Modal,
   Paper,
@@ -77,9 +79,9 @@ const AddSchoolModal = () => {
           </Group>
         </Card>
 
-        <Paper p="lg">
-          <Flex gap={20}>
-            <Box flex={1}>
+        <Paper>
+          <Flex>
+            <Box p="lg" flex={1}>
               <Title order={5} mb={14}>
                 General Information
               </Title>
@@ -195,13 +197,58 @@ const AddSchoolModal = () => {
               <SchoolHeadPicker control={control} formState={formState} />
             </Box>
 
-            <Box flex={1}>
+            {/* <Divider orientation="vertical" /> */}
+
+            <Box p="lg" flex={1}>
               <Title order={5} mb={14}>
                 Address
               </Title>
+              <AddressPicker />
+
+              <Divider mt={24} mb={12} />
+
+              <Title order={5} mb={14}>
+                Map Coordirnates
+              </Title>
               <FormMap />
 
-              <AddressPicker />
+              <Grid mt="sm">
+                <Grid.Col span={6}>
+                  <TextInput
+                    // value={streetValue}
+                    leftSection={<Text size="sm">X :</Text>}
+                    // onChange={(e) => setStreetValue(e.target.value)}
+                    labelProps={{
+                      mb: 2,
+                      fw: 400,
+                      c: "dark",
+                      // c: formState.errors.school_name?.message
+                      //   ? "subRed"
+                      //   : "dark",
+                    }}
+                    // label="District"
+                    radius="sm"
+                  />
+                </Grid.Col>
+
+                <Grid.Col span={6}>
+                  <TextInput
+                    // value={streetValue}
+                    // onChange={(e) => setStreetValue(e.target.value)}
+                    leftSection={<Text size="sm">Y :</Text>}
+                    labelProps={{
+                      mb: 2,
+                      fw: 400,
+                      c: "dark",
+                      // c: formState.errors.school_name?.message
+                      //   ? "subRed"
+                      //   : "dark",
+                    }}
+                    // label="District"
+                    radius="sm"
+                  />
+                </Grid.Col>
+              </Grid>
             </Box>
           </Flex>
         </Paper>

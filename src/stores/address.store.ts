@@ -13,6 +13,7 @@ type AddressStore = {
   barangays: { [k: string]: any }[];
   street: string;
   region: string;
+  district: string;
   setId: (key: string, val: any) => void;
 };
 
@@ -27,6 +28,8 @@ export const useAddressStore = create<AddressStore>((set) => ({
   cities: [],
   street: "",
   region: "",
+  district: "",
+  coordinates: [15.04, 120.6667],
   barangays: [...provincesJson],
-  setId: (key: string, val: string) => set({ [key]: val }),
+  setId: (key, val) => set({ [key]: val }),
 }));

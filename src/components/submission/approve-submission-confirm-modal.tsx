@@ -16,13 +16,13 @@ const ApproveSubmissionConfirmModal = ({
 
   const handleApproveSubmission = async () => {
     try {
-      const res = await api.put(`/api/submissions/${submission.id}/approve`);
+      const res = await api.post(`/api/submissions/${submission.id}/approve`);
       if (res.data.code === 200) {
         queryClient.invalidateQueries({ queryKey: ["submissions", {}] });
         queryClient.invalidateQueries({
           queryKey: ["submission", String(submission.id), {}],
         });
-        toast(res.data.results.action);
+        toast(res.data.message);
         close();
       }
     } catch (error) {

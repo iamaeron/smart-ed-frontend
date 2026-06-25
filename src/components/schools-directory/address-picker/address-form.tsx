@@ -51,7 +51,37 @@ const AddressForm = () => {
             }}
             label="Street"
             radius="sm"
-            required
+          />
+        </Grid.Col>
+
+        <Grid.Col span={6}>
+          <TextInput
+            value={streetValue}
+            onChange={(e) => setStreetValue(e.target.value)}
+            labelProps={{
+              mb: 2,
+              fw: 400,
+              c: "dark",
+              // c: formState.errors.school_name?.message
+              //   ? "subRed"
+              //   : "dark",
+            }}
+            label="District"
+            radius="sm"
+          />
+        </Grid.Col>
+
+        <Grid.Col span={6}>
+          <TextInput
+            value={streetValue}
+            onChange={(e) => setStreetValue(e.target.value)}
+            labelProps={{
+              mb: 2,
+              fw: 400,
+              c: "dark",
+            }}
+            label="Region"
+            radius="sm"
           />
         </Grid.Col>
       </Grid>
