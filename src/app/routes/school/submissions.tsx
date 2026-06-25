@@ -162,7 +162,7 @@ const SchoolAdminSubmissions = () => {
 
             <ListFilter
               bg="white"
-              all="All Districts"
+              all="All Types"
               data={baseList}
               accessor="type"
               callbackFn={(v) => setTypeFilter(v)}

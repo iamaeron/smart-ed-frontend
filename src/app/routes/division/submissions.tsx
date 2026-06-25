@@ -52,7 +52,7 @@ const DivisionAdminSubmissions = () => {
   const displayList = baseList.filter((act: Submission) => {
     // Search Filter
     const matchesSearch = searchQuery
-      ? act.school.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ? act.school.school_name.toLowerCase().includes(searchQuery.toLowerCase())
       : true;
 
     // Role Filter
@@ -142,7 +142,7 @@ const DivisionAdminSubmissions = () => {
 
             <ListFilter
               bg="white"
-              all="All Districts"
+              all="All Types"
               data={baseList}
               accessor="type"
               callbackFn={(v) => setTypeFilter(v)}
