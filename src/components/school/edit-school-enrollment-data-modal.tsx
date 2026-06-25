@@ -26,10 +26,12 @@ const EditSchoolEnrollmentDataModal = ({
   data,
   loading,
   review,
+  submissionId,
 }: {
   data: any;
   loading: boolean;
   review?: boolean;
+  submissionId?: string;
 }) => {
   const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
@@ -39,6 +41,7 @@ const EditSchoolEnrollmentDataModal = ({
     e.preventDefault();
     const formData = new FormData();
 
+    if (review) formData.append("_method", "PUT");
     formData.append("type", "enrollment");
 
     const gradeLevelNodes = document.querySelectorAll("[data-grade-level]");
@@ -57,11 +60,20 @@ const EditSchoolEnrollmentDataModal = ({
     });
 
     try {
-      const res = await api.post(`/api/submissions`, formData);
+      const reqFunc = review
+        ? api.post(`/api/submissions/${submissionId}`, formData)
+        : api.post(`/api/submissions`, formData);
+
+      const res = await reqFunc;
 
       if (res.data.code === 200) {
         toast.success(res.data.message);
-        queryClient.invalidateQueries({ queryKey: ["academic_years", {}] });
+        queryClient.invalidateQueries({ queryKey: ["submissions", {}] });
+        if (review) {
+          queryClient.invalidateQueries({
+            queryKey: ["submission", submissionId, {}],
+          });
+        }
         close();
       }
     } catch (err: any) {

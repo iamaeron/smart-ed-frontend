@@ -104,7 +104,7 @@ const ViewSubmissionModal = ({
         </Group>
       </Card>
 
-      <form id="edit-school-data-form">
+      <div>
         <Paper bg="lightBackground" p="lg">
           {loading ? (
             <Box>
@@ -205,6 +205,7 @@ const ViewSubmissionModal = ({
                         <EditSchoolEnrollmentDataModal
                           data={submissionData?.details?.items}
                           loading={isPending}
+                          submissionId={String(submissionData?.id)}
                           review
                         />
                       ) : null}
@@ -215,6 +216,7 @@ const ViewSubmissionModal = ({
                           data={submissionData?.details}
                           loading={isPending}
                           review
+                          submissionId={String(submissionData?.id)}
                         />
                       ) : null}
                     </Flex>
@@ -287,7 +289,7 @@ const ViewSubmissionModal = ({
             </Box>
           )}
         </Paper>
-      </form>
+      </div>
     </Modal>
   );
 };

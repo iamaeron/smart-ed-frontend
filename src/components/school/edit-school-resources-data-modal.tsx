@@ -25,10 +25,12 @@ const EditSchoolResourcesDataModal = ({
   data,
   loading,
   review,
+  submissionId,
 }: {
   data: any;
   loading: boolean;
   review?: boolean;
+  submissionId?: string;
 }) => {
   const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
@@ -38,33 +40,41 @@ const EditSchoolResourcesDataModal = ({
     e.preventDefault();
     const formData = new FormData();
 
+    if (review) formData.append("_method", "PUT");
     formData.append("type", "resource");
 
     const resourceNodes = document.querySelectorAll("[data-resource]");
-    resourceNodes.forEach((gradeLevelNode, index) => {
+    resourceNodes.forEach((resourceNode, index) => {
       const inventoryCount = (
-        gradeLevelNode.querySelector(
-          "[data-inventory-count]",
-        ) as HTMLInputElement
+        resourceNode.querySelector("[data-inventory-count]") as HTMLInputElement
       ).value;
       const requirementCount = (
-        gradeLevelNode.querySelector(
+        resourceNode.querySelector(
           "[data-requirement-count]",
         ) as HTMLInputElement
       ).value;
-      const resource = gradeLevelNode.getAttribute("data-resource") ?? "";
+      const resource = resourceNode.getAttribute("data-resource") ?? "";
 
       formData.append(`details[${index}][resource_name]`, resource);
-      formData.append(`details[${index}][requirement]`, requirementCount);
       formData.append(`details[${index}][inventory]`, inventoryCount);
+      formData.append(`details[${index}][requirement]`, requirementCount);
     });
 
     try {
-      const res = await api.post(`/api/submissions`, formData);
+      const reqFunc = review
+        ? api.post(`/api/submissions/${submissionId}`, formData)
+        : api.post(`/api/submissions`, formData);
+
+      const res = await reqFunc;
 
       if (res.data.code === 200) {
         toast.success(res.data.message);
         queryClient.invalidateQueries({ queryKey: ["submissions", {}] });
+        if (review) {
+          queryClient.invalidateQueries({
+            queryKey: ["submission", submissionId, {}],
+          });
+        }
         close();
       }
     } catch (err: any) {

@@ -6,8 +6,10 @@ import { useSearchParams } from "react-router";
 import NotificationCard from "./notification-card";
 import OverviewCol from "../overview/overview-col";
 import { Bell, BellBing } from "@solar-icons/react";
+import { useAuth } from "@/contexts/auth.context";
 
 const NotificationTab = () => {
+  const { user } = useAuth();
   const { data, isPending } = useFetchNotifications();
   const [searchParams, setSearchParams] = useSearchParams();
   const [view, setView] = useState(searchParams.get("tab") ?? "total");
@@ -28,29 +30,31 @@ const NotificationTab = () => {
 
   return (
     <Box>
-      <Grid mb={30}>
-        <Grid.Col span={6}>
-          <OverviewCol
-            label="All"
-            highlighted={view === "total"}
-            handleClick={() => handleChangeView("total")}
-            value={data?.results?.count?.total}
-            loading={isPending}
-            icon={Bell}
-          />
-        </Grid.Col>
+      {user?.role === "School Account" && (
+        <Grid mb={30}>
+          <Grid.Col span={6}>
+            <OverviewCol
+              label="All"
+              highlighted={view === "total"}
+              handleClick={() => handleChangeView("total")}
+              value={data?.results?.count?.total ?? "0"}
+              loading={isPending}
+              icon={Bell}
+            />
+          </Grid.Col>
 
-        <Grid.Col span={6}>
-          <OverviewCol
-            label="Action Required"
-            highlighted={view === "action_required"}
-            handleClick={() => handleChangeView("action_required")}
-            value={data?.results?.count?.action_required}
-            loading={isPending}
-            icon={BellBing}
-          />
-        </Grid.Col>
-      </Grid>
+          <Grid.Col span={6}>
+            <OverviewCol
+              label="Action Required"
+              highlighted={view === "action_required"}
+              handleClick={() => handleChangeView("action_required")}
+              value={data?.results?.count?.action_required ?? "0"}
+              loading={isPending}
+              icon={BellBing}
+            />
+          </Grid.Col>
+        </Grid>
+      )}
 
       <Group mb={30} justify="space-between">
         <Text fz={18} fw={600}>

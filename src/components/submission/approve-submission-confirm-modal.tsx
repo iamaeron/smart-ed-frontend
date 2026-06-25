@@ -19,6 +19,9 @@ const ApproveSubmissionConfirmModal = ({
       const res = await api.put(`/api/submissions/${submission.id}/approve`);
       if (res.data.code === 200) {
         queryClient.invalidateQueries({ queryKey: ["submissions", {}] });
+        queryClient.invalidateQueries({
+          queryKey: ["submission", String(submission.id), {}],
+        });
         toast(res.data.results.action);
         close();
       }
