@@ -112,17 +112,17 @@ const ResourceSummary = ({
           )}
       </Group>
 
-      <Table horizontalSpacing={0}>
+      <Table layout="fixed" horizontalSpacing={0}>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>Resources</Table.Th>
-            <Table.Th pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
+            <Table.Th w="56%">Resources</Table.Th>
+            <Table.Th w="18%" pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
               Inventory
             </Table.Th>
-            <Table.Th pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
+            <Table.Th w="18%" pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
               Requirement
             </Table.Th>
-            <Table.Th pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
+            <Table.Th w="18%" pr={summary ? 0 : 40} pl={summary ? 0 : 50}>
               Need
             </Table.Th>
           </Table.Tr>

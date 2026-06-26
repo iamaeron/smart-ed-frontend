@@ -1,35 +1,17 @@
+import { useFetchDashboardEnrollmentData } from "@/lib/fetcher/enrollment.fetcher";
 import { BarChart } from "@mantine/charts";
+import { Skeleton } from "@mantine/core";
 import { ResponsiveContainer } from "recharts";
 
 const ComparativeEnrollment = () => {
-  const dummyData = [
-    {
-      year: "2022-2023",
-      North: 12540,
-      East: 11950,
-      South: 9050,
-      West: 11950,
-    },
-    {
-      year: "2023-2024",
-      North: 12600,
-      East: 11985,
-      South: 9390,
-      West: 11985,
-    },
-    {
-      year: "2024-2025",
-      North: 12790,
-      East: 12150,
-      South: 9872,
-      West: 12150,
-    },
-  ];
+  const { data, isPending } = useFetchDashboardEnrollmentData();
+
+  if (isPending) return <Skeleton h={200} />;
 
   return (
     <ResponsiveContainer width="80%" debounce={250} height={200}>
       <BarChart
-        data={dummyData}
+        data={data?.results?.data}
         dataKey="year"
         orientation="vertical"
         type="default"

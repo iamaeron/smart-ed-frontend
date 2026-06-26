@@ -2,12 +2,12 @@ import QuickViewCol from "@/components/dashboard/quick-view-col";
 import QuickViewContainer from "@/components/dashboard/quick-view-container";
 import { Card, Center, Grid, Text } from "@mantine/core";
 import { Buildings, SquareAcademicCap, UserHandUp } from "@solar-icons/react";
-import ResourceSummary from "@/components/dashboard/resource-summary";
 import RecentActivity from "@/components/dashboard/recent-activity";
 import ComparativeEnrollment from "@/components/dashboard/comparative-enrollment";
 import EnrollmentByGender from "@/components/dashboard/enrollment-by-gender";
 import NotificationsCol from "@/components/dashboard/notifications-col";
 import AppLayout from "@/layouts/app.layout";
+import DashboardResourceSummary from "@/components/dashboard/dashboard-resource-summary";
 
 const SystemAdminDashboard = () => {
   return (
@@ -40,7 +40,7 @@ const SystemAdminDashboard = () => {
               </Card>
             </Grid.Col>
             <Grid.Col span={12}>
-              <ResourceSummary />
+              <DashboardResourceSummary />
             </Grid.Col>
           </Grid>
         </Grid.Col>

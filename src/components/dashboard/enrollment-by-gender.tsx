@@ -1,11 +1,43 @@
+import { useFetchEnrollmentData } from "@/lib/fetcher/enrollment.fetcher";
 import { DonutChart } from "@mantine/charts";
-import { Box, Card, Group, Stack, Text } from "@mantine/core";
+import { Box, Card, Group, Skeleton, Stack, Text } from "@mantine/core";
 
 const EnrollmentByGender = () => {
-  const enrollDummyData = [
-    { name: "Female", value: 17140, color: "primary" },
-    { name: "Male", value: 17150, color: "accent1" },
-  ];
+  const { data, isPending } = useFetchEnrollmentData();
+
+  if (isPending) {
+    return (
+      <Card h="100%" radius="lg" p="lg" shadow="sm">
+        <Text mb={18} fw={600}>
+          Enrollment by Gender
+          <Skeleton mt={18} h={193} />
+        </Text>
+      </Card>
+    );
+  }
+
+  const totalFemale = data?.results?.data?.enrollments_totals?.total_female;
+  const totalMale = data?.results?.data?.enrollments_totals?.total_male;
+
+  const isBothZero = totalFemale === 0 && totalMale === 0;
+
+  const enrollmentByGenderData = isBothZero
+    ? [
+        {
+          name: "Female",
+          value: 50,
+          color: "#E5E7EB",
+        },
+        { name: "Male", value: 50, color: "#D1D5DB" },
+      ]
+    : [
+        {
+          name: "Female",
+          value: totalFemale,
+          color: "primary",
+        },
+        { name: "Male", value: totalMale, color: "accent1" },
+      ];
 
   return (
     <Card h="100%" radius="lg" p="lg" shadow="sm">
@@ -16,7 +48,7 @@ const EnrollmentByGender = () => {
       <Stack gap={20} align="center" justify="center">
         <div>
           <DonutChart
-            data={enrollDummyData}
+            data={enrollmentByGenderData}
             withTooltip={false}
             thickness={12}
             size={130}
@@ -42,7 +74,7 @@ const EnrollmentByGender = () => {
             ></div>
             <Box>
               <Text fw={600} c="mainText">
-                17,140
+                {totalFemale}
               </Text>
               <Text size="xs" c="longText">
                 Female
@@ -61,7 +93,7 @@ const EnrollmentByGender = () => {
             ></div>
             <Box>
               <Text fw={600} c="mainText">
-                17,150
+                {totalMale}
               </Text>
               <Text size="xs" c="longText">
                 Male
