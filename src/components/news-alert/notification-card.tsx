@@ -1,6 +1,9 @@
+import { api } from "@/lib/api";
 import { Box, Card, Flex, Pill, Text } from "@mantine/core";
+import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { AlertCircle } from "lucide-react";
+import { useNavigate } from "react-router";
 
 type NotificationCardProps = {
   title: string;
@@ -8,6 +11,8 @@ type NotificationCardProps = {
   date: string;
   pillType: "new" | "action_required" | null;
   unread?: boolean;
+  link?: string;
+  id?: string;
 };
 
 const NotificationCard = ({
@@ -16,7 +21,12 @@ const NotificationCard = ({
   date,
   pillType,
   unread,
+  link,
+  id,
 }: NotificationCardProps) => {
+  const query = useQueryClient();
+  const navigate = useNavigate();
+
   const indicatorColor = () => {
     switch (title) {
       case "Submission Returned":
@@ -30,8 +40,28 @@ const NotificationCard = ({
     }
   };
 
+  const handleReadNotif = async () => {
+    if (!id) alert("No notification ID was found.");
+
+    try {
+      const res = await api.put(`/api/notifications/${id}/read`);
+
+      if (res.data.code === 200) {
+        query.invalidateQueries({ queryKey: ["notifications", {}] });
+        navigate(link ?? "");
+      }
+    } catch (e) {
+      navigate(link ?? "");
+    }
+  };
+
   return (
-    <Card withBorder style={{ borderColor: unread ? "#2C68FF" : "#dee2e6" }}>
+    <Card
+      onClick={link ? handleReadNotif : undefined}
+      withBorder
+      style={{ borderColor: unread ? "#2C68FF" : "#dee2e6" }}
+      className={link ? "notif-card" : undefined}
+    >
       <Flex gap="lg">
         <Box py="sm" pl="xs">
           <div
@@ -67,7 +97,7 @@ const NotificationCard = ({
               </Pill>
             )
           ) : null}
-          <Text mt={3} mb={6} fw={700}>
+          <Text mt={3} mb={6} fw={700} c={unread ? "dark" : "longText"}>
             {title}
           </Text>
           <Text c="longText" fz={14}>

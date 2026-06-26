@@ -5,8 +5,10 @@ import BarangayPicker from "./barangay-picker";
 import { Box, Grid, Text, TextInput } from "@mantine/core";
 import { useAddressStore } from "@/stores/address.store";
 import { useDebouncedValue } from "@mantine/hooks";
+import { romanize } from "@/lib/romanize";
 
 const AddressForm = () => {
+  const region = useAddressStore((state) => state.region);
   const street = useAddressStore((state) => state.street);
   const setId = useAddressStore((state) => state.setId);
   const [streetValue, setStreetValue] = useState("");
@@ -73,15 +75,16 @@ const AddressForm = () => {
 
         <Grid.Col span={6}>
           <TextInput
-            value={streetValue}
             onChange={(e) => setStreetValue(e.target.value)}
             labelProps={{
               mb: 2,
               fw: 400,
               c: "dark",
             }}
+            value={romanize(Number(region)) ?? ""}
             label="Region"
             radius="sm"
+            readOnly
           />
         </Grid.Col>
       </Grid>

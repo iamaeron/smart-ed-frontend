@@ -68,12 +68,14 @@ const NotificationTab = () => {
         ) : displayList.length > 0 ? (
           displayList.map((notification) => (
             <NotificationCard
+              id={notification.id}
+              link={`/${user?.role.toLowerCase().replace(" ", "-")}/submissions?sub=${notification.submission_id}`}
               key={notification.id}
               title={notification.title}
               description={notification.message}
               date={notification.created_at}
               pillType={notification.action_required ? "action_required" : null}
-              unread={notification.is_read === "true" ? false : true}
+              unread={!notification.is_read}
             />
           ))
         ) : (

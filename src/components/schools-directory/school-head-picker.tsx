@@ -75,7 +75,7 @@ const SchoolHeadPicker = ({
               }}
               onClear={() => {
                 field.onChange(null);
-                setSelectedAccount({ phone_number: "", email: "" });
+                setSelectedAccount(null);
               }}
               filter={({ search }) => {
                 return accountsList.filter(
@@ -139,7 +139,7 @@ const SchoolHeadPicker = ({
             }}
             label="Phone Number"
             radius="sm"
-            defaultValue={selectedAccount?.phone_number ?? ""}
+            value={selectedAccount?.phone_number ?? ""}
             disabled={!selectedAccount}
           />
         </Box>
@@ -152,7 +152,7 @@ const SchoolHeadPicker = ({
             }}
             label="Email"
             radius="sm"
-            defaultValue={selectedAccount?.email ?? ""}
+            value={selectedAccount?.email ?? ""}
             disabled={!selectedAccount}
           />
         </Box>

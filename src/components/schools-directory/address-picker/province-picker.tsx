@@ -9,6 +9,7 @@ const ProvincePicker = () => {
 
   const handleSelect = (province: any) => {
     setId("provinceId", province.prov_code);
+    setId("region", province.reg_code);
     setId("province", province.name.toLowerCase());
     // Reset dependents
     setId("cityId", 0);
@@ -20,6 +21,7 @@ const ProvincePicker = () => {
   const handleClear = () => {
     setId("provinceId", 0);
     setId("province", "");
+    setId("region", "");
     setId("cityId", 0);
     setId("city", "");
     setId("barangayId", 0);

@@ -5,7 +5,6 @@ import {
   ActionIcon,
   Box,
   Card,
-  Center,
   Divider,
   Flex,
   Grid,
@@ -24,6 +23,7 @@ import ReturnSubmissionModal from "./return-submission-modal";
 import ApproveSubmissionConfirmModal from "./approve-submission-confirm-modal";
 import EditSchoolEnrollmentDataModal from "../school/edit-school-enrollment-data-modal";
 import EditSchoolResourcesDataModal from "../school/edit-school-resources-data-modal";
+import SubmissionCommentsList from "./comments-list";
 
 type ViewSubModalProps = {
   submissionId: number | string | null;
@@ -233,47 +233,8 @@ const ViewSubmissionModal = ({
                   </Paper>
                 </Box>
 
-                {submissionData.comments?.length > 0 && (
-                  <Box mt="lg">
-                    <Title order={5} mb="sm">
-                      Comments
-                    </Title>
-                    {submissionData.comments.map((comment: any) => (
-                      <Paper shadow="sm" p="sm" radius="lg" key={comment.id}>
-                        <Group gap="sm">
-                          <Center
-                            component={Paper}
-                            bdrs={999}
-                            bg="#DBEAFE"
-                            c="#1447E6"
-                            fw={600}
-                            w={30}
-                            h={30}
-                          >
-                            {comment.user.name[0]}
-                          </Center>
-
-                          <Box>
-                            <Text size="sm" fw={600}>
-                              {comment.user.name}
-                            </Text>
-                            <Text mt={-4} c="longText" size="sm">
-                              @{comment.user.username}
-                            </Text>
-                          </Box>
-                        </Group>
-
-                        <Text my="xs" size="sm">
-                          {comment.comment}
-                        </Text>
-                        <Flex justify="flex-end">
-                          <Text size="xs" c="longText">
-                            {dayjs(comment.created_at).format("MMM DD, YYYY")}
-                          </Text>
-                        </Flex>
-                      </Paper>
-                    ))}
-                  </Box>
+                {submissionData.comments_count > 0 && (
+                  <SubmissionCommentsList submissionData={submissionData} />
                 )}
               </Box>
 
