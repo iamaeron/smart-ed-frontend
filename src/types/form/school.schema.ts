@@ -3,7 +3,7 @@ import { z } from "zod";
 export const schoolSchema = z.object({
   school_name: z.string().min(1, "Required").max(255),
   school_code: z.string().min(1, "Required").max(50),
-  year_established: z.string(),
+  year_established: z.string().min(4, "Required"),
   school_type: z.string().nullable(),
   school_type_id: z.string().nullable(),
   school_head: z.string().min(1, "Required").max(255),

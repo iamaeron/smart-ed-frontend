@@ -1,3 +1,4 @@
+import { cacheFetch } from "@/lib/cache-store";
 import { useCallback, useMemo, useRef, useState, type Ref } from "react";
 import { Marker } from "react-leaflet";
 
@@ -14,12 +15,9 @@ export default function DraggableMarker() {
   const fetchAddress = async (lat: number, lng: number) => {
     setIsLoading(true);
     try {
-      const response = await fetch(
+      const data: any = await cacheFetch(
         `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`,
       );
-      const data = await response.json();
-
-      console.log(data);
 
       // Nominatim returns a detailed display_name
       setAddress(data.display_name || "Address not found");

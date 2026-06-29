@@ -17,9 +17,10 @@ type AddressStore = {
   district: string;
   isPinDraggable: boolean;
   setId: (key: string, val: any) => void;
+  resetAddress: () => void;
 };
 
-export const useAddressStore = create<AddressStore>((set) => ({
+const initialStore: Omit<AddressStore, "setId" | "resetAddress"> = {
   provinceId: 0,
   province: "",
   cityId: 0,
@@ -34,5 +35,12 @@ export const useAddressStore = create<AddressStore>((set) => ({
   coordinates: [15.04, 120.6667],
   barangays: [...provincesJson],
   isPinDraggable: false,
+};
+
+export const useAddressStore = create<AddressStore>((set) => ({
+  ...initialStore,
   setId: (key, val) => set({ [key]: val }),
+  resetAddress: () => {
+    set({});
+  },
 }));

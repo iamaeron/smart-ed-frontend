@@ -4,6 +4,9 @@ import { Box, Grid, Paper, Text, TextInput } from "@mantine/core";
 import { useAddressStore } from "@/stores/address.store";
 import { useEffect, useMemo, useRef } from "react";
 import provicesJson from "@/data/provinces.json";
+import { Controller, useFormContext } from "react-hook-form";
+import type { SchoolData } from "@/types/form/school.schema";
+import { cacheFetch } from "@/lib/cache-store";
 
 function ChangeMapView({ center }: { center: [number, number] }) {
   const map = useMap();
@@ -19,9 +22,15 @@ export default function FormMap() {
   const selectedBarangay = useAddressStore((state) => state.barangay);
   const selectedCity = useAddressStore((state) => state.city);
   const selectedProvince = useAddressStore((state) => state.province);
-  const street = useAddressStore((state) => state.street);
   const setId = useAddressStore((state) => state.setId);
   const markerRef = useRef(null);
+
+  const { control, setValue } = useFormContext<SchoolData>();
+
+  useEffect(() => {
+    setValue("latitude", String(coordinates[0]), { shouldValidate: true });
+    setValue("longitude", String(coordinates[1]), { shouldValidate: true });
+  }, [coordinates, setValue]);
 
   useEffect(() => {
     if (
@@ -43,17 +52,14 @@ export default function FormMap() {
       const fullAddress = `${selectedBarangay}, ${selectedCity.replace("city", "")}, ${selectedProvince}, Philippines`;
 
       try {
-        const response = await fetch(
+        const data: any = await cacheFetch(
           `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}`,
         );
-        const data = await response.json();
-        console.log(fullAddress);
 
         if (data && data.length > 0) {
           const lat = parseFloat(data[0].lat);
           const lon = parseFloat(data[0].lon);
 
-          // 2. Update state to trigger map re-render
           setId("coordinates", [lat, lon]);
         }
       } catch (error) {
@@ -62,7 +68,7 @@ export default function FormMap() {
     };
 
     fetchLoc();
-  }, [selectedBarangay, selectedCity, selectedProvince, street]);
+  }, [selectedBarangay, selectedCity, selectedProvince]);
 
   const eventHandlers = useMemo(
     () => ({
@@ -71,7 +77,6 @@ export default function FormMap() {
         if (marker != null) {
           const newPos = marker.getLatLng();
           setId("coordinates", [newPos.lat, newPos.lng]);
-          // fetchAddress(newPos.lat, newPos.lng);
         }
       },
     }),
@@ -104,28 +109,44 @@ export default function FormMap() {
 
       <Grid mt="sm">
         <Grid.Col span={6}>
-          <TextInput
-            leftSection={<Text size="sm">X :</Text>}
-            labelProps={{
-              mb: 2,
-              fw: 400,
-              c: "dark",
-            }}
-            radius="sm"
-            defaultValue={coordinates[0].toFixed(5)}
+          <Controller
+            name="latitude"
+            control={control}
+            render={({ field, fieldState }) => (
+              <TextInput
+                {...field}
+                leftSection={<Text size="sm">X :</Text>}
+                labelProps={{
+                  mb: 2,
+                  fw: 400,
+                  c: "dark",
+                }}
+                radius="sm"
+                value={coordinates[0].toFixed(5)}
+                error={fieldState.error?.message}
+              />
+            )}
           />
         </Grid.Col>
 
         <Grid.Col span={6}>
-          <TextInput
-            leftSection={<Text size="sm">Y :</Text>}
-            labelProps={{
-              mb: 2,
-              fw: 400,
-              c: "dark",
-            }}
-            radius="sm"
-            defaultValue={coordinates[1].toFixed(5)}
+          <Controller
+            name="longitude"
+            control={control}
+            render={({ field, fieldState }) => (
+              <TextInput
+                {...field}
+                leftSection={<Text size="sm">Y :</Text>}
+                labelProps={{
+                  mb: 2,
+                  fw: 400,
+                  c: "dark",
+                }}
+                radius="sm"
+                value={coordinates[1].toFixed(5)}
+                error={fieldState.error?.message}
+              />
+            )}
           />
         </Grid.Col>
       </Grid>

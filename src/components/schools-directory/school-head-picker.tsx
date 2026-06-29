@@ -29,6 +29,8 @@ const SchoolHeadPicker = ({
     [k: string]: string;
   } | null>(null);
 
+  console.log(accounts?.results?.users);
+
   const accountsList =
     accounts?.results?.users.map((user: any) => ({
       value: user.name,
