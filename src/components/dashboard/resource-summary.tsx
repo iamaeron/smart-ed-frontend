@@ -1,5 +1,14 @@
 import { useAuth } from "@/contexts/auth.context";
-import { Box, Button, Card, Group, Skeleton, Table, Text } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Card,
+  Center,
+  Group,
+  Skeleton,
+  Table,
+  Text,
+} from "@mantine/core";
 import { Link } from "react-router";
 import EditSchoolResourcesDataModal from "../school/edit-school-resources-data-modal";
 import { useAcademicYearStore } from "@/stores/academic-year.store";
@@ -10,38 +19,11 @@ const ResourceSummary = ({
   loading,
 }: {
   summary?: boolean;
-  data?: { [k: string]: any };
+  data: { [k: string]: any };
   loading?: boolean;
 }) => {
   const { user } = useAuth();
   const selectedYearStatus = useAcademicYearStore((state) => state.yearStatus);
-
-  const dummyTableData = [
-    {
-      resource_name: "Classrooms",
-      total_inventory: 960,
-      total_requirement: 1050,
-      total_need: 90,
-    },
-    {
-      resource_name: "Teachers",
-      total_inventory: 1215,
-      total_requirement: 1250,
-      total_need: 35,
-    },
-    {
-      resource_name: "Seats",
-      total_inventory: 27000,
-      total_requirement: 35420,
-      total_need: 8420,
-    },
-    {
-      resource_name: "Learning Materials",
-      total_inventory: 31000,
-      total_requirement: 35420,
-      total_need: 4420,
-    },
-  ];
 
   const paddingStyles = {
     pr: summary ? 0 : 40,
@@ -67,7 +49,7 @@ const ResourceSummary = ({
       </Table.Tr>
     ));
 
-  const rows = (data ? data : dummyTableData).map((element: any) => (
+  const rows = data.map((element: any) => (
     <Table.Tr key={element.id}>
       <Table.Td w={summary ? "auto" : "100%"}>{element.resource_name}</Table.Td>
       <Table.Td {...paddingStyles}>{element.inventory}</Table.Td>
@@ -127,7 +109,21 @@ const ResourceSummary = ({
             </Table.Th>
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>{loading ? skeleton : rows}</Table.Tbody>
+        <Table.Tbody>
+          {loading ? (
+            skeleton
+          ) : data.length > 0 ? (
+            rows
+          ) : (
+            <Table.Tr>
+              <Table.Td colSpan={4}>
+                <Center py="xl" c="longText">
+                  No resources available for this S.Y.
+                </Center>
+              </Table.Td>
+            </Table.Tr>
+          )}
+        </Table.Tbody>
       </Table>
     </Card>
   );

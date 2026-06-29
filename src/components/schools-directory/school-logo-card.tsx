@@ -1,6 +1,7 @@
 import useImagePreview from "@/hooks/use-image-preview";
 import { api } from "@/lib/api";
 import {
+  Box,
   Button,
   Card,
   Center,
@@ -12,7 +13,7 @@ import {
 } from "@mantine/core";
 import { UploadMinimalistic } from "@solar-icons/react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Check, Pen, X } from "lucide-react";
+import { Check, Pen, School, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -112,14 +113,24 @@ const SchoolLogoCard = ({ school }: { school: { [k: string]: any } }) => {
         </Card>
       ) : (
         <Center h={230} style={{ flexDirection: "column" }}>
-          <Image
-            src={school.image ?? "/spcf-logo.png"}
-            h={170}
-            w={170}
-            radius="md"
-            loading="lazy"
-            decoding="async"
-          />
+          <Box w={170} h={170}>
+            {school.image ? (
+              <Image
+                src={school.image}
+                width="100%"
+                height="100%"
+                radius="md"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <Paper h="100%" w="100%" shadow="none" bg="blue.0" radius="md">
+                <Center h="100%" w="100%" c="blue.9">
+                  <School strokeWidth={1.5} size={80} />
+                </Center>
+              </Paper>
+            )}
+          </Box>
         </Center>
       )}
       <Center>

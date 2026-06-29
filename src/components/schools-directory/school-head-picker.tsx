@@ -159,6 +159,37 @@ const SchoolHeadPicker = ({
           />
         </Box>
       </Group>
+
+      <Controller
+        name="position"
+        control={control}
+        render={({ field, fieldState }) => (
+          <Select
+            {...field}
+            label="Position"
+            placeholder="Select Position"
+            data={[
+              "Principal I",
+              "Principal II",
+              "Principal III",
+              "Principal IV",
+            ]}
+            searchable
+            clearable
+            radius="sm"
+            nothingFoundMessage="No results found"
+            comboboxProps={{
+              shadow: "xl",
+            }}
+            styles={{
+              input: { textTransform: "capitalize" },
+              option: { textTransform: "capitalize" },
+            }}
+            className="w-full"
+            error={fieldState.error?.message}
+          />
+        )}
+      />
     </>
   );
 };

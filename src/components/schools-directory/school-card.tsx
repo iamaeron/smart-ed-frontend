@@ -2,14 +2,16 @@ import {
   Box,
   Button,
   Card,
+  Center,
   Flex,
   Grid,
   Group,
   Image,
+  Paper,
   Text,
 } from "@mantine/core";
 import { Calendar, MapPoint, Phone, User } from "@solar-icons/react";
-import { Dot } from "lucide-react";
+import { Dot, School } from "lucide-react";
 import { motion } from "motion/react";
 import { Link } from "react-router";
 import AppTooltip from "../system-management/app-tooltip";
@@ -40,14 +42,22 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
       <Card p="lg" radius="lg" shadow="sm">
         <Flex align="start" gap="md">
           <Box w={90} h={90}>
-            <Image
-              src={school.image ?? "/spcf-logo.png"}
-              width="100%"
-              height="100%"
-              radius="md"
-              loading="lazy"
-              decoding="async"
-            />
+            {school.image ? (
+              <Image
+                src={school.image}
+                width="100%"
+                height="100%"
+                radius="md"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <Paper h="100%" w="100%" shadow="none" bg="blue.0" radius="md">
+                <Center h="100%" w="100%" c="blue.9">
+                  <School strokeWidth={1.5} size={38} />
+                </Center>
+              </Paper>
+            )}
           </Box>
           <Box flex={1}>
             <Flex mb={16} justify="space-between">
