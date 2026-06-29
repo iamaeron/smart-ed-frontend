@@ -15,6 +15,7 @@ export const schoolSchema = z.object({
   region: z.string().min(1, "Required").max(255),
   district: z.string().min(1, "Required").max(255),
   latitude: z.string().nullable(),
+  longitude: z.string().nullable(),
 });
 
 export type SchoolData = z.infer<typeof schoolSchema>;

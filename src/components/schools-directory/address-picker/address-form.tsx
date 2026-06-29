@@ -1,22 +1,16 @@
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import ProvincePicker from "./province-picker";
 import CityPicker from "./city-picker";
 import BarangayPicker from "./barangay-picker";
-import { Box, Grid, Text, TextInput } from "@mantine/core";
+import { Box, Grid, Select, Text, TextInput } from "@mantine/core";
 import { useAddressStore } from "@/stores/address.store";
-import { useDebouncedValue } from "@mantine/hooks";
 import { romanize } from "@/lib/romanize";
+import AppTooltip from "@/components/system-management/app-tooltip";
 
 const AddressForm = () => {
   const region = useAddressStore((state) => state.region);
   const street = useAddressStore((state) => state.street);
   const setId = useAddressStore((state) => state.setId);
-  const [streetValue, setStreetValue] = useState("");
-  const [debounced] = useDebouncedValue(streetValue, 1000);
-
-  useEffect(() => {
-    setId("street", debounced);
-  }, [streetValue]);
 
   return (
     <Box mt="md">
@@ -41,15 +35,12 @@ const AddressForm = () => {
         </Grid.Col>
         <Grid.Col span={6}>
           <TextInput
-            value={streetValue}
-            onChange={(e) => setStreetValue(e.target.value)}
+            value={street}
+            onChange={(e) => setId("street", e.target.value)}
             labelProps={{
               mb: 2,
               fw: 400,
               c: "dark",
-              // c: formState.errors.school_name?.message
-              //   ? "subRed"
-              //   : "dark",
             }}
             label="Street"
             radius="sm"
@@ -57,35 +48,44 @@ const AddressForm = () => {
         </Grid.Col>
 
         <Grid.Col span={6}>
-          <TextInput
-            value={streetValue}
-            onChange={(e) => setStreetValue(e.target.value)}
-            labelProps={{
-              mb: 2,
-              fw: 400,
-              c: "dark",
-              // c: formState.errors.school_name?.message
-              //   ? "subRed"
-              //   : "dark",
-            }}
+          <Select
             label="District"
+            placeholder="District"
+            data={["East", "West", "South", "North"]}
+            searchable
+            clearable
             radius="sm"
+            nothingFoundMessage="No results found"
+            comboboxProps={{
+              shadow: "xl",
+            }}
+            styles={{
+              input: { textTransform: "capitalize" },
+              option: { textTransform: "capitalize" },
+            }}
+            className="w-full"
           />
         </Grid.Col>
 
         <Grid.Col span={6}>
-          <TextInput
-            onChange={(e) => setStreetValue(e.target.value)}
-            labelProps={{
-              mb: 2,
-              fw: 400,
-              c: "dark",
-            }}
-            value={romanize(Number(region)) ?? ""}
-            label="Region"
-            radius="sm"
-            readOnly
-          />
+          <AppTooltip
+            withArrow
+            arrowOffset={17}
+            position="bottom-start"
+            label="Read only"
+          >
+            <TextInput
+              labelProps={{
+                mb: 2,
+                fw: 400,
+                c: "dark",
+              }}
+              defaultValue={romanize(Number(region)) ?? ""}
+              label="Region"
+              radius="sm"
+              readOnly
+            />
+          </AppTooltip>
         </Grid.Col>
       </Grid>
     </Box>

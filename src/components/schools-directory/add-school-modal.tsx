@@ -18,12 +18,13 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { ChevronDown, Plus, X } from "lucide-react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import ErrorMessage from "../form/error-message";
 import { useFetchSchoolTypes } from "@/lib/fetcher/school.fetcher";
 import SchoolHeadPicker from "./school-head-picker";
 import FormMap from "./form-map";
 import AddressPicker from "./address-picker/address-form";
+import AddSchoolConfirmModal from "./add-school-confirm-modal";
 
 const AddSchoolModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -46,11 +47,16 @@ const AddSchoolModal = () => {
         region: "",
         district: "",
         latitude: "",
+        longitude: "",
       },
     });
 
   const schoolTypesList =
     schoolTypes?.results?.school_types.map((school: any) => school.name) || [];
+
+  const onSubmit: SubmitHandler<SchoolData> = async (data) => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -79,179 +85,164 @@ const AddSchoolModal = () => {
           </Group>
         </Card>
 
-        <Paper p="sm">
-          <Flex>
-            <Box p="lg" flex={1}>
-              <Title order={5} mb={14}>
-                General Information
-              </Title>
+        <form
+          id="new-school-form"
+          onSubmit={handleSubmit(
+            (err) => console.log(err),
+            (err) => console.log(err),
+          )}
+        >
+          <Paper p="sm">
+            <Flex>
+              <Box p="lg" flex={1}>
+                <Title order={5} mb={14}>
+                  General Information
+                </Title>
 
-              <Group gap={16} my={14}>
-                <Controller
-                  name="school_name"
-                  control={control}
-                  render={({ field }) => (
-                    <Box flex={1}>
-                      <TextInput
-                        {...field}
-                        labelProps={{
-                          mb: 6,
-                          fw: 400,
-                          c: formState.errors.school_name?.message
-                            ? "subRed"
-                            : "dark",
-                        }}
-                        label="School Name"
-                        radius="sm"
-                        required
-                      />
-                      <ErrorMessage
-                        atEnd={false}
-                        error={formState.errors.school_name?.message}
-                      />
-                    </Box>
-                  )}
-                />
-
-                <Controller
-                  name="school_code"
-                  control={control}
-                  render={({ field }) => (
-                    <Box flex={1}>
-                      <TextInput
-                        {...field}
-                        labelProps={{
-                          mb: 6,
-                          fw: 400,
-                          c: formState.errors.school_code?.message
-                            ? "subRed"
-                            : "dark",
-                        }}
-                        label="School ID"
-                        radius="sm"
-                        required
-                      />
-                      <ErrorMessage
-                        atEnd={false}
-                        error={formState.errors.school_code?.message}
-                      />
-                    </Box>
-                  )}
-                />
-              </Group>
-
-              <Group gap={16} my={14}>
-                <Controller
-                  name="year_established"
-                  control={control}
-                  render={({ field }) => (
-                    <Box flex={1}>
-                      <TextInput
-                        {...field}
-                        labelProps={{
-                          mb: 6,
-                          fw: 400,
-                          c: formState.errors.year_established?.message
-                            ? "subRed"
-                            : "dark",
-                        }}
-                        label="Year Established"
-                        radius="sm"
-                      />
-                      <ErrorMessage
-                        atEnd={false}
-                        error={formState.errors.year_established?.message}
-                      />
-                    </Box>
-                  )}
-                />
-
-                <Controller
-                  name="school_type"
-                  control={control}
-                  render={({ field }) => (
-                    <Box flex={1}>
-                      <Select
-                        {...field}
-                        allowDeselect={false}
-                        label="Role"
-                        labelProps={{ style: { marginBottom: 6 } }}
-                        placeholder="Search Type ..."
-                        rightSection={<ChevronDown size={16} />}
-                        radius="sm"
-                        searchable
-                        comboboxProps={{
-                          shadow: "xl",
-                        }}
-                        data={schoolTypesList}
-                      />
-                      <ErrorMessage
-                        atEnd={false}
-                        error={formState.errors.school_code?.message}
-                      />
-                    </Box>
-                  )}
-                />
-              </Group>
-
-              <SchoolHeadPicker control={control} formState={formState} />
-            </Box>
-
-            {/* <Divider orientation="vertical" /> */}
-
-            <Box p="lg" flex={1}>
-              <Title order={5} mb={14}>
-                Address
-              </Title>
-              <AddressPicker />
-
-              <Divider mt={24} mb={12} />
-
-              <Title order={5} mb={14}>
-                Map Coordirnates
-              </Title>
-              <FormMap />
-
-              <Grid mt="sm">
-                <Grid.Col span={6}>
-                  <TextInput
-                    // value={streetValue}
-                    leftSection={<Text size="sm">X :</Text>}
-                    // onChange={(e) => setStreetValue(e.target.value)}
-                    labelProps={{
-                      mb: 2,
-                      fw: 400,
-                      c: "dark",
-                      // c: formState.errors.school_name?.message
-                      //   ? "subRed"
-                      //   : "dark",
-                    }}
-                    // label="District"
-                    radius="sm"
+                <Group gap={16} my={14}>
+                  <Controller
+                    name="school_name"
+                    control={control}
+                    render={({ field }) => (
+                      <Box flex={1}>
+                        <TextInput
+                          {...field}
+                          labelProps={{
+                            mb: 6,
+                            fw: 400,
+                            c: formState.errors.school_name?.message
+                              ? "subRed"
+                              : "dark",
+                          }}
+                          label="School Name"
+                          radius="sm"
+                          required
+                        />
+                        <ErrorMessage
+                          atEnd={false}
+                          error={formState.errors.school_name?.message}
+                        />
+                      </Box>
+                    )}
                   />
-                </Grid.Col>
 
-                <Grid.Col span={6}>
-                  <TextInput
-                    // value={streetValue}
-                    // onChange={(e) => setStreetValue(e.target.value)}
-                    leftSection={<Text size="sm">Y :</Text>}
-                    labelProps={{
-                      mb: 2,
-                      fw: 400,
-                      c: "dark",
-                      // c: formState.errors.school_name?.message
-                      //   ? "subRed"
-                      //   : "dark",
-                    }}
-                    // label="District"
-                    radius="sm"
+                  <Controller
+                    name="school_code"
+                    control={control}
+                    render={({ field }) => (
+                      <Box flex={1}>
+                        <TextInput
+                          {...field}
+                          labelProps={{
+                            mb: 6,
+                            fw: 400,
+                            c: formState.errors.school_code?.message
+                              ? "subRed"
+                              : "dark",
+                          }}
+                          label="School ID"
+                          radius="sm"
+                          required
+                        />
+                        <ErrorMessage
+                          atEnd={false}
+                          error={formState.errors.school_code?.message}
+                        />
+                      </Box>
+                    )}
                   />
-                </Grid.Col>
-              </Grid>
-            </Box>
-          </Flex>
-        </Paper>
+                </Group>
+
+                <Group gap={16} my={14}>
+                  <Controller
+                    name="year_established"
+                    control={control}
+                    render={({ field }) => (
+                      <Box flex={1}>
+                        <TextInput
+                          {...field}
+                          labelProps={{
+                            mb: 6,
+                            fw: 400,
+                            c: formState.errors.year_established?.message
+                              ? "subRed"
+                              : "dark",
+                          }}
+                          label="Year Established"
+                          radius="sm"
+                        />
+                        <ErrorMessage
+                          atEnd={false}
+                          error={formState.errors.year_established?.message}
+                        />
+                      </Box>
+                    )}
+                  />
+
+                  <Controller
+                    name="school_type"
+                    control={control}
+                    render={({ field }) => (
+                      <Box flex={1}>
+                        <Select
+                          {...field}
+                          allowDeselect={false}
+                          label="Role"
+                          labelProps={{ style: { marginBottom: 6 } }}
+                          placeholder="Search Type ..."
+                          rightSection={<ChevronDown size={16} />}
+                          radius="sm"
+                          searchable
+                          comboboxProps={{
+                            shadow: "xl",
+                          }}
+                          data={schoolTypesList}
+                        />
+                        <ErrorMessage
+                          atEnd={false}
+                          error={formState.errors.school_code?.message}
+                        />
+                      </Box>
+                    )}
+                  />
+                </Group>
+
+                <SchoolHeadPicker control={control} formState={formState} />
+              </Box>
+
+              {/* <Divider orientation="vertical" /> */}
+
+              <Box p="lg" flex={1}>
+                <Title order={5} mb={14}>
+                  Address
+                </Title>
+                <AddressPicker />
+
+                <Divider mt={24} mb={12} />
+
+                <Title order={5} mb={14}>
+                  Map Coordirnates
+                </Title>
+                <FormMap />
+              </Box>
+            </Flex>
+
+            <Flex p="lg" gap="xl">
+              <Button
+                onClick={close}
+                tt="uppercase"
+                variant="outline"
+                color="primary"
+                c="primary"
+                fullWidth
+                type="button"
+              >
+                Cancel
+              </Button>
+              <AddSchoolConfirmModal />
+            </Flex>
+          </Paper>
+        </form>
       </Modal>
       <Button onClick={open} leftSection={<Plus size={16} />}>
         Add School

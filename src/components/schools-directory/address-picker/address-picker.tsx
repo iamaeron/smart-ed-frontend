@@ -66,6 +66,9 @@ const AddressPicker = ({
         const matched = selectData.find((d) => d.value === val);
         if (matched) onSelect(matched.raw);
       }}
+      comboboxProps={{
+        shadow: "xl",
+      }}
       styles={{
         input: { textTransform: "capitalize" },
         option: { textTransform: "capitalize" },

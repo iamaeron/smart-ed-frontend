@@ -9,8 +9,6 @@ const BarangayPicker = () => {
   const setId = useAddressStore((s) => s.setId);
 
   const filteredBarangays = useMemo(() => {
-    console.log(cityId);
-
     return (barangaysJson as { [k: string]: string }[]).filter(
       (b) => b.mun_code === cityId,
     );

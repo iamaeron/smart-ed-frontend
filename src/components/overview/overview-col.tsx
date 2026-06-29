@@ -24,14 +24,11 @@ const OverviewCol = ({
     <Card
       w="100%"
       bg={highlighted ? "primary" : "white"}
-      // withBorder
       p="lg"
       style={{ cursor: handleClick ? "pointer" : "auto" }}
-      // onClick={() => console.log("clicked")}
       onClick={handleClick ? handleClick : undefined}
       c={highlighted ? "white" : "mainText"}
       radius="lg"
-      // bd="1px solid rgba(0,0,0,0.1)"
       shadow="xl"
     >
       <Group justify="space-between">
@@ -52,7 +49,7 @@ const OverviewCol = ({
               lts={2}
               lh={1}
             >
-              {value}
+              {value ?? "0"}
             </Text>
           )}
         </Box>

@@ -4,8 +4,9 @@ const AppTooltip = ({ ...props }: TooltipProps) => {
   return (
     <Tooltip
       {...props}
-      style={{ fontSize: "13px" }}
-      color="rgba(17, 16, 23, 0.7)"
+      fw={500}
+      style={{ fontSize: "12px" }}
+      color="rgba(17, 16, 23, 0.75)"
     />
   );
 };

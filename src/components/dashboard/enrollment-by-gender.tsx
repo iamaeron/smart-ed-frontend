@@ -10,7 +10,7 @@ const EnrollmentByGender = () => {
       <Card h="100%" radius="lg" p="lg" shadow="sm">
         <Text mb={18} fw={600}>
           Enrollment by Gender
-          <Skeleton mt={18} h={193} />
+          <Skeleton mt={18} h={175} />
         </Text>
       </Card>
     );
@@ -21,23 +21,18 @@ const EnrollmentByGender = () => {
 
   const isBothZero = totalFemale === 0 && totalMale === 0;
 
-  const enrollmentByGenderData = isBothZero
-    ? [
-        {
-          name: "Female",
-          value: 50,
-          color: "#E5E7EB",
-        },
-        { name: "Male", value: 50, color: "#D1D5DB" },
-      ]
-    : [
-        {
-          name: "Female",
-          value: totalFemale,
-          color: "primary",
-        },
-        { name: "Male", value: totalMale, color: "accent1" },
-      ];
+  const enrollmentByGenderData = [
+    {
+      name: "Female",
+      value: isBothZero ? 50 : totalFemale,
+      color: isBothZero ? "#E5E7EB" : "primary",
+    },
+    {
+      name: "Male",
+      value: isBothZero ? 50 : totalMale,
+      color: isBothZero ? "#D1D5DB" : "accent1",
+    },
+  ];
 
   return (
     <Card h="100%" radius="lg" p="lg" shadow="sm">

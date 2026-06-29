@@ -13,7 +13,9 @@ type AddressStore = {
   barangays: { [k: string]: any }[];
   street: string;
   region: string;
+  coordinates: [number, number];
   district: string;
+  isPinDraggable: boolean;
   setId: (key: string, val: any) => void;
 };
 
@@ -31,5 +33,6 @@ export const useAddressStore = create<AddressStore>((set) => ({
   district: "",
   coordinates: [15.04, 120.6667],
   barangays: [...provincesJson],
+  isPinDraggable: false,
   setId: (key, val) => set({ [key]: val }),
 }));
