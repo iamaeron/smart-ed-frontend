@@ -124,16 +124,16 @@ const AddressForm = () => {
         </Grid.Col>
 
         <Grid.Col span={6}>
-          <AppTooltip
-            withArrow
-            arrowOffset={17}
-            position="bottom-start"
-            label="Read only"
-          >
-            <Controller
-              name="region"
-              control={control}
-              render={({ field }) => (
+          <Controller
+            name="region"
+            control={control}
+            render={({ field }) => (
+              <AppTooltip
+                withArrow
+                arrowOffset={17}
+                position="bottom-start"
+                label="Read only"
+              >
                 <TextInput
                   {...field}
                   labelProps={{
@@ -146,9 +146,9 @@ const AddressForm = () => {
                   radius="sm"
                   readOnly
                 />
-              )}
-            />
-          </AppTooltip>
+              </AppTooltip>
+            )}
+          />
         </Grid.Col>
       </Grid>
     </Box>

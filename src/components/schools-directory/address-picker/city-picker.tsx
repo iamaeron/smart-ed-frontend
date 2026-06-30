@@ -30,6 +30,7 @@ const CityPicker = () => {
 
   return (
     <AddressPicker
+      pickerName="city"
       placeholder="City / Municipality"
       value={cityId}
       dataList={filteredCities}

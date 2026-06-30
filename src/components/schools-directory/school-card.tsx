@@ -108,7 +108,14 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                     />
                   </div>
                   <Box>
-                    <AppTooltip label={address} position="bottom-start">
+                    <AppTooltip
+                      label={
+                        <Text fz={12} fw={500} tt="capitalize">
+                          {address}
+                        </Text>
+                      }
+                      position="bottom-start"
+                    >
                       <Text lineClamp={1} fz={14} c="mainText" fw={600}>
                         {address}
                       </Text>

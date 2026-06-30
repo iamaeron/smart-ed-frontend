@@ -30,6 +30,7 @@ const ProvincePicker = () => {
 
   return (
     <AddressPicker
+      pickerName="province"
       placeholder="Province"
       value={provinceId}
       dataList={provincesJson}

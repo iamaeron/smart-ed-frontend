@@ -5,7 +5,7 @@ import { ResponsiveContainer } from "recharts";
 
 const ComparativeEnrollment = () => {
   const { data, isPending } = useFetchDashboardEnrollmentData();
-
+  console.log(data);
   if (isPending) return <Skeleton h={200} />;
 
   return (

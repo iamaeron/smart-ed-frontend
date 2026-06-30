@@ -1,25 +1,15 @@
-import QuickViewCol from "@/components/dashboard/quick-view-col";
-import QuickViewContainer from "@/components/dashboard/quick-view-container";
 import { Card, Center, Grid, Text } from "@mantine/core";
-import { Buildings, SquareAcademicCap, UserHandUp } from "@solar-icons/react";
 import ComparativeEnrollment from "@/components/dashboard/comparative-enrollment";
 import EnrollmentByGender from "@/components/dashboard/enrollment-by-gender";
 import NotificationsCol from "@/components/dashboard/notifications-col";
 import AppLayout from "@/layouts/app.layout";
 import DashboardResourceSummary from "@/components/dashboard/dashboard-resource-summary";
+import QuickOverviewCols from "@/components/dashboard/quick-overview-cols";
 
 const DivisionAdminDashboard = () => {
   return (
     <AppLayout>
-      <QuickViewContainer>
-        <QuickViewCol icon={Buildings} label="Total Schools" value="55" />
-        <QuickViewCol
-          icon={SquareAcademicCap}
-          label="Total Learners"
-          value="35,420"
-        />
-        <QuickViewCol icon={UserHandUp} label="Total Teachers" value="1,215" />
-      </QuickViewContainer>
+      <QuickOverviewCols />
 
       <Grid mt={20}>
         <Grid.Col span={9}>

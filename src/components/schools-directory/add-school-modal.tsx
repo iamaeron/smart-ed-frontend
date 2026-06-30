@@ -23,7 +23,6 @@ import {
   useForm,
   type SubmitHandler,
 } from "react-hook-form";
-import ErrorMessage from "../form/error-message";
 import { useFetchSchoolTypes } from "@/lib/fetcher/school.fetcher";
 import SchoolHeadPicker from "./school-head-picker";
 import FormMap from "./form-map";
@@ -33,6 +32,7 @@ import { api } from "@/lib/api";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAddressStore } from "@/stores/address.store";
+import { romanize } from "@/lib/romanize";
 
 const AddSchoolModal = () => {
   const queryClient = useQueryClient();
@@ -66,7 +66,10 @@ const AddSchoolModal = () => {
 
   const onSubmit: SubmitHandler<SchoolData> = async (data) => {
     try {
-      const res = await api.post(`/api/schools`, data);
+      const res = await api.post(`/api/schools`, {
+        ...data,
+        region: `Region ${romanize(Number(data.region))}`,
+      });
 
       if (res.data.code === 200) {
         toast.success(res.data.message);
@@ -131,7 +134,7 @@ const AddSchoolModal = () => {
                     <Controller
                       name="school_name"
                       control={control}
-                      render={({ field }) => (
+                      render={({ field, fieldState }) => (
                         <Box flex={1}>
                           <TextInput
                             {...field}
@@ -144,11 +147,7 @@ const AddSchoolModal = () => {
                             }}
                             label="School Name"
                             radius="sm"
-                            required
-                          />
-                          <ErrorMessage
-                            atEnd={false}
-                            error={formState.errors.school_name?.message}
+                            error={fieldState.error?.message}
                           />
                         </Box>
                       )}
@@ -157,7 +156,7 @@ const AddSchoolModal = () => {
                     <Controller
                       name="school_code"
                       control={control}
-                      render={({ field }) => (
+                      render={({ field, fieldState }) => (
                         <Box flex={1}>
                           <TextInput
                             {...field}
@@ -170,11 +169,7 @@ const AddSchoolModal = () => {
                             }}
                             label="School ID"
                             radius="sm"
-                            required
-                          />
-                          <ErrorMessage
-                            atEnd={false}
-                            error={formState.errors.school_code?.message}
+                            error={fieldState.error?.message}
                           />
                         </Box>
                       )}
@@ -185,7 +180,7 @@ const AddSchoolModal = () => {
                     <Controller
                       name="year_established"
                       control={control}
-                      render={({ field }) => (
+                      render={({ field, fieldState }) => (
                         <Box flex={1}>
                           <TextInput
                             {...field}
@@ -198,10 +193,7 @@ const AddSchoolModal = () => {
                             }}
                             label="Year Established"
                             radius="sm"
-                          />
-                          <ErrorMessage
-                            atEnd={false}
-                            error={formState.errors.year_established?.message}
+                            error={fieldState.error?.message}
                           />
                         </Box>
                       )}
@@ -210,12 +202,12 @@ const AddSchoolModal = () => {
                     <Controller
                       name="school_type"
                       control={control}
-                      render={({ field }) => (
+                      render={({ field, fieldState }) => (
                         <Box flex={1}>
                           <Select
                             {...field}
                             allowDeselect={false}
-                            label="Role"
+                            label="School Type"
                             labelProps={{ style: { marginBottom: 6 } }}
                             placeholder="Search Type ..."
                             rightSection={<ChevronDown size={16} />}
@@ -225,10 +217,7 @@ const AddSchoolModal = () => {
                               shadow: "xl",
                             }}
                             data={schoolTypesList}
-                          />
-                          <ErrorMessage
-                            atEnd={false}
-                            error={formState.errors.school_code?.message}
+                            error={fieldState.error?.message}
                           />
                         </Box>
                       )}

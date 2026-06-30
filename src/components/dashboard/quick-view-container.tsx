@@ -14,8 +14,6 @@ type QuickViewContainerType = {
 const QuickViewContainer = ({ children }: QuickViewContainerType) => {
   const { user } = useAuth();
 
-  console.log(user);
-
   return (
     <Paper bg="#0d4fe2" radius="lg">
       <BackgroundImage src={bg} c="white" p="xl" radius="lg">

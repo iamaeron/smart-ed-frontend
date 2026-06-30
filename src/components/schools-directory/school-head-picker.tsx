@@ -49,10 +49,11 @@ const SchoolHeadPicker = ({
       <Controller
         name="school_head"
         control={control}
-        render={({ field }) => (
+        render={({ field, fieldState }) => (
           <Box flex={1}>
             <Select
               {...field}
+              error={fieldState.error?.message}
               allowDeselect={false}
               labelProps={{ style: { marginBottom: 6 } }}
               placeholder="Enter account name ..."
@@ -122,10 +123,6 @@ const SchoolHeadPicker = ({
                 },
               }}
               data={accountsList}
-            />
-            <ErrorMessage
-              atEnd={false}
-              error={formState.errors.school_code?.message}
             />
           </Box>
         )}

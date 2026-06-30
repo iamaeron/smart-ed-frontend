@@ -10,8 +10,8 @@ const EnrollmentByGender = () => {
       <Card h="100%" radius="lg" p="lg" shadow="sm">
         <Text mb={18} fw={600}>
           Enrollment by Gender
-          <Skeleton mt={18} h={175} />
         </Text>
+        <Skeleton h={175} />
       </Card>
     );
   }

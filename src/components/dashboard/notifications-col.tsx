@@ -58,7 +58,7 @@ const NotificationsCol = () => {
       <Stack>
         {isPending ? (
           <Skeleton h={50} />
-        ) : data.results.data.length > 0 ? (
+        ) : data?.results?.data?.length > 0 ? (
           data.results.data.map((notif: Notification) => (
             <Indicator
               key={notif.id}
@@ -85,7 +85,11 @@ const NotificationsCol = () => {
             </Indicator>
           ))
         ) : (
-          <Center>No notification found.</Center>
+          <Center>
+            <Text size="sm" c="longText">
+              No notification found.
+            </Text>
+          </Center>
         )}
         {/* 
               <Indicator

@@ -89,7 +89,8 @@ const ResourceSummary = ({
 
         {user?.role === "School Account" &&
           selectedYearStatus === "default" &&
-          typeof loading === "boolean" && (
+          typeof loading === "boolean" &&
+          !summary && (
             <EditSchoolResourcesDataModal data={data} loading={loading} />
           )}
       </Group>

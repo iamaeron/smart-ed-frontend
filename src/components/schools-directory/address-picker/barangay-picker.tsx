@@ -26,6 +26,7 @@ const BarangayPicker = () => {
 
   return (
     <AddressPicker
+      pickerName="barangay"
       placeholder="Barangay"
       value={barangayId}
       dataList={filteredBarangays}
