@@ -2,7 +2,7 @@ import { Buildings, SquareAcademicCap, UserHandUp } from "@solar-icons/react";
 import QuickViewContainer from "./quick-view-container";
 import QuickViewCol from "./quick-view-col";
 import { useFetchResources } from "@/lib/fetcher/resource.fetcher";
-import { Skeleton } from "@mantine/core";
+import { Card } from "@mantine/core";
 import { useAuth } from "@/contexts/auth.context";
 import { useFetchEnrollmentData } from "@/lib/fetcher/enrollment.fetcher";
 
@@ -23,7 +23,13 @@ const QuickOverviewCols = () => {
     <QuickViewContainer>
       {isPending || isEnrollmentDataPending ? (
         [1, 2, 3].map((skelly) => (
-          <Skeleton key={skelly} h={134} bg="rgba(255,255,255,0.3)" />
+          <Card
+            key={skelly}
+            h={134}
+            w="100%"
+            radius="lg"
+            bg="rgba(255,255,255,0.3)"
+          />
         ))
       ) : (
         <>

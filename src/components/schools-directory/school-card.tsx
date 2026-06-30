@@ -102,6 +102,7 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                 <Flex gap={4}>
                   <div>
                     <MapPoint
+                      color="#555555"
                       style={{ marginBottom: "-2px" }}
                       weight="Linear"
                       size="18"
@@ -116,7 +117,13 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                       }
                       position="bottom-start"
                     >
-                      <Text lineClamp={1} fz={14} c="mainText" fw={600}>
+                      <Text
+                        lineClamp={1}
+                        tt="capitalize"
+                        fz={14}
+                        c="mainText"
+                        fw={600}
+                      >
                         {address}
                       </Text>
                     </AppTooltip>
@@ -131,6 +138,7 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                 <Flex gap={4}>
                   <div>
                     <User
+                      color="#555555"
                       style={{ marginBottom: "-2px" }}
                       weight="Linear"
                       size="18"
@@ -156,6 +164,7 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                 <Flex gap={4}>
                   <div>
                     <Phone
+                      color="#555555"
                       style={{ marginBottom: "-2px" }}
                       weight="Linear"
                       size="18"
@@ -173,6 +182,7 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                 <Flex gap={4}>
                   <div>
                     <Calendar
+                      color="#555555"
                       style={{ marginBottom: "-2px" }}
                       weight="Linear"
                       size="18"
