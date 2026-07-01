@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import SignInPage from "./signin";
 import SystemAdminDashboard from "./system/dashboard";
 import ProtectedRoutes from "@/layouts/protected-routes";
@@ -28,6 +28,11 @@ const AppRoutes = () => {
       {/* School Admin Routes */}
       <Route element={<ProtectedRoutes />}>
         <Route
+          path="/school-account"
+          element={<Navigate to="/school-account/dashboard" replace />}
+        />
+
+        <Route
           path="/school-account/dashboard"
           element={<SchoolAdminDashboard />}
         />
@@ -47,6 +52,10 @@ const AppRoutes = () => {
 
       {/* System Admin Routes */}
       <Route element={<ProtectedRoutes />}>
+        <Route
+          path="/system-admin"
+          element={<Navigate to="/system-admin/dashboard" replace />}
+        />
         <Route
           path="/system-admin/dashboard"
           element={<SystemAdminDashboard />}
@@ -78,6 +87,10 @@ const AppRoutes = () => {
 
       {/* Division Admin Routes */}
       <Route element={<ProtectedRoutes />}>
+        <Route
+          path="/division-admin"
+          element={<Navigate to="/division-admin/dashboard" replace />}
+        />
         <Route
           path="/division-admin/dashboard"
           element={<DivisionAdminDashboard />}

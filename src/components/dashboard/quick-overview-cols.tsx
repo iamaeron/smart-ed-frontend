@@ -16,7 +16,7 @@ const QuickOverviewCols = () => {
   const currentYearData =
     totalArr.length > 0 ? totalArr.find((i: any) => i.year === year) : {};
 
-  const isSchoolAccount = user?.role === "School Account?";
+  const isSchoolAccount = user?.role === "School Account";
 
   return (
     <QuickViewContainer>
@@ -34,7 +34,7 @@ const QuickOverviewCols = () => {
         <>
           <QuickViewCol
             icon={Buildings}
-            label={isSchoolAccount ? "Total Schools" : "Total Classrooms"}
+            label={isSchoolAccount ? "Total Classrooms" : "Total Schools"}
             value={
               isSchoolAccount
                 ? currentYearData.classrooms
