@@ -1,4 +1,3 @@
-import ErrorMessage from "@/components/form/error-message";
 import { api } from "@/lib/api";
 import type { User } from "@/stores/auth.store";
 import {
@@ -45,11 +44,10 @@ const EditAccountModal = ({
     phone_number: account.phone_number,
   };
 
-  const { control, handleSubmit, formState, setError, reset } =
-    useForm<EditAccountData>({
-      resolver: zodResolver(editAccountSchema),
-      defaultValues: defValues,
-    });
+  const { control, handleSubmit, setError, reset } = useForm<EditAccountData>({
+    resolver: zodResolver(editAccountSchema),
+    defaultValues: defValues,
+  });
 
   useEffect(() => {
     if (account) {
@@ -115,22 +113,19 @@ const EditAccountModal = ({
             <Controller
               name="name"
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Box>
                   <TextInput
                     {...field}
                     labelProps={{
                       mb: 6,
                       fw: 400,
-                      c: formState.errors.name?.message ? "subRed" : "dark",
+                      c: fieldState.error?.message ? "subRed" : "dark",
                     }}
                     label="Name"
                     placeholder="Name"
                     radius="sm"
-                  />
-                  <ErrorMessage
-                    atEnd={false}
-                    error={formState.errors.name?.message}
+                    error={fieldState.error?.message}
                   />
                 </Box>
               )}
@@ -139,22 +134,19 @@ const EditAccountModal = ({
             <Controller
               name="username"
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Box mt={14}>
                   <TextInput
                     {...field}
                     labelProps={{
                       mb: 6,
                       fw: 400,
-                      c: formState.errors.username?.message ? "subRed" : "dark",
+                      c: fieldState.error?.message ? "subRed" : "dark",
                     }}
                     label="Username"
                     placeholder="Username"
                     radius="sm"
-                  />
-                  <ErrorMessage
-                    atEnd={false}
-                    error={formState.errors.username?.message}
+                    error={fieldState.error?.message}
                   />
                 </Box>
               )}
@@ -164,22 +156,19 @@ const EditAccountModal = ({
               <Controller
                 name="email"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <TextInput
                       {...field}
                       labelProps={{
                         mb: 6,
                         fw: 400,
-                        c: formState.errors.email?.message ? "subRed" : "dark",
+                        c: fieldState.error?.message ? "subRed" : "dark",
                       }}
                       label="Email"
                       placeholder="Email"
                       radius="sm"
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.email?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -188,22 +177,19 @@ const EditAccountModal = ({
               <Controller
                 name="phone_number"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <TextInput
                       {...field}
                       labelProps={{
                         mb: 6,
                         fw: 400,
-                        c: formState.errors.email?.message ? "subRed" : "dark",
+                        c: fieldState.error?.message ? "subRed" : "dark",
                       }}
                       label="Phone No."
                       placeholder="Phone No."
                       radius="sm"
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.phone_number?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}

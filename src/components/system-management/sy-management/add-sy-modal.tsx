@@ -59,8 +59,12 @@ const AddSYModal = () => {
         close();
       }
     } catch (err: any) {
-      setError("end_date", { message: "Error" });
-      setError("start_date", { message: "Error" });
+      console.log(err);
+      for (const [key, value] of Object.entries(err.response.data.errors)) {
+        setError(key as keyof AcademicYearData, {
+          message: (value as any[])[0] ?? "This field is required",
+        });
+      }
     }
   };
 

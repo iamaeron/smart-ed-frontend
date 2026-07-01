@@ -18,8 +18,8 @@ const ArchiveSYConfirmModal = ({ sy, onClose, opened }: EditSYModalProps) => {
         toast(res.data.results.action);
         onClose();
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 

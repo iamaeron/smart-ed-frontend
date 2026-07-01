@@ -1,4 +1,4 @@
-import { useFetchKPI, useFetchKPITrends } from "@/lib/fetcher/kpi.fetcher";
+import { useFetchKPITrends } from "@/lib/fetcher/kpi.fetcher";
 import { useFetchSchoolTypes } from "@/lib/fetcher/school.fetcher";
 import { AreaChart } from "@mantine/charts";
 import { Box, Card, Flex, Group, Skeleton, Text } from "@mantine/core";
@@ -8,24 +8,6 @@ import { ResponsiveContainer } from "recharts";
 import KPISchoolTypePicker from "./kpi-school-type-picker";
 import KPIRatePicker from "./kpi-rate-picker";
 import ListPending from "../list-pending";
-
-const dummyData = [
-  {
-    year: "S.Y. 2023-2024",
-    Male: 89,
-    Female: 92,
-  },
-  {
-    year: "S.Y. 2024-2025",
-    Male: 90,
-    Female: 90,
-  },
-  {
-    year: "S.Y. 2025-2026",
-    Male: 88,
-    Female: 89,
-  },
-];
 
 const KPITrend = () => {
   const { data: schoolTypes, isPending: isSchoolTypesPending } =
@@ -42,8 +24,6 @@ const KPITrend = () => {
 
   const kpiTrendTotal = data?.results?.data?.kpi_trends_total;
   const kpiTrends = data?.results?.data?.kpi_trends || [];
-
-  console.log(data);
 
   return (
     <Card mb={30} p="lg" shadow="xl" radius="lg">

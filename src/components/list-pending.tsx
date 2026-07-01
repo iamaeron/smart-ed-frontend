@@ -3,14 +3,17 @@ import { Loader } from "@mantine/core";
 const ListPending = ({
   pending,
   children,
+  style,
 }: {
   pending: boolean;
+  style?: React.CSSProperties;
   children: React.ReactNode;
 }) => {
   return (
     <div
       style={{
         position: "relative",
+        ...style,
       }}
     >
       {pending && (

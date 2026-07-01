@@ -1,4 +1,3 @@
-import ErrorMessage from "@/components/form/error-message";
 import { api } from "@/lib/api";
 import {
   accountPasswordSchema,
@@ -31,7 +30,7 @@ const EditAccountPasswordModal = ({
 }: EditAccountModalProps) => {
   const queryClient = useQueryClient();
 
-  const { control, handleSubmit, formState, setError, reset } =
+  const { control, handleSubmit, setError, reset } =
     useForm<AccountPasswordData>({
       resolver: zodResolver(accountPasswordSchema),
       defaultValues: {
@@ -104,22 +103,19 @@ const EditAccountPasswordModal = ({
             <Controller
               name="new_pass"
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Box>
                   <TextInput
                     {...field}
                     labelProps={{
                       mb: 6,
                       fw: 400,
-                      c: formState.errors.new_pass?.message ? "subRed" : "dark",
+                      c: fieldState.error?.message ? "subRed" : "dark",
                     }}
                     label="New Password"
                     placeholder="Password"
                     radius="sm"
-                  />
-                  <ErrorMessage
-                    atEnd={false}
-                    error={formState.errors.new_pass?.message}
+                    error={fieldState.error?.message}
                   />
                 </Box>
               )}
@@ -128,24 +124,19 @@ const EditAccountPasswordModal = ({
             <Controller
               name="confirm_new_pass"
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Box mt={14}>
                   <TextInput
                     {...field}
                     labelProps={{
                       mb: 6,
                       fw: 400,
-                      c: formState.errors.confirm_new_pass?.message
-                        ? "subRed"
-                        : "dark",
+                      c: fieldState.error?.message ? "subRed" : "dark",
                     }}
                     label="Confirm Password"
                     placeholder="Password"
                     radius="sm"
-                  />
-                  <ErrorMessage
-                    atEnd={false}
-                    error={formState.errors.confirm_new_pass?.message}
+                    error={fieldState.error?.message}
                   />
                 </Box>
               )}

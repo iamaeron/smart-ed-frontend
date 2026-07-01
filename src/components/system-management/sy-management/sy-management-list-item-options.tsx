@@ -7,8 +7,10 @@ import { useState } from "react";
 import ArchiveSYConfirmModal from "./archive-sy-confirm-modal";
 import ActivateSYConfirmModal from "./activate-sy-confirm-modal";
 import { ArchiveLine, CheckCircleLine, Edit2Line } from "@mingcute/react";
+import DefaultSYConfirmModal from "./default-sy-confirm-modal";
+import { Check } from "lucide-react";
 
-type Modals = "edit" | "archive" | "activate";
+type Modals = "edit" | "archive" | "activate" | "default";
 
 const SYManagementListItemOptions = ({ item }: { item: AcademicYear }) => {
   const [activeModal, setActiveModal] = useState<Modals | null>(null);
@@ -30,6 +32,17 @@ const SYManagementListItemOptions = ({ item }: { item: AcademicYear }) => {
           >
             Edit School Year
           </Menu.Item>
+
+          <Show when={item.status === "upcoming"}>
+            <Menu.Item
+              onClick={() => setActiveModal("default")}
+              color="red"
+              leftSection={<Check size={18} />}
+            >
+              Set as Default Year
+            </Menu.Item>
+          </Show>
+
           <Show when={item.status === "active"}>
             <Menu.Item
               onClick={() => setActiveModal("archive")}
@@ -60,6 +73,12 @@ const SYManagementListItemOptions = ({ item }: { item: AcademicYear }) => {
       <ArchiveSYConfirmModal
         sy={item}
         opened={activeModal === "archive"}
+        onClose={() => setActiveModal(null)}
+      />
+
+      <DefaultSYConfirmModal
+        sy={item}
+        opened={activeModal === "default"}
         onClose={() => setActiveModal(null)}
       />
 

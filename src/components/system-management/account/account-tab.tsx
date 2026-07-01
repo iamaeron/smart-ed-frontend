@@ -28,14 +28,13 @@ const AccountTab = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
 
-  console.log(data);
-
   const baseList = data?.results?.users || [];
 
   const displayList = baseList.filter((act: any) => {
     // Search Filter
-    const matchesSearch = searchQuery
-      ? act.name.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesSearchName = searchQuery
+      ? act.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        act.username.toLowerCase().includes(searchQuery.toLowerCase())
       : true;
 
     // Role Filter
@@ -44,13 +43,7 @@ const AccountTab = () => {
         ? true
         : act?.role === roleFilter;
 
-    // Action Filter
-    // const matchesAction =
-    //   !actionFilter || actionFilter.toLowerCase().includes("all")
-    //     ? true
-    //     : act.log_name === actionFilter;
-
-    return matchesSearch && matchesRole; // && matchesAction;
+    return matchesSearchName && matchesRole; // && matchesAction;
   });
 
   const handlePageChange = (newPage: number) => {

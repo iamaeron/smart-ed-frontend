@@ -17,7 +17,6 @@ import { useDisclosure } from "@mantine/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { ChevronDown, Plus, X } from "lucide-react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
-import ErrorMessage from "@/components/form/error-message";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { accountSchema, type AccountData } from "@/types/form/account.schema";
@@ -112,22 +111,19 @@ const AddAccountModal = () => {
               <Controller
                 name="name"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box>
                     <TextInput
                       {...field}
                       labelProps={{
                         mb: 6,
                         fw: 400,
-                        c: formState.errors.name?.message ? "subRed" : "dark",
+                        c: fieldState.error?.message ? "subRed" : "dark",
                       }}
                       label="Name"
                       placeholder="Name"
                       radius="sm"
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.name?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -137,7 +133,7 @@ const AddAccountModal = () => {
                 <Controller
                   name="email"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <Box flex={1}>
                       <TextInput
                         {...field}
@@ -151,10 +147,7 @@ const AddAccountModal = () => {
                         label="Email"
                         placeholder="Email"
                         radius="sm"
-                      />
-                      <ErrorMessage
-                        atEnd={false}
-                        error={formState.errors.email?.message}
+                        error={fieldState.error?.message}
                       />
                     </Box>
                   )}
@@ -163,24 +156,19 @@ const AddAccountModal = () => {
                 <Controller
                   name="phone_number"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <Box flex={1}>
                       <TextInput
                         {...field}
                         labelProps={{
                           mb: 6,
                           fw: 400,
-                          c: formState.errors.email?.message
-                            ? "subRed"
-                            : "dark",
+                          c: fieldState.error?.message ? "subRed" : "dark",
                         }}
                         label="Phone No."
                         placeholder="Phone No."
                         radius="sm"
-                      />
-                      <ErrorMessage
-                        atEnd={false}
-                        error={formState.errors.phone_number?.message}
+                        error={fieldState.error?.message}
                       />
                     </Box>
                   )}
@@ -196,24 +184,19 @@ const AddAccountModal = () => {
               <Controller
                 name="username"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box>
                     <TextInput
                       {...field}
                       labelProps={{
                         mb: 6,
                         fw: 400,
-                        c: formState.errors.username?.message
-                          ? "subRed"
-                          : "dark",
+                        c: fieldState.error?.message ? "subRed" : "dark",
                       }}
                       label="Username"
                       placeholder="Username"
                       radius="sm"
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.username?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -222,24 +205,19 @@ const AddAccountModal = () => {
               <Controller
                 name="password"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1} my={14}>
                     <TextInput
                       {...field}
                       labelProps={{
                         mb: 6,
                         fw: 400,
-                        c: formState.errors.password?.message
-                          ? "subRed"
-                          : "dark",
+                        c: fieldState.error?.message ? "subRed" : "dark",
                       }}
                       label="Password"
                       placeholder="Password"
                       radius="sm"
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.password?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -248,24 +226,19 @@ const AddAccountModal = () => {
               <Controller
                 name="password_confirmation"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <TextInput
                       {...field}
                       labelProps={{
                         mb: 6,
                         fw: 400,
-                        c: formState.errors.password_confirmation?.message
-                          ? "subRed"
-                          : "dark",
+                        c: fieldState.error?.message ? "subRed" : "dark",
                       }}
                       label="Confirm New Password"
                       placeholder="Password"
                       radius="sm"
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.password_confirmation?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -281,7 +254,7 @@ const AddAccountModal = () => {
                 <Controller
                   name="school"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <Box flex={1}>
                       <Select
                         {...field}
@@ -295,10 +268,7 @@ const AddAccountModal = () => {
                           shadow: "xl",
                         }}
                         data={schoolList}
-                      />
-                      <ErrorMessage
-                        atEnd={false}
-                        error={formState.errors.school?.message}
+                        error={fieldState.error?.message}
                       />
                     </Box>
                   )}
@@ -307,7 +277,7 @@ const AddAccountModal = () => {
                 <Controller
                   name="role"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <Box flex={1}>
                       <Select
                         {...field}
@@ -321,10 +291,7 @@ const AddAccountModal = () => {
                           shadow: "xl",
                         }}
                         data={roleList}
-                      />
-                      <ErrorMessage
-                        atEnd={false}
-                        error={formState.errors.role?.message}
+                        error={fieldState.error?.message}
                       />
                     </Box>
                   )}
