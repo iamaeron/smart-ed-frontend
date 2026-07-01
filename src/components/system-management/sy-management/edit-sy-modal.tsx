@@ -23,7 +23,6 @@ import { api } from "@/lib/api";
 import EditSYConfirmModal from "./edit-sy-confirm-modal";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import ErrorMessage from "@/components/form/error-message";
 import type { AcademicYear } from "@/types/data/academic-year.type";
 import { useEffect } from "react";
 

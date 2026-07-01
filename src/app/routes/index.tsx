@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import SignInPage from "./landing";
+import SignInPage from "./signin";
 import SystemAdminDashboard from "./system/dashboard";
 import ProtectedRoutes from "@/layouts/protected-routes";
 import SystemAdminDivisionOverview from "./system/division-overview";
@@ -18,6 +18,7 @@ import DivisionAdminSubmissions from "./division/submissions";
 import SchoolAdminSchoolOverview from "./school/school-overview";
 import SchoolAdminSubmissions from "./school/submissions";
 import SchoolAdminNews from "./school/news-alert";
+import NotFound from "./404";
 
 const AppRoutes = () => {
   return (
@@ -102,6 +103,8 @@ const AppRoutes = () => {
           element={<DivisionAdminSubmissions />}
         />
       </Route>
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
