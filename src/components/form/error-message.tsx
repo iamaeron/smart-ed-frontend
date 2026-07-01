@@ -8,14 +8,13 @@ const ErrorMessage = ({
   atEnd?: boolean;
 }) => {
   return (
-    <Flex
-      style={{ opacity: error ? 1 : 0, pointerEvents: error ? "all" : "none" }}
-      justify={atEnd ? "flex-end" : "flex-start"}
-    >
-      <Text mt={6} fz={12} fw={500} c="subRed">
-        {error ? error : "E"}
-      </Text>
-    </Flex>
+    error && (
+      <Flex justify={atEnd ? "flex-end" : "flex-start"}>
+        <Text mt={6} fz={12} fw={500} c="subRed">
+          {error ? error : "E"}
+        </Text>
+      </Flex>
+    )
   );
 };
 

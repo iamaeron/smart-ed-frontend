@@ -19,7 +19,6 @@ import { useDisclosure } from "@mantine/hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { Plus, X } from "lucide-react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
-import ErrorMessage from "@/components/form/error-message";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import {
@@ -41,16 +40,15 @@ const AddAnnouncementModal = ({
   const { getRootProps, getInputProps, isDragActive, file, image, resetImage } =
     useImagePreview();
 
-  const { control, handleSubmit, formState, setError, reset } =
-    useForm<AnnouncementData>({
-      resolver: zodResolver(announcementSchema),
-      defaultValues: {
-        title: "",
-        description: "",
-        image: undefined,
-        type,
-      },
-    });
+  const { control, handleSubmit, setError, reset } = useForm<AnnouncementData>({
+    resolver: zodResolver(announcementSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      image: undefined,
+      type,
+    },
+  });
 
   const onSubmit: SubmitHandler<AnnouncementData> = async (data) => {
     const payload = new FormData();
@@ -113,22 +111,19 @@ const AddAnnouncementModal = ({
             <Controller
               name="title"
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Box>
                   <TextInput
                     {...field}
                     labelProps={{
                       mb: 6,
                       fw: 400,
-                      c: formState.errors.title?.message ? "subRed" : "dark",
+                      c: fieldState.error?.message ? "subRed" : "dark",
                     }}
                     placeholder="Write something ..."
                     label="Announcement Title"
                     radius="sm"
-                  />
-                  <ErrorMessage
-                    atEnd={false}
-                    error={formState.errors.title?.message}
+                    error={fieldState.error?.message}
                   />
                 </Box>
               )}
@@ -137,25 +132,20 @@ const AddAnnouncementModal = ({
             <Controller
               name="description"
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Box my={16}>
                   <Textarea
                     {...field}
                     labelProps={{
                       mb: 6,
                       fw: 400,
-                      c: formState.errors.description?.message
-                        ? "subRed"
-                        : "dark",
+                      c: fieldState.error?.message ? "subRed" : "dark",
                     }}
                     placeholder="Write something ..."
                     label="Description"
                     radius="sm"
                     rows={8}
-                  />
-                  <ErrorMessage
-                    atEnd={false}
-                    error={formState.errors.description?.message}
+                    error={fieldState.error?.message}
                   />
                 </Box>
               )}

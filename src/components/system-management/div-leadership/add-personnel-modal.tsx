@@ -25,7 +25,6 @@ import dayjs from "dayjs";
 import { ChevronDown, Plus, X } from "lucide-react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import AddPersonnelConfirmModal from "./add-personnel-confirm-modal";
-import ErrorMessage from "@/components/form/error-message";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { useState } from "react";
@@ -44,7 +43,7 @@ const AddPersonnelModal = () => {
   const termEndData =
     data?.results?.data.map((d: any) => dayjs(d.end_date).format("YYYY")) || [];
 
-  const { control, handleSubmit, formState, setError, reset, setValue, watch } =
+  const { control, handleSubmit, setError, reset, setValue, watch } =
     useForm<PersonnelData>({
       resolver: zodResolver(personnelSchema),
       defaultValues: {
@@ -118,21 +117,18 @@ const AddPersonnelModal = () => {
             <Controller
               name="name"
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Box>
                   <TextInput
                     {...field}
                     labelProps={{
                       mb: 6,
                       fw: 400,
-                      c: formState.errors.name?.message ? "subRed" : "dark",
+                      c: fieldState.error?.message ? "subRed" : "dark",
                     }}
                     label="Name"
                     radius="sm"
-                  />
-                  <ErrorMessage
-                    atEnd={false}
-                    error={formState.errors.name?.message}
+                    error={fieldState.error?.message}
                   />
                 </Box>
               )}
@@ -142,7 +138,7 @@ const AddPersonnelModal = () => {
               <Controller
                 name="position"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <Select
                       {...field}
@@ -157,10 +153,7 @@ const AddPersonnelModal = () => {
                         "Schools Division Superintendent",
                         "Assistant Schools Division Superintendent",
                       ]}
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.position?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -169,12 +162,12 @@ const AddPersonnelModal = () => {
               <Controller
                 name="is_oic"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <Text fz={14} fw={600}>
                       Officer in Charge
                     </Text>
-                    <Radio.Group {...field}>
+                    <Radio.Group error={fieldState.error?.message} {...field}>
                       <Group my={8}>
                         <Box flex={1}>
                           <Radio label="Yes" value="true" />
@@ -184,11 +177,6 @@ const AddPersonnelModal = () => {
                         </Box>
                       </Group>
                     </Radio.Group>
-
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.is_oic?.message}
-                    />
                   </Box>
                 )}
               />
@@ -198,7 +186,7 @@ const AddPersonnelModal = () => {
               <Controller
                 name="term_start"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <Select
                       {...field}
@@ -210,10 +198,7 @@ const AddPersonnelModal = () => {
                         shadow: "xl",
                       }}
                       data={termStartData}
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.term_start?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -222,7 +207,7 @@ const AddPersonnelModal = () => {
               <Controller
                 name="term_end"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1} pos="relative">
                     <Checkbox
                       size="xs"
@@ -256,10 +241,7 @@ const AddPersonnelModal = () => {
                             )
                           : termEndData
                       }
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.term_end?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}

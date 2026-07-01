@@ -23,7 +23,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { ChevronDown, X } from "lucide-react";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
-import ErrorMessage from "@/components/form/error-message";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { useEffect, useState } from "react";
@@ -140,7 +139,7 @@ const EditPersonnelModal = ({
             <Controller
               name="name"
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Box>
                   <TextInput
                     {...field}
@@ -151,10 +150,7 @@ const EditPersonnelModal = ({
                     }}
                     label="Name"
                     radius="sm"
-                  />
-                  <ErrorMessage
-                    atEnd={false}
-                    error={formState.errors.name?.message}
+                    error={fieldState.error?.message}
                   />
                 </Box>
               )}
@@ -164,7 +160,7 @@ const EditPersonnelModal = ({
               <Controller
                 name="position"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <Select
                       {...field}
@@ -179,10 +175,7 @@ const EditPersonnelModal = ({
                         "Schools Division Superintendent",
                         "Assistant Schools Division Superintendent",
                       ]}
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.position?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -191,12 +184,12 @@ const EditPersonnelModal = ({
               <Controller
                 name="is_oic"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <Text fz={14} fw={600}>
                       Officer in Charge
                     </Text>
-                    <Radio.Group {...field}>
+                    <Radio.Group error={fieldState.error?.message} {...field}>
                       <Group my={8}>
                         <Box flex={1}>
                           <Radio label="Yes" value="true" />
@@ -206,11 +199,6 @@ const EditPersonnelModal = ({
                         </Box>
                       </Group>
                     </Radio.Group>
-
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.is_oic?.message}
-                    />
                   </Box>
                 )}
               />
@@ -220,7 +208,7 @@ const EditPersonnelModal = ({
               <Controller
                 name="term_start"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <Select
                       {...field}
@@ -232,10 +220,7 @@ const EditPersonnelModal = ({
                         shadow: "xl",
                       }}
                       data={termStartData}
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.term_start?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -244,7 +229,7 @@ const EditPersonnelModal = ({
               <Controller
                 name="term_end"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1} pos="relative">
                     <Checkbox
                       size="xs"
@@ -278,10 +263,7 @@ const EditPersonnelModal = ({
                             )
                           : termEndData
                       }
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.term_end?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}

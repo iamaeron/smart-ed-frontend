@@ -24,7 +24,6 @@ import { api } from "@/lib/api";
 import AddSYConfirmModal from "./add-sy-confirm-modal";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import ErrorMessage from "@/components/form/error-message";
 
 const AddSYModal = () => {
   const queryClient = useQueryClient();
@@ -117,7 +116,7 @@ const AddSYModal = () => {
               <Controller
                 name="start_date"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <DateInput
                       {...field}
@@ -130,10 +129,7 @@ const AddSYModal = () => {
                       }}
                       rightSection={<Calendar size={18} />}
                       label="Start Date"
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.start_date?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -142,7 +138,7 @@ const AddSYModal = () => {
               <Controller
                 name="end_date"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <DateInput
                       {...field}
@@ -155,10 +151,7 @@ const AddSYModal = () => {
                       }}
                       rightSection={<Calendar size={18} />}
                       label="End Date"
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.end_date?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}

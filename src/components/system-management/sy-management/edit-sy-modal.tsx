@@ -131,7 +131,7 @@ const EditSYModal = ({ sy, opened, onClose }: EditSYModalProps) => {
               <Controller
                 name="start_date"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <DateInput
                       {...field}
@@ -144,10 +144,7 @@ const EditSYModal = ({ sy, opened, onClose }: EditSYModalProps) => {
                       }}
                       rightSection={<Calendar size={18} />}
                       label="Start Date"
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.start_date?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
@@ -156,7 +153,7 @@ const EditSYModal = ({ sy, opened, onClose }: EditSYModalProps) => {
               <Controller
                 name="end_date"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Box flex={1}>
                     <DateInput
                       {...field}
@@ -169,10 +166,7 @@ const EditSYModal = ({ sy, opened, onClose }: EditSYModalProps) => {
                       }}
                       rightSection={<Calendar size={18} />}
                       label="End Date"
-                    />
-                    <ErrorMessage
-                      atEnd={false}
-                      error={formState.errors.end_date?.message}
+                      error={fieldState.error?.message}
                     />
                   </Box>
                 )}
