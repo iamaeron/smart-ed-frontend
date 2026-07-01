@@ -18,9 +18,34 @@ export const useFetchResources = (
 
   return useQuery({
     ...options,
+    enabled: !!selectedYear,
+
     queryKey: ["resources", p],
     queryFn: async () => {
       const res = await api.get(`/api/resource-data?${urlParams}`);
+      return res.data;
+    },
+  });
+};
+
+export const useFetchDashboardResources = (
+  params: Param | {} = {},
+  options?: FetcherOptions,
+) => {
+  // const selectedYear = useAcademicYearStore((state) => state.yearLabel);
+
+  // const p = {
+  //   academic_year: selectedYear,
+  //   ...params,
+  // };
+
+  const urlParams = new URLSearchParams(params).toString();
+
+  return useQuery({
+    ...options,
+    queryKey: ["dashboard_resources", params],
+    queryFn: async () => {
+      const res = await api.get(`/api/resource-data-dashboard?${urlParams}`);
       return res.data;
     },
   });

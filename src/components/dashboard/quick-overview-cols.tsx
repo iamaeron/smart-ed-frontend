@@ -1,27 +1,26 @@
 import { Buildings, SquareAcademicCap, UserHandUp } from "@solar-icons/react";
 import QuickViewContainer from "./quick-view-container";
 import QuickViewCol from "./quick-view-col";
-import { useFetchResources } from "@/lib/fetcher/resource.fetcher";
+import { useFetchDashboardResources } from "@/lib/fetcher/resource.fetcher";
 import { Card } from "@mantine/core";
 import { useAuth } from "@/contexts/auth.context";
-import { useFetchEnrollmentData } from "@/lib/fetcher/enrollment.fetcher";
+import { useAcademicYearStore } from "@/stores/academic-year.store";
 
 const QuickOverviewCols = () => {
   const { user } = useAuth();
-  const { data, isPending } = useFetchResources();
-  const { data: enrollmentData, isPending: isEnrollmentDataPending } =
-    useFetchEnrollmentData();
+  const year = useAcademicYearStore((state) => state.yearLabel);
+  const { data: data, isPending } = useFetchDashboardResources();
   console.log(data);
 
-  const totals = data?.results?.data?.totals_by_resource || [];
-  const enrollmentTotal =
-    enrollmentData?.results?.data?.enrollment_totals?.total_students || 0;
+  const totalArr = data?.results?.data || [];
+  const currentYearData =
+    totalArr.length > 0 ? totalArr.find((i: any) => i.year === year) : {};
 
   const isSchoolAccount = user?.role === "School Account?";
 
   return (
     <QuickViewContainer>
-      {isPending || isEnrollmentDataPending ? (
+      {isPending || isPending ? (
         [1, 2, 3].map((skelly) => (
           <Card
             key={skelly}
@@ -36,17 +35,21 @@ const QuickOverviewCols = () => {
           <QuickViewCol
             icon={Buildings}
             label={isSchoolAccount ? "Total Schools" : "Total Classrooms"}
-            value={totals[0].inventory}
+            value={
+              isSchoolAccount
+                ? currentYearData.classrooms
+                : currentYearData.total_schools
+            }
           />
           <QuickViewCol
             icon={SquareAcademicCap}
             label="Total Learners"
-            value={enrollmentTotal}
+            value={currentYearData.total_students}
           />
           <QuickViewCol
             icon={UserHandUp}
             label="Total Teachers"
-            value={totals[1].inventory}
+            value={currentYearData.teachers}
           />
         </>
       )}

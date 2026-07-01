@@ -112,7 +112,7 @@ const ResourceSummary = ({
         </Table.Thead>
         <Table.Tbody>
           {loading ? (
-            skeleton
+            <>{skeleton}</>
           ) : data.length > 0 ? (
             rows
           ) : (

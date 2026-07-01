@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/auth.context";
 import { useFetchAcademicYears } from "@/lib/fetcher/academic-year.fetcher";
 import { useAcademicYearStore } from "@/stores/academic-year.store";
 import type { AcademicYear } from "@/types/data/academic-year.type";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router";
 
 const ProtectedRoutes = () => {

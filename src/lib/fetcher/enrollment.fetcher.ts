@@ -17,6 +17,7 @@ export const useFetchEnrollmentData = (
 
   return useQuery({
     ...options,
+    enabled: !!selectedYear,
     queryKey: ["enrollment_data", p],
     queryFn: async () => {
       const res = await api.get(`/api/enrollment-data?${urlParams}`);
@@ -39,6 +40,7 @@ export const useFetchDashboardEnrollmentData = (
 
   return useQuery({
     ...options,
+    enabled: !!selectedYear,
     queryKey: ["dashboard_enrollment_data", p],
     queryFn: async () => {
       const res = await api.get(`/api/enrollment-data-dashboard?${urlParams}`);

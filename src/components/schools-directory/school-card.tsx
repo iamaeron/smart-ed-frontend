@@ -110,10 +110,26 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                   </div>
                   <Box>
                     <AppTooltip
+                      withArrow
+                      offset={0}
+                      arrowPosition="side"
+                      arrowSize={5}
+                      arrowOffset={10}
                       label={
-                        <Text fz={12} fw={500} tt="capitalize">
-                          {address}
-                        </Text>
+                        <Flex direction="column" gap={2}>
+                          <Text fz={12} fw={500} tt="capitalize">
+                            {address}
+                          </Text>
+
+                          <Text
+                            fz={12}
+                            fw={500}
+                            opacity={0.5}
+                            style={{ fontStyle: "italic" }}
+                          >
+                            {school.latitude}, {school.longitude}
+                          </Text>
+                        </Flex>
                       }
                       position="bottom-start"
                     >
@@ -127,7 +143,7 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                         {address}
                       </Text>
                     </AppTooltip>
-                    <Text fz={12} c="longText">
+                    <Text style={{ cursor: "help" }} fz={12} c="longText">
                       {school.latitude}, {school.longitude}
                     </Text>
                   </Box>
@@ -146,10 +162,34 @@ const SchoolCard = ({ school }: { school: { [k: string]: any } }) => {
                   </div>
                   <Box>
                     <AppTooltip
-                      label={school.school_head.name}
+                      withArrow
+                      offset={0}
+                      arrowPosition="center"
+                      label={
+                        <Flex direction="column" gap={2}>
+                          <Text fz={12} fw={500} tt="capitalize">
+                            {school.school_head.name}
+                          </Text>
+
+                          <Text
+                            fz={12}
+                            fw={500}
+                            opacity={0.5}
+                            style={{ fontStyle: "italic" }}
+                          >
+                            {school.school_head.position}
+                          </Text>
+                        </Flex>
+                      }
                       position="bottom-start"
                     >
-                      <Text lineClamp={1} fz={14} c="mainText" fw={600}>
+                      <Text
+                        style={{ cursor: "help" }}
+                        lineClamp={1}
+                        fz={14}
+                        c="mainText"
+                        fw={600}
+                      >
                         {school.school_head.name}
                       </Text>
                     </AppTooltip>

@@ -91,30 +91,6 @@ const NotificationsCol = () => {
             </Text>
           </Center>
         )}
-        {/* 
-              <Indicator
-                color="subYellow"
-                position="top-start"
-                size={25}
-                label={<Bell size={15} weight="Bold" />}
-                offset={4}
-              >
-                <Card shadow="none" bg="lightBackground">
-                  <Text mb={2} size="sm" fw={600}>
-                    Pending Submission
-                  </Text>
-                  <Text c="longText" mb={2} size="sm" lineClamp={2}>
-                    2 schools have pending submissions awaiting your validation:
-                    Mabalacat ES and Sta. Ines IS
-                  </Text>
-
-                  <Flex justify="flex-end">
-                    <Text mt={6} c="longText" size="xs" lineClamp={2}>
-                      2d ago
-                    </Text>
-                  </Flex>
-                </Card>
-              </Indicator> */}
       </Stack>
     </Card>
   );
