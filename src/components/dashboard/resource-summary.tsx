@@ -114,7 +114,7 @@ const ResourceSummary = ({
           {loading ? (
             <>{skeleton}</>
           ) : data.length > 0 ? (
-            rows
+            <>{rows}</>
           ) : (
             <Table.Tr>
               <Table.Td colSpan={4}>
