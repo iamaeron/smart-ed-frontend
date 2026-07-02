@@ -124,6 +124,7 @@ const AddAccountModal = () => {
                       placeholder="Name"
                       radius="sm"
                       error={fieldState.error?.message}
+                      required
                     />
                   </Box>
                 )}
@@ -148,6 +149,7 @@ const AddAccountModal = () => {
                         placeholder="Email"
                         radius="sm"
                         error={fieldState.error?.message}
+                        required
                       />
                     </Box>
                   )}
@@ -169,11 +171,36 @@ const AddAccountModal = () => {
                         placeholder="Phone No."
                         radius="sm"
                         error={fieldState.error?.message}
+                        required
                       />
                     </Box>
                   )}
                 />
               </Group>
+
+              <Controller
+                name="role"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <Box flex={1}>
+                    <Select
+                      {...field}
+                      allowDeselect={false}
+                      label="Role"
+                      placeholder="Search Role ..."
+                      rightSection={<ChevronDown size={16} />}
+                      radius="sm"
+                      required
+                      searchable
+                      comboboxProps={{
+                        shadow: "xl",
+                      }}
+                      data={roleList}
+                      error={fieldState.error?.message}
+                    />
+                  </Box>
+                )}
+              />
             </Box>
 
             <Box>
@@ -196,6 +223,7 @@ const AddAccountModal = () => {
                       label="Username"
                       placeholder="Username"
                       radius="sm"
+                      required
                       error={fieldState.error?.message}
                     />
                   </Box>
@@ -217,6 +245,7 @@ const AddAccountModal = () => {
                       label="Password"
                       placeholder="Password"
                       radius="sm"
+                      required
                       error={fieldState.error?.message}
                     />
                   </Box>
@@ -238,6 +267,7 @@ const AddAccountModal = () => {
                       label="Confirm New Password"
                       placeholder="Password"
                       radius="sm"
+                      required
                       error={fieldState.error?.message}
                     />
                   </Box>
@@ -246,57 +276,38 @@ const AddAccountModal = () => {
             </Box>
 
             <Box>
-              <Title order={5} mt={20} mb={14}>
-                School Assignment
-              </Title>
+              <Flex mt={20} mb={14} align="center" gap={4}>
+                <Title order={5}>School Assignment</Title>
+                <Text c="longText" size="sm" fs="italic">
+                  (Optional)
+                </Text>
+              </Flex>
 
-              <Group gap={16}>
-                <Controller
-                  name="school"
-                  control={control}
-                  render={({ field, fieldState }) => (
-                    <Box flex={1}>
-                      <Select
-                        {...field}
-                        allowDeselect={false}
-                        label="School"
-                        placeholder="Search School ..."
-                        rightSection={<ChevronDown size={16} />}
-                        radius="sm"
-                        searchable
-                        comboboxProps={{
-                          shadow: "xl",
-                        }}
-                        data={schoolList}
-                        error={fieldState.error?.message}
-                      />
-                    </Box>
-                  )}
-                />
-
-                <Controller
-                  name="role"
-                  control={control}
-                  render={({ field, fieldState }) => (
-                    <Box flex={1}>
-                      <Select
-                        {...field}
-                        allowDeselect={false}
-                        label="Role"
-                        placeholder="Search Role ..."
-                        rightSection={<ChevronDown size={16} />}
-                        radius="sm"
-                        searchable
-                        comboboxProps={{
-                          shadow: "xl",
-                        }}
-                        data={roleList}
-                        error={fieldState.error?.message}
-                      />
-                    </Box>
-                  )}
-                />
-              </Group>
+              {/* <Group gap={16}> */}
+              <Controller
+                name="school"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <Box flex={1}>
+                    <Select
+                      {...field}
+                      allowDeselect={false}
+                      label="School"
+                      placeholder="Search School ..."
+                      rightSection={<ChevronDown size={16} />}
+                      radius="sm"
+                      searchable
+                      clearable
+                      comboboxProps={{
+                        shadow: "xl",
+                      }}
+                      data={schoolList}
+                      error={fieldState.error?.message}
+                    />
+                  </Box>
+                )}
+              />
+              {/* </Group> */}
             </Box>
 
             <Flex mt={30} gap={16}>

@@ -19,11 +19,13 @@ import SchoolAdminSchoolOverview from "./school/school-overview";
 import SchoolAdminSubmissions from "./school/submissions";
 import SchoolAdminNews from "./school/news-alert";
 import NotFound from "./404";
+import LandingPage from "./landing";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<SignInPage />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/signin" element={<SignInPage />} />
 
       {/* School Admin Routes */}
       <Route element={<ProtectedRoutes />}>

@@ -9,7 +9,7 @@ export const accountSchema = z.object({
     .string()
     .min(1, { message: "This field is required." })
     .max(255, { message: "Username is too long." }),
-  school: z.string(),
+  school: z.string().nullable().optional(),
   role: z.string(),
   email: z.email().max(255, { message: "Email is too long." }),
   phone_number: z

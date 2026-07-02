@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/auth.context";
 import { useFetchAcademicYears } from "@/lib/fetcher/academic-year.fetcher";
 import { useAcademicYearStore } from "@/stores/academic-year.store";
 import type { AcademicYear } from "@/types/data/academic-year.type";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router";
 
 const ProtectedRoutes = () => {
@@ -28,7 +28,7 @@ const ProtectedRoutes = () => {
 
   if (isLoading || isPending) return <Loader />;
 
-  if (!user) return <Navigate to="/" replace />;
+  if (!user) return <Navigate to="/signin" replace />;
 
   const userRoleToUrl = user?.role.toLowerCase().replace(" ", "-"); // System Admin -> system admin -> system-admin
 

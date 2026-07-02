@@ -35,12 +35,21 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     initializeAuth();
   }, []);
 
+  if (location.pathname === "/") {
+    return children;
+  }
+
   if (isLoading) {
     return <Loader />;
   }
 
-  if (location.pathname !== "/" && !user) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+  if (
+    (location.pathname.includes("system-admin") ||
+      location.pathname.includes("school-account") ||
+      location.pathname.includes("division-admin")) &&
+    !user
+  ) {
+    return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 
   return (
