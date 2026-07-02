@@ -7,7 +7,8 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import bg from "@/assets/school.png";
+import bg from "@/assets/landing/school.png";
+import QuickLinksContainer from "@/components/landing/quick-links-container";
 
 const LandingPage = () => {
   return (
@@ -18,13 +19,12 @@ const LandingPage = () => {
     >
       <Paper py="md">
         <Container size="1200px">
-          <Logo />
+          <Logo withDiv imgSize={40} />
         </Container>
       </Paper>
       <Paper bg="#0d4fe2">
         <BackgroundImage src={bg} c="white" h="75vh">
           <Paper
-            // bg="transparent"
             radius="none"
             style={{
               backgroundColor: "transparent",
@@ -34,7 +34,7 @@ const LandingPage = () => {
             }}
           >
             <Container h="100%" size="1200px">
-              <Flex h="100%" justify="end" direction="column" pb={100}>
+              <Flex h="100%" justify="end" direction="column" pb={150}>
                 <Title fz={48} mb="sm" style={{ maxWidth: "16ch" }}>
                   Smarter Insights for Better Education.
                 </Title>
@@ -48,6 +48,8 @@ const LandingPage = () => {
           </Paper>
         </BackgroundImage>
       </Paper>
+
+      <QuickLinksContainer />
     </div>
   );
 };

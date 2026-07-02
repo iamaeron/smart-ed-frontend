@@ -1,5 +1,5 @@
 import Logo from "@/components/logo";
-import { Card, Center, Flex, Image, Paper, Text } from "@mantine/core";
+import { Card, Center, Paper } from "@mantine/core";
 
 const NotFound = () => {
   return (

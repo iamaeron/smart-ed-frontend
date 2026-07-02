@@ -58,7 +58,6 @@ const AddSYModal = () => {
         close();
       }
     } catch (err: any) {
-      console.log(err);
       for (const [key, value] of Object.entries(err.response.data.errors)) {
         setError(key as keyof AcademicYearData, {
           message: (value as any[])[0] ?? "This field is required",
