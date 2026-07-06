@@ -122,9 +122,7 @@ const AddSYModal = () => {
                       labelProps={{
                         mb: 6,
                         fw: 400,
-                        c: formState.errors.start_date?.message
-                          ? "subRed"
-                          : "grey",
+                        c: fieldState.error?.message ? "subRed" : "grey",
                       }}
                       rightSection={<Calendar size={18} />}
                       label="Start Date"
@@ -144,9 +142,7 @@ const AddSYModal = () => {
                       labelProps={{
                         mb: 6,
                         fw: 400,
-                        c: formState.errors.end_date?.message
-                          ? "subRed"
-                          : "grey",
+                        c: fieldState.error?.message ? "subRed" : "grey",
                       }}
                       rightSection={<Calendar size={18} />}
                       label="End Date"
@@ -169,7 +165,12 @@ const AddSYModal = () => {
               >
                 Cancel
               </Button>
-              <AddSYConfirmModal />
+              <AddSYConfirmModal
+                hasError={
+                  !!formState?.errors?.end_date ||
+                  !!formState?.errors?.start_date
+                }
+              />
             </Flex>
           </Paper>
         </form>
