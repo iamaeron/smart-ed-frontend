@@ -18,10 +18,10 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        const response = await api.get("/api/user-returned-submissions");
+        const response = await api.get("/api/user-submissions");
         const user = {
           ...response.data.results?.user,
-          returned_submissions: response.data.results?.returned_submissions,
+          submission_data: response.data.results?.submission_data,
         };
 
         authStore.getState().setUser(user || response.data.data);

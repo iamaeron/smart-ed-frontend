@@ -12,7 +12,7 @@ export type User = {
   is_active: boolean;
   created_at: string;
   updated_at: string;
-  returned_submissions: Record<any, any>[];
+  submission_data: Record<any, any>[];
 };
 
 export type School = {

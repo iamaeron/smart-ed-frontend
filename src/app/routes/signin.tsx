@@ -58,7 +58,7 @@ const SignInPage = () => {
         if (userData) {
           setUser({
             ...userData,
-            returned_submissions: res.data?.results?.returned_submissions,
+            submission_data: res.data?.results?.submission_data,
           });
         }
       }

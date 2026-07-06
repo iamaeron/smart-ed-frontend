@@ -21,6 +21,8 @@ import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth.context";
 import ReturnedWarningCard from "./returned-warning-card";
+import ApprovedInfoCard from "./approved-info-card";
+import RequestEditDataConfirmModal from "./request-edit-data-confirm-modal";
 
 const EditSchoolEnrollmentDataModal = ({
   data,
@@ -121,13 +123,24 @@ const EditSchoolEnrollmentDataModal = ({
     ),
   );
 
-  const pendingEnrollmentData = user?.returned_submissions?.find(
-    (f) => f.type === "enrollment",
+  const returnedEnrollmentData = user?.submission_data?.find(
+    (f) => f.type === "enrollment" && f.status === "returned",
   );
 
-  const hasPendingEnrollmentData = pendingEnrollmentData ? true : false;
+  const approvedEnrollmentData = user?.submission_data?.find(
+    (f) => f.type === "enrollment" && f.status === "approved",
+  );
 
-  const isDisabled = hasPendingEnrollmentData && !review;
+  console.log(user);
+
+  const hasApprovedEnrollmentData = approvedEnrollmentData ? true : false;
+
+  const hasReturnedEnrollmentData = returnedEnrollmentData ? true : false;
+
+  const isReturned = hasReturnedEnrollmentData && !review;
+  const isApproved = hasApprovedEnrollmentData && !review;
+
+  const isTableDisabled = isReturned || isApproved;
 
   return (
     <>
@@ -164,21 +177,25 @@ const EditSchoolEnrollmentDataModal = ({
 
         <form id="edit-school-data-form" onSubmit={onSubmit}>
           <Paper p="lg">
-            {isDisabled ? (
-              <ReturnedWarningCard subId={pendingEnrollmentData?.id} />
+            {isReturned ? (
+              <ReturnedWarningCard subId={returnedEnrollmentData?.id} />
             ) : null}
 
+            {isApproved ? <ApprovedInfoCard /> : null}
+
             <Paper
-              h={isDisabled ? 200 : "max-content"}
+              h={isTableDisabled ? 200 : "max-content"}
               style={
-                isDisabled ? { overflow: "hidden", position: "relative" } : {}
+                isTableDisabled
+                  ? { overflow: "hidden", position: "relative" }
+                  : {}
               }
             >
               <Paper
                 withBorder
                 radius="md"
                 style={
-                  isDisabled
+                  isTableDisabled
                     ? {
                         opacity: 0.8,
                         cursor: "not-allowed",
@@ -188,7 +205,7 @@ const EditSchoolEnrollmentDataModal = ({
               >
                 <Table
                   style={{
-                    pointerEvents: isDisabled ? "none" : "all",
+                    pointerEvents: isTableDisabled ? "none" : "all",
                   }}
                   highlightOnHover
                   layout="fixed"
@@ -225,7 +242,7 @@ const EditSchoolEnrollmentDataModal = ({
                 </Table>
               </Paper>
 
-              {isDisabled ? (
+              {isTableDisabled ? (
                 <div
                   style={{
                     position: "absolute",
@@ -253,7 +270,13 @@ const EditSchoolEnrollmentDataModal = ({
               >
                 Cancel
               </Button>
-              <EditSchoolDataConfirmModal disabled={isDisabled} />
+              {isApproved ? (
+                <RequestEditDataConfirmModal
+                  subId={approvedEnrollmentData?.id}
+                />
+              ) : (
+                <EditSchoolDataConfirmModal disabled={isReturned} />
+              )}
             </Flex>
           </Paper>
         </form>
