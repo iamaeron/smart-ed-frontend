@@ -8,15 +8,21 @@ import type { Submission } from "@/types/data/submission.type";
 
 const ApproveSubmissionConfirmModal = ({
   submission,
+  requestEdit,
 }: {
   submission: Submission;
+  requestEdit: boolean;
 }) => {
   const queryClient = useQueryClient();
   const [opened, { close, open }] = useDisclosure();
 
   const handleApproveSubmission = async () => {
     try {
-      const res = await api.post(`/api/submissions/${submission.id}/approve`);
+      const reqApi = requestEdit
+        ? `/api/submissions/${submission.id}/approve-request`
+        : `/api/submissions/${submission.id}/approve`;
+
+      const res = await api.post(reqApi);
       if (res.data.code === 200) {
         queryClient.invalidateQueries({ queryKey: ["submissions", {}] });
         queryClient.invalidateQueries({
@@ -40,9 +46,13 @@ const ApproveSubmissionConfirmModal = ({
         centered
       >
         <ConfirmPopupUI
-          title="Approve Submission?"
-          description="Approving this submission will make it publicly visible on the dashboard. Make sure all details are accurate."
-          confirmText="Approve"
+          title={requestEdit ? "Grant Permission?" : "Approve Submission?"}
+          description={
+            requestEdit
+              ? "This will unlock the submission and notify the user. Once they make their changes, they will need to resubmit the data for your approval."
+              : "Approving this submission will make it publicly visible on the dashboard. Make sure all details are accurate."
+          }
+          confirmText={requestEdit ? "Grant" : "Approve"}
           onConfirm={handleApproveSubmission}
           onClose={close}
           type="warning"
@@ -56,7 +66,7 @@ const ApproveSubmissionConfirmModal = ({
         color="subGreen"
         fullWidth
       >
-        Approve
+        {requestEdit ? "Grant Permission" : `Approve`}
       </Button>
     </>
   );

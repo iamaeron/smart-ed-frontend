@@ -190,48 +190,69 @@ const ViewSubmissionModal = ({
 
                 <Divider my="md" />
 
-                <Box>
-                  <Title order={5} mb="sm">
-                    Submission Data
-                  </Title>
+                {submissionData.type.includes("Edit Request") ? (
                   <Paper shadow="sm" radius="lg" bg="white" p="lg">
-                    <Flex mb="xs" justify="space-between" align="flex-end">
-                      <Title order={6} tt="capitalize">
-                        {submissionData.type} Data
-                      </Title>
+                    <Title order={6} mb="md" tt="capitalize">
+                      {submissionData.type} Data
+                    </Title>
 
-                      {submissionData.type === "enrollment" &&
-                      submissionData.status === "returned" ? (
-                        <EditSchoolEnrollmentDataModal
-                          data={submissionData?.details?.items}
-                          loading={isPending}
-                          submissionId={String(submissionData?.id)}
-                          review
-                        />
-                      ) : null}
-
-                      {submissionData.type === "resource" &&
-                      submissionData.status === "returned" ? (
-                        <EditSchoolResourcesDataModal
-                          data={submissionData?.details}
-                          loading={isPending}
-                          review
-                          submissionId={String(submissionData?.id)}
-                        />
-                      ) : null}
-                    </Flex>
-
-                    {submissionData.type === "enrollment" && (
-                      <EnrollmentDataTable
-                        data={submissionData?.details?.items}
-                      />
-                    )}
-
-                    {submissionData.type === "resource" && (
-                      <ResourceDataTable data={submissionData?.details} />
-                    )}
+                    <Card
+                      bg="blue.0"
+                      shadow="none"
+                      style={{
+                        border: "1px solid var(--mantine-color-blue-2)",
+                      }}
+                    >
+                      <Text size="sm" c="blue.9">
+                        This school has requested an edit permission for their
+                        enrollment data.
+                      </Text>
+                    </Card>
                   </Paper>
-                </Box>
+                ) : (
+                  <Box>
+                    <Title order={5} mb="sm">
+                      Submission Data
+                    </Title>
+                    <Paper shadow="sm" radius="lg" bg="white" p="lg">
+                      <Flex mb="xs" justify="space-between" align="flex-end">
+                        <Title order={6} tt="capitalize">
+                          {submissionData.type} Data
+                        </Title>
+
+                        {submissionData.type === "enrollment" &&
+                        submissionData.status === "returned" ? (
+                          <EditSchoolEnrollmentDataModal
+                            data={submissionData?.details?.items}
+                            loading={isPending}
+                            submissionId={String(submissionData?.id)}
+                            review
+                          />
+                        ) : null}
+
+                        {submissionData.type === "resource" &&
+                        submissionData.status === "returned" ? (
+                          <EditSchoolResourcesDataModal
+                            data={submissionData?.details}
+                            loading={isPending}
+                            review
+                            submissionId={String(submissionData?.id)}
+                          />
+                        ) : null}
+                      </Flex>
+
+                      {submissionData.type === "enrollment" && (
+                        <EnrollmentDataTable
+                          data={submissionData?.details?.items}
+                        />
+                      )}
+
+                      {submissionData.type === "resource" && (
+                        <ResourceDataTable data={submissionData?.details} />
+                      )}
+                    </Paper>
+                  </Box>
+                )}
 
                 {submissionData.comments_count > 0 && (
                   <SubmissionCommentsList submissionData={submissionData} />
@@ -241,8 +262,12 @@ const ViewSubmissionModal = ({
               {user?.role !== "School Account" &&
                 submissionData.status === "pending" && (
                   <Flex justify="flex-end" mt={20} gap={8}>
-                    <ReturnSubmissionModal submission={submissionData} />
+                    <ReturnSubmissionModal
+                      requestEdit={submissionData.type.includes("Edit Request")}
+                      submission={submissionData}
+                    />
                     <ApproveSubmissionConfirmModal
+                      requestEdit={submissionData.type.includes("Edit Request")}
                       submission={submissionData}
                     />
                   </Flex>

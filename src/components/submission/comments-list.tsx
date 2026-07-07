@@ -22,7 +22,7 @@ const SubmissionCommentsList = ({
 }: {
   submissionData: Submission;
 }) => {
-  const [expanded, { toggle }] = useDisclosure(false);
+  const [expanded, { toggle }] = useDisclosure(true);
 
   return (
     <Box mt="lg">
