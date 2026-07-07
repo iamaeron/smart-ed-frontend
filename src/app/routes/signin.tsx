@@ -54,7 +54,7 @@ const SignInPage = () => {
       if (csrf.status === 204) {
         const res = await api.post("/api/login", data);
 
-        const userData = res.data?.results?.user;
+        const userData = res.data?.results?.User;
         if (userData) {
           setUser({
             ...userData,
