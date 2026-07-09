@@ -17,3 +17,19 @@ export const useFetchAnnouncements = (
     },
   });
 };
+
+export const useFetchPublicAnnouncements = (
+  params: Param | {} = {},
+  options?: FetcherOptions,
+) => {
+  const urlParams = new URLSearchParams(params).toString();
+
+  return useQuery({
+    ...options,
+    queryKey: ["public_announcements", params],
+    queryFn: async () => {
+      const res = await api.get(`/api/public/announcements?${urlParams}`);
+      return res.data;
+    },
+  });
+};

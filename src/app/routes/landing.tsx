@@ -9,11 +9,14 @@ import {
 } from "@mantine/core";
 import bg from "@/assets/landing/school.png";
 import QuickLinksContainer from "@/components/landing/quick-links-container";
+import AdvisoriesContainer from "@/components/landing/advisories-container";
 
 const LandingPage = () => {
   return (
     <div
       style={{
+        paddingBottom: "80px",
+        backgroundColor: "#f3f5ff",
         minHeight: "100vh",
       }}
     >
@@ -50,6 +53,7 @@ const LandingPage = () => {
       </Paper>
 
       <QuickLinksContainer />
+      <AdvisoriesContainer />
     </div>
   );
 };
