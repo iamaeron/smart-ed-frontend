@@ -71,3 +71,13 @@
 .drop-box.dragging {
   border-color: #868e96;
 }
+
+.quick-link-desc {
+  transform: translateY(130px);
+  will-change: transform;
+  transition-duration: 500ms;
+}
+
+.quick-link:hover .quick-link-desc {
+  transform: translateY(0);
+}

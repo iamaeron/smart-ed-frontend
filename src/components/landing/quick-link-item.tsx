@@ -10,23 +10,39 @@ const QuickLinkItem = ({
   desc: string;
 }) => {
   return (
-    <Box style={{ aspectRatio: "1 / 1" }}>
+    <Box
+      className="quick-link"
+      style={{ aspectRatio: "1 / 1", overflow: "hidden" }}
+    >
       <BackgroundImage src={img} h="100%" w="100%">
         <Paper
           radius="none"
           style={{
+            display: "flex",
+            alignItems: "flex-end",
+            // flexDirection: "column",
+            // justifyItems: "flex-end",
             backgroundColor: "transparent",
             backgroundImage:
               "linear-gradient(180deg, rgba(25, 45, 124, 0.14) 0%, rgba(44, 104, 255, 0.7) 100%)",
             height: "100%",
           }}
-          p="md"
+          p="sm"
         >
-          <Text fz="lg" fw={600} c="white">
-            {title}
-          </Text>
+          <Box className="quick-link-desc">
+            <Text
+              fz="lg"
+              fw={600}
+              style={{ minWidth: "max-content" }}
+              c="white"
+            >
+              {title}
+            </Text>
 
-          <Text c="white">{desc}</Text>
+            <Text c="white" size="sm">
+              {desc}
+            </Text>
+          </Box>
         </Paper>
       </BackgroundImage>
     </Box>

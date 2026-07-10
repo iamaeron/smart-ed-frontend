@@ -10,6 +10,8 @@ import {
 import bg from "@/assets/landing/school.png";
 import QuickLinksContainer from "@/components/landing/quick-links-container";
 import AdvisoriesContainer from "@/components/landing/advisories-container";
+import DescriptionSectionContainer from "@/components/landing/description-section-container";
+import ExploreSchoolsContainer from "@/components/landing/explore-schools-container";
 
 const LandingPage = () => {
   return (
@@ -54,6 +56,8 @@ const LandingPage = () => {
 
       <QuickLinksContainer />
       <AdvisoriesContainer />
+      <DescriptionSectionContainer />
+      <ExploreSchoolsContainer />
     </div>
   );
 };

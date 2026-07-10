@@ -100,7 +100,9 @@ const FullAnnouncementSections = ({
               ))
             : latestPublicAnnouncements.map(
                 (announcement: Announcement, i: number) => (
-                  <PublicAnnouncementCard key={i} announcement={announcement} />
+                  <Grid.Col span={4} key={i}>
+                    <PublicAnnouncementCard announcement={announcement} />
+                  </Grid.Col>
                 ),
               )}
         </Grid>

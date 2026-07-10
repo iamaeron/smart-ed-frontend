@@ -1,4 +1,4 @@
-import { createTheme, Input, type MantineColorsTuple } from "@mantine/core";
+import { createTheme, type MantineColorsTuple } from "@mantine/core";
 
 // Helper to fill a Mantine 10-shade array with a single color
 // This satisfies Mantine's internal type requirements safely
