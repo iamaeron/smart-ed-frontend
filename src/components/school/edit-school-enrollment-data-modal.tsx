@@ -123,6 +123,10 @@ const EditSchoolEnrollmentDataModal = ({
     ),
   );
 
+  const pendingEnrollmentData = user?.submission_data?.find(
+    (f) => f.type === "enrollment" && f.status === "pending",
+  );
+
   const returnedEnrollmentData = user?.submission_data?.find(
     (f) => f.type === "enrollment" && f.status === "returned",
   );
@@ -131,7 +135,7 @@ const EditSchoolEnrollmentDataModal = ({
     (f) => f.type === "enrollment" && f.status === "approved",
   );
 
-  console.log(user);
+  const hasPendingEnrollmentData = pendingEnrollmentData ? true : false;
 
   const hasApprovedEnrollmentData = approvedEnrollmentData ? true : false;
 
@@ -284,6 +288,16 @@ const EditSchoolEnrollmentDataModal = ({
 
       {loading ? (
         <Skeleton w={60} h={26} />
+      ) : hasPendingEnrollmentData ? (
+        <Button
+          size="compact-sm"
+          radius="sm"
+          px="md"
+          variant="outline"
+          color="yellow"
+        >
+          Submission Pending
+        </Button>
       ) : (
         <Button
           onClick={open}

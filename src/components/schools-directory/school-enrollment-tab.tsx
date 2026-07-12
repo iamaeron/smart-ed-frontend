@@ -25,7 +25,7 @@ const EnrollmentTab = ({ schoolName }: { schoolName: string }) => {
       )
     : [];
 
-  const enrollmentByGradeData = schoolEnrollmentData?.enrollmentByGrade?.find(
+  const enrollmentByGradeData = schoolEnrollmentData?.enrollment_by_grade?.find(
     (item: any) =>
       item.academic_year === schoolEnrollmentData?.academic_year.name,
   ) || { levels: [] };

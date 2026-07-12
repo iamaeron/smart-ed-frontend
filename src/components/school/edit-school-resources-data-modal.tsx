@@ -20,6 +20,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth.context";
 import ReturnedWarningCard from "./returned-warning-card";
+import ApprovedInfoCard from "./approved-info-card";
+import RequestEditDataConfirmModal from "./request-edit-data-confirm-modal";
 
 const EditSchoolResourcesDataModal = ({
   data,
@@ -123,13 +125,26 @@ const EditSchoolResourcesDataModal = ({
     pl: 10,
   };
 
-  const pendingResourceData = user?.returned_submissions?.find(
-    (f) => f.type === "resource",
+  const pendingResourcesData = user?.submission_data?.find(
+    (f) => f.type === "resource" && f.status === "pending",
   );
 
-  const hasPendingResourceData = pendingResourceData ? true : false;
+  const returnedResourcesData = user?.submission_data?.find(
+    (f) => f.type === "resource" && f.status === "returned",
+  );
 
-  const isDisabled = hasPendingResourceData && !review;
+  const approvedResourcesData = user?.submission_data?.find(
+    (f) => f.type === "resource" && f.status === "approved",
+  );
+
+  const hasApprovedResourcesData = approvedResourcesData ? true : false;
+  const hasPendingResourcesData = pendingResourcesData ? true : false;
+  const hasReturnedResourcesData = returnedResourcesData ? true : false;
+
+  const isReturned = hasReturnedResourcesData && !review;
+  const isApproved = hasApprovedResourcesData && !review;
+
+  const isTableDisabled = isReturned || isApproved;
 
   return (
     <>
@@ -166,21 +181,25 @@ const EditSchoolResourcesDataModal = ({
 
         <form id="edit-school-data-form" onSubmit={onSubmit}>
           <Paper p="lg">
-            {isDisabled ? (
-              <ReturnedWarningCard subId={pendingResourceData?.id} />
+            {isReturned ? (
+              <ReturnedWarningCard subId={returnedResourcesData?.id} />
             ) : null}
 
+            {isApproved ? <ApprovedInfoCard /> : null}
+
             <Paper
-              h={isDisabled ? 200 : "max-content"}
+              h={isTableDisabled ? 200 : "max-content"}
               style={
-                isDisabled ? { overflow: "hidden", position: "relative" } : {}
+                isTableDisabled
+                  ? { overflow: "hidden", position: "relative" }
+                  : {}
               }
             >
               <Paper
                 withBorder
                 radius="md"
                 style={
-                  isDisabled
+                  isTableDisabled
                     ? {
                         opacity: 0.8,
                         cursor: "not-allowed",
@@ -190,7 +209,7 @@ const EditSchoolResourcesDataModal = ({
               >
                 <Table
                   style={{
-                    pointerEvents: isDisabled ? "none" : "all",
+                    pointerEvents: isTableDisabled ? "none" : "all",
                   }}
                   highlightOnHover
                   layout="fixed"
@@ -209,7 +228,7 @@ const EditSchoolResourcesDataModal = ({
                 </Table>
               </Paper>
 
-              {isDisabled ? (
+              {isTableDisabled ? (
                 <div
                   style={{
                     position: "absolute",
@@ -237,7 +256,13 @@ const EditSchoolResourcesDataModal = ({
               >
                 Cancel
               </Button>
-              <EditSchoolDataConfirmModal disabled={isDisabled} />
+              {isApproved ? (
+                <RequestEditDataConfirmModal
+                  subId={approvedResourcesData?.id}
+                />
+              ) : (
+                <EditSchoolDataConfirmModal disabled={isReturned} />
+              )}
             </Flex>
           </Paper>
         </form>
@@ -245,6 +270,16 @@ const EditSchoolResourcesDataModal = ({
 
       {loading ? (
         <Skeleton w={60} h={26} />
+      ) : hasPendingResourcesData ? (
+        <Button
+          size="compact-sm"
+          radius="sm"
+          px="md"
+          variant="outline"
+          color="yellow"
+        >
+          Submission Pending
+        </Button>
       ) : (
         <Button
           onClick={open}

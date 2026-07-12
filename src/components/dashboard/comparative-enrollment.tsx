@@ -11,7 +11,7 @@ const ComparativeEnrollment = () => {
   return (
     <ResponsiveContainer width="80%" debounce={250} height={200}>
       <BarChart
-        data={data?.results?.data}
+        data={data?.results?.data?.dashboard_data}
         dataKey="year"
         orientation="vertical"
         type="default"
