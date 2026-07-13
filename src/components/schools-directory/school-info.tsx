@@ -1,6 +1,7 @@
-import { Button, Card, Divider, Flex, Grid, Text } from "@mantine/core";
+import { Card, Divider, Flex, Grid, Text } from "@mantine/core";
 import SchoolLogoCard from "./school-logo-card";
 import { useAuth } from "@/contexts/auth.context";
+import EditSchoolInfoModal from "../school/edit-school-info-modal";
 
 const SchoolInfo = ({ school }: { school: { [k: string]: any } }) => {
   const { user } = useAuth();
@@ -26,15 +27,7 @@ const SchoolInfo = ({ school }: { school: { [k: string]: any } }) => {
             </Text>
 
             {user?.role === "School Account" && (
-              <Button
-                size="compact-sm"
-                radius="sm"
-                px="md"
-                variant="outline"
-                color="blue"
-              >
-                Edit
-              </Button>
+              <EditSchoolInfoModal school={school} />
             )}
           </Flex>
           <Divider mb={20} />

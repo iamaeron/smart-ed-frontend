@@ -5,8 +5,10 @@ import { InboxIn } from "@solar-icons/react";
 
 const EditSchoolDataConfirmModal = ({
   disabled = false,
+  fullWidth = false,
 }: {
   disabled?: boolean;
+  fullWidth?: boolean;
 }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -33,6 +35,7 @@ const EditSchoolDataConfirmModal = ({
         onClick={open}
         disabled={disabled}
         tt="uppercase"
+        fullWidth={fullWidth}
         color="primary"
         type="button"
       >

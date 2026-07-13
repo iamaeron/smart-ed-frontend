@@ -17,10 +17,26 @@ type AddressStore = {
   district: string;
   isPinDraggable: boolean;
   setId: (key: string, val: any) => void;
+  hydrateAddress: (
+    data: Partial<
+      Omit<
+        AddressStore,
+        | "setId"
+        | "resetAddress"
+        | "hydrateAddress"
+        | "provinces"
+        | "cities"
+        | "barangays"
+      >
+    >,
+  ) => void;
   resetAddress: () => void;
 };
 
-const initialStore: Omit<AddressStore, "setId" | "resetAddress"> = {
+const initialStore: Omit<
+  AddressStore,
+  "setId" | "resetAddress" | "hydrateAddress"
+> = {
   provinceId: 0,
   province: "",
   cityId: 0,
@@ -40,7 +56,6 @@ const initialStore: Omit<AddressStore, "setId" | "resetAddress"> = {
 export const useAddressStore = create<AddressStore>((set) => ({
   ...initialStore,
   setId: (key, val) => set({ [key]: val }),
-  resetAddress: () => {
-    set({});
-  },
+  hydrateAddress: (data) => set(data),
+  resetAddress: () => set({ ...initialStore }),
 }));

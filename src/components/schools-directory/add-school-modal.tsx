@@ -224,7 +224,7 @@ const AddSchoolModal = () => {
                     />
                   </Group>
 
-                  <SchoolHeadPicker control={control} formState={formState} />
+                  <SchoolHeadPicker control={control} />
                 </Box>
 
                 {/* <Divider orientation="vertical" /> */}

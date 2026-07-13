@@ -3,8 +3,10 @@ import { Modal, Button, Text, Stack, Flex, Paper } from "@mantine/core";
 import { Logout2 } from "@solar-icons/react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/auth.context";
+import { useQueryClient } from "@tanstack/react-query";
 
 const LogOutModal = () => {
+  const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
   const { setUser } = useAuth();
 
@@ -12,6 +14,7 @@ const LogOutModal = () => {
     try {
       await api.post("/api/logout");
       setUser(null);
+      queryClient.clear();
     } catch (error) {
       console.error("Logout failed:", error);
     }

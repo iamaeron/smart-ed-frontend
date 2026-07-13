@@ -12,24 +12,15 @@ import {
 } from "@mantine/core";
 import { Check, ChevronDown } from "lucide-react";
 import { Controller, type Control, type FormState } from "react-hook-form";
-import ErrorMessage from "../form/error-message";
 import { useState } from "react";
 
-const SchoolHeadPicker = ({
-  control,
-  formState,
-}: {
-  control: Control<SchoolData>;
-  formState: FormState<SchoolData>;
-}) => {
+const SchoolHeadPicker = ({ control }: { control: Control<SchoolData> }) => {
   const { data: accounts, isPending: isAccountsDataFetching } =
     useFetchUserAccounts();
 
   const [selectedAccount, setSelectedAccount] = useState<{
     [k: string]: string;
   } | null>(null);
-
-  console.log(accounts?.results?.users);
 
   const accountsList =
     accounts?.results?.users.map((user: any) => ({
