@@ -47,6 +47,9 @@ importers:
       fuse.js:
         specifier: ^7.4.2
         version: 7.4.2
+      laravel-echo:
+        specifier: ^2.4.0
+        version: 2.4.0(pusher-js@8.5.0)(socket.io-client@4.8.3)
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4
@@ -59,6 +62,9 @@ importers:
       motion:
         specifier: ^12.40.0
         version: 12.40.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      pusher-js:
+        specifier: ^8.5.0
+        version: 8.5.0
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -1972,6 +1978,18 @@ packages:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
 
+  laravel-echo@2.4.0:
+    resolution: {integrity: sha512-8w0fAGSNt6THfbNyqdKc29bhfeNpJg13CGx2fcLgoX0/f0mTJm/AIkYTTakmcr9pc42ZB68cSoE00j4/xNaFGQ==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      pusher-js: '*'
+      socket.io-client: '*'
+    peerDependenciesMeta:
+      pusher-js:
+        optional: true
+      socket.io-client:
+        optional: true
+
   leaflet-geosearch@4.4.0:
     resolution: {integrity: sha512-Pt/3JU0Oxvk+5ccGChNOV8yxk+Vl+3P83drGwW8/6ugF+K7zKPkx3naGDbPdhfeUmy+QuSCeVdvjN1jLCgwbaQ==}
 
@@ -2318,6 +2336,9 @@ packages:
 
   pure-rand@6.1.0:
     resolution: {integrity: sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA==}
+
+  pusher-js@8.5.0:
+    resolution: {integrity: sha512-V7uzGi9bqOOOyM/6IkJdpFyjGZj7llz1v0oWnYkZKcYLvbz6VcHVLmzKqkvegjuMumpfIEKGLmWHwFb39XFCpw==}
 
   rc@1.2.8:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
@@ -2676,6 +2697,9 @@ packages:
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
+  tweetnacl@1.0.3:
+    resolution: {integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -4862,6 +4886,11 @@ snapshots:
 
   kleur@4.1.5: {}
 
+  laravel-echo@2.4.0(pusher-js@8.5.0)(socket.io-client@4.8.3):
+    optionalDependencies:
+      pusher-js: 8.5.0
+      socket.io-client: 4.8.3
+
   leaflet-geosearch@4.4.0:
     optionalDependencies:
       '@googlemaps/js-api-loader': 1.16.10
@@ -5155,6 +5184,10 @@ snapshots:
       escape-goat: 2.1.1
 
   pure-rand@6.1.0: {}
+
+  pusher-js@8.5.0:
+    dependencies:
+      tweetnacl: 1.0.3
 
   rc@1.2.8:
     dependencies:
@@ -5615,6 +5648,8 @@ snapshots:
       typescript: 6.0.3
 
   tslib@2.8.1: {}
+
+  tweetnacl@1.0.3: {}
 
   type-check@0.4.0:
     dependencies:
