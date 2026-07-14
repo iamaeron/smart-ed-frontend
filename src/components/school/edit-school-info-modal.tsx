@@ -30,7 +30,7 @@ import { romanize } from "@/lib/romanize";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAddressStore } from "@/stores/address.store";
-import { useEffect, type SubmitEvent } from "react";
+import { useEffect } from "react";
 import { resolveAddressIds } from "@/lib/resolve-address";
 import EditSchoolDataConfirmModal from "./edit-school-data-confirm-modal";
 
@@ -47,7 +47,10 @@ const EditSchoolInfoModal = ({
 }) => {
   const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
-  const { data: schoolTypes, isPending } = useFetchSchoolTypes();
+  const { data: schoolTypes, isPending } = useFetchSchoolTypes(
+    {},
+    { enabled: opened },
+  );
   const formMethods = useForm<SchoolData>({
     resolver: zodResolver(schoolSchema),
     defaultValues: {
@@ -105,11 +108,11 @@ const EditSchoolInfoModal = ({
 
     Object.entries(data).forEach(([k, v]) => {
       if (k === "region") {
-        formData.append(`details[${k}]`, `Region ${romanize(Number(v))}`);
+        formData.append(`details[0][${k}]`, `Region ${romanize(Number(v))}`);
         return;
       }
 
-      formData.append(`details[${k}]`, v ?? "");
+      formData.append(`details[0][${k}]`, v ?? "");
     });
 
     console.log(formData);

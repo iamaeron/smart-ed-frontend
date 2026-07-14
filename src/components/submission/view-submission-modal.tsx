@@ -16,7 +16,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { Back2Line, CheckFill, Comment2Line, TimeLine } from "@mingcute/react";
+import { Comment2Line } from "@mingcute/react";
 import dayjs from "dayjs";
 import { User, X } from "lucide-react";
 import ReturnSubmissionModal from "./return-submission-modal";
@@ -24,26 +24,12 @@ import ApproveSubmissionConfirmModal from "./approve-submission-confirm-modal";
 import EditSchoolEnrollmentDataModal from "../school/edit-school-enrollment-data-modal";
 import EditSchoolResourcesDataModal from "../school/edit-school-resources-data-modal";
 import SubmissionCommentsList from "./comments-list";
+import StatusChip from "./status-chip";
 
 type ViewSubModalProps = {
   submissionId: number | string | null;
   opened: boolean;
   onClose: () => void;
-};
-
-const statusColors = {
-  pending: {
-    bg: "subYellow",
-    icon: <TimeLine size={16} />,
-  },
-  approved: {
-    bg: "subGreen",
-    icon: <CheckFill size={16} />,
-  },
-  returned: {
-    bg: "subRed",
-    icon: <Back2Line size={16} />,
-  },
 };
 
 const ViewSubmissionModal = ({
@@ -118,21 +104,7 @@ const ViewSubmissionModal = ({
                 <Box>
                   <Group>
                     <Text fw={600}>{submissionData.school.school_name}</Text>
-                    <Paper
-                      c="white"
-                      bg={statusColors[submissionData.status].bg}
-                      radius={999}
-                      px={10}
-                      py={3}
-                      tt="uppercase"
-                    >
-                      <Group gap={4}>
-                        {statusColors[submissionData.status].icon}
-                        <Text fz={12} fw={500}>
-                          {submissionData.status}
-                        </Text>
-                      </Group>
-                    </Paper>
+                    <StatusChip status={submissionData.status} />
                     <Group gap={4}>
                       <Comment2Line size={14} />
                       <Text size="xs">

@@ -1,8 +1,17 @@
+export type SubmissionStatus =
+  | "returned"
+  | "approved"
+  | "pending"
+  | "edit-returned"
+  | "edit-granted"
+  | "edit-request"
+  | "edit-granted";
+
 export type Submission = {
   id: number;
   submission_number: any;
   type: string;
-  status: "pending" | "approved" | "returned";
+  status: SubmissionStatus;
   date_submitted: string;
   comments_count: number;
   submitted_by: string;

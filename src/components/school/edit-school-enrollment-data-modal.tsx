@@ -19,10 +19,10 @@ import type { SubmitEvent } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
-import { useAuth } from "@/contexts/auth.context";
 import ReturnedWarningCard from "./returned-warning-card";
 import ApprovedInfoCard from "./approved-info-card";
 import RequestEditDataConfirmModal from "./request-edit-data-confirm-modal";
+import { findUserSubmission } from "@/lib/find-user-submission";
 
 const EditSchoolEnrollmentDataModal = ({
   data,
@@ -37,7 +37,6 @@ const EditSchoolEnrollmentDataModal = ({
 }) => {
   const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
-  const { user } = useAuth();
 
   const onSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -123,23 +122,27 @@ const EditSchoolEnrollmentDataModal = ({
     ),
   );
 
-  const pendingEnrollmentData = user?.submission_data?.find(
-    (f) => f.type === "enrollment" && f.status === "pending",
+  const TYPE = "enrollment";
+
+  const { hasData: hasEditRequestEnrollmentData } = findUserSubmission(
+    TYPE,
+    "edit-request",
   );
 
-  const returnedEnrollmentData = user?.submission_data?.find(
-    (f) => f.type === "enrollment" && f.status === "returned",
+  const { hasData: hasPendingEnrollmentData } = findUserSubmission(
+    TYPE,
+    "pending",
   );
 
-  const approvedEnrollmentData = user?.submission_data?.find(
-    (f) => f.type === "enrollment" && f.status === "approved",
-  );
+  const {
+    foundData: approvedEnrollmentData,
+    hasData: hasApprovedEnrollmentData,
+  } = findUserSubmission(TYPE, "approved");
 
-  const hasPendingEnrollmentData = pendingEnrollmentData ? true : false;
-
-  const hasApprovedEnrollmentData = approvedEnrollmentData ? true : false;
-
-  const hasReturnedEnrollmentData = returnedEnrollmentData ? true : false;
+  const {
+    foundData: returnedEnrollmentData,
+    hasData: hasReturnedEnrollmentData,
+  } = findUserSubmission(TYPE, "returned");
 
   const isReturned = hasReturnedEnrollmentData && !review;
   const isApproved = hasApprovedEnrollmentData && !review;
@@ -288,7 +291,7 @@ const EditSchoolEnrollmentDataModal = ({
 
       {loading ? (
         <Skeleton w={60} h={26} />
-      ) : hasPendingEnrollmentData ? (
+      ) : hasPendingEnrollmentData || hasEditRequestEnrollmentData ? (
         <Button
           size="compact-sm"
           radius="sm"
@@ -296,7 +299,7 @@ const EditSchoolEnrollmentDataModal = ({
           variant="outline"
           color="yellow"
         >
-          Submission Pending
+          {hasPendingEnrollmentData ? "Submission Pending" : "Edit Requested"}
         </Button>
       ) : (
         <Button

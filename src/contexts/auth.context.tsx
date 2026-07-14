@@ -19,6 +19,7 @@ const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
     const initializeAuth = async () => {
       try {
         const response = await api.get("/api/user-submissions");
+
         const user = {
           ...response.data.results?.user,
           submission_data: response.data.results?.submission_data,

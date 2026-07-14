@@ -1,23 +1,9 @@
 import type { Submission } from "@/types/data/submission.type";
-import {
-  Grid,
-  Box,
-  Card,
-  Flex,
-  Group,
-  Text,
-  Paper,
-  Button,
-} from "@mantine/core";
-import {
-  Back2Line,
-  Comment2Line,
-  TimeLine,
-  CheckFill,
-  Eye2Line,
-} from "@mingcute/react";
+import { Grid, Box, Card, Flex, Group, Text, Button } from "@mantine/core";
+import { Comment2Line, Eye2Line } from "@mingcute/react";
 import { User } from "@solar-icons/react";
 import dayjs from "dayjs";
+import StatusChip from "./status-chip";
 
 const SubmissionListItem = ({
   submission,
@@ -26,42 +12,13 @@ const SubmissionListItem = ({
   submission: Submission;
   openSubmission: () => void;
 }) => {
-  const statusColors = {
-    pending: {
-      bg: "subYellow",
-      icon: <TimeLine size={16} />,
-    },
-    approved: {
-      bg: "subGreen",
-      icon: <CheckFill size={16} />,
-    },
-    returned: {
-      bg: "subRed",
-      icon: <Back2Line size={16} />,
-    },
-  };
-
   return (
     <Card shadow="lg" p="lg" radius="lg">
       <Flex justify="space-between">
         <Box>
           <Group>
             <Text fw={600}>{submission.school.school_name}</Text>
-            <Paper
-              c="white"
-              bg={statusColors[submission.status].bg}
-              radius={999}
-              px={10}
-              py={3}
-              tt="uppercase"
-            >
-              <Group gap={4}>
-                {statusColors[submission.status].icon}
-                <Text fz={12} fw={500}>
-                  {submission.status}
-                </Text>
-              </Group>
-            </Paper>
+            <StatusChip status={submission.status} />
             <Group gap={4}>
               <Comment2Line size={14} />
               <Text size="xs">{submission.comments_count} comments</Text>
