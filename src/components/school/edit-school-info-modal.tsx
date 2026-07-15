@@ -33,6 +33,7 @@ import { useAddressStore } from "@/stores/address.store";
 import { useEffect } from "react";
 import { resolveAddressIds } from "@/lib/resolve-address";
 import EditSchoolDataConfirmModal from "./edit-school-data-confirm-modal";
+import { findUserSubmission } from "@/lib/find-user-submission";
 
 const EditSchoolInfoModal = ({
   school,
@@ -47,10 +48,7 @@ const EditSchoolInfoModal = ({
 }) => {
   const queryClient = useQueryClient();
   const [opened, { open, close }] = useDisclosure(false);
-  const { data: schoolTypes, isPending } = useFetchSchoolTypes(
-    {},
-    { enabled: opened },
-  );
+  const { data: schoolTypes } = useFetchSchoolTypes({}, { enabled: opened });
   const formMethods = useForm<SchoolData>({
     resolver: zodResolver(schoolSchema),
     defaultValues: {
@@ -67,12 +65,15 @@ const EditSchoolInfoModal = ({
       province: school.address.province,
       region: school.region,
       district: school.district,
-      longitude: school.longitude,
-      latitude: school.latitude,
+      latitude: school.latitude.replace("N", ""),
+      longitude: school.longitude.replace("E", ""),
       phone_number: school.school_head.phone_number,
       email: school.school_head.head_email,
     },
   });
+
+  console.log(formMethods.getValues("longitude"));
+
   const { control, handleSubmit, formState } = formMethods;
 
   const schoolTypesList =
@@ -138,6 +139,10 @@ const EditSchoolInfoModal = ({
       console.log(err);
     }
   };
+
+  const TYPE = "information";
+
+  const { hasData: hasPendingInfoData } = findUserSubmission(TYPE, "pending");
 
   return (
     <>
@@ -399,16 +404,28 @@ const EditSchoolInfoModal = ({
           </form>
         </FormProvider>
       </Modal>
-      <Button
-        onClick={open}
-        size="compact-sm"
-        radius="sm"
-        px="md"
-        variant="outline"
-        color="blue"
-      >
-        Edit
-      </Button>
+      {hasPendingInfoData ? (
+        <Button
+          size="compact-sm"
+          radius="sm"
+          px="md"
+          variant="outline"
+          color="yellow"
+        >
+          Submission Pending
+        </Button>
+      ) : (
+        <Button
+          onClick={open}
+          size="compact-sm"
+          radius="sm"
+          px="md"
+          variant="outline"
+          color="blue"
+        >
+          Edit
+        </Button>
+      )}
     </>
   );
 };

@@ -39,7 +39,7 @@ const QuickLinkItem = ({
               {title}
             </Text>
 
-            <Text c="white" size="sm">
+            <Text c="white" size="sm" opacity={0.8}>
               {desc}
             </Text>
           </Box>

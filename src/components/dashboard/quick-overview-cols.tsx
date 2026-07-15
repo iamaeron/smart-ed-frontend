@@ -10,9 +10,8 @@ const QuickOverviewCols = () => {
   const { user } = useAuth();
   const year = useAcademicYearStore((state) => state.yearLabel);
   const { data: data, isPending } = useFetchDashboardResources();
-  console.log(data);
 
-  const totalArr = data?.results?.data || [];
+  const totalArr = data?.results || [];
   const currentYearData =
     totalArr.length > 0 ? totalArr.find((i: any) => i.year === year) : {};
 
