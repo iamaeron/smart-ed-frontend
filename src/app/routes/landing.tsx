@@ -12,12 +12,13 @@ import QuickLinksContainer from "@/components/landing/quick-links-container";
 import AdvisoriesContainer from "@/components/landing/advisories-container";
 import DescriptionSectionContainer from "@/components/landing/description-section-container";
 import ExploreSchoolsContainer from "@/components/landing/explore-schools-container";
+import Footer from "@/components/landing/footer";
 
 const LandingPage = () => {
   return (
     <div
       style={{
-        paddingBottom: "80px",
+        // paddingBottom: "80px",
         backgroundColor: "#f3f5ff",
         minHeight: "100vh",
       }}
@@ -58,6 +59,13 @@ const LandingPage = () => {
       <AdvisoriesContainer />
       <DescriptionSectionContainer />
       <ExploreSchoolsContainer />
+      <Footer />
+
+      {/* <iframe
+        src="https://www.google.com/maps/d/u/0/embed?mid=1sb-hHj0QgFzt3SJ0rOBSHOJoKRnWJ6Q&ehbc=2E312F&noprof=1"
+        width="640"
+        height="480"
+      ></iframe> */}
     </div>
   );
 };

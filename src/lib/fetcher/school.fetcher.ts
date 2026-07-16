@@ -50,3 +50,19 @@ export const useFetchSchoolTypes = (
     },
   });
 };
+
+export const useFetchSchoolsPublic = (
+  params: Param | {} = {},
+  options?: FetcherOptions,
+) => {
+  const urlParams = new URLSearchParams(params).toString();
+
+  return useQuery({
+    ...options,
+    queryKey: ["schools_public", params],
+    queryFn: async () => {
+      const res = await api.get(`/api/public/schools?${urlParams}`);
+      return res.data;
+    },
+  });
+};
