@@ -25,6 +25,7 @@ import EditSchoolEnrollmentDataModal from "../school/edit-school-enrollment-data
 import EditSchoolResourcesDataModal from "../school/edit-school-resources-data-modal";
 import SubmissionCommentsList from "./comments-list";
 import StatusChip from "./status-chip";
+import SchoolDetails from "../schools-directory/school-details";
 
 type ViewSubModalProps = {
   submissionId: number | string | null;
@@ -221,6 +222,10 @@ const ViewSubmissionModal = ({
 
                       {submissionData.type === "resource" && (
                         <ResourceDataTable data={submissionData?.details} />
+                      )}
+
+                      {submissionData.type === "information" && (
+                        <SchoolDetails school={submissionData?.details} view />
                       )}
                     </Paper>
                   </Box>

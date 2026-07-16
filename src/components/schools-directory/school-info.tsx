@@ -2,6 +2,7 @@ import { Card, Divider, Flex, Grid, Text } from "@mantine/core";
 import SchoolLogoCard from "./school-logo-card";
 import { useAuth } from "@/contexts/auth.context";
 import EditSchoolInfoModal from "../school/edit-school-info-modal";
+import SchoolDetails from "./school-details";
 
 const SchoolInfo = ({ school }: { school: { [k: string]: any } }) => {
   const { user } = useAuth();
@@ -31,36 +32,7 @@ const SchoolInfo = ({ school }: { school: { [k: string]: any } }) => {
             )}
           </Flex>
           <Divider mb={20} />
-          <Grid rowGap={20}>
-            <Info label="School Name" value={school.school_name} />
-            <Info label="School ID" value={school.school_code} />
-            <Info label="Year Established" value={school.year_established} />
-            <Info label="Type" value={school.school_type.name} />
-          </Grid>
-
-          <Text fw={600} fz={18} mt={40} mb={10}>
-            Address
-          </Text>
-          <Divider mb={20} />
-          <Grid rowGap={20}>
-            <Info capt label="Street" value={school.address.street} />
-            <Info capt label="City" value={school.address.city} />
-            <Info capt label="Barangay" value={school.address.barangay} />
-            <Info capt label="Province" value={school.address.province} />
-            <Info capt label="District" value={school.district} />
-            <Info capt label="Region" value={school.region} />
-          </Grid>
-
-          <Text fw={600} fz={18} mt={40} mb={10}>
-            School Head
-          </Text>
-          <Divider mb={20} />
-          <Grid rowGap={20}>
-            <Info label="Name" value={school.school_head.name} />
-            <Info label="Phone No." value={school.school_head.phone_number} />
-            <Grid.Col span={6} />
-            <Info label="Email" value={school.school_head.head_email} />
-          </Grid>
+          <SchoolDetails school={school} />
         </Card>
       </Grid.Col>
       <Grid.Col span={4}>
@@ -71,26 +43,3 @@ const SchoolInfo = ({ school }: { school: { [k: string]: any } }) => {
 };
 
 export default SchoolInfo;
-
-const Info = ({
-  label,
-  value,
-  capt,
-}: {
-  label: string;
-  value: string;
-  capt?: boolean;
-}) => {
-  return (
-    <Grid.Col span={6}>
-      <Card p="0" shadow="none" radius="md">
-        <Text fz={14} c="longText">
-          {label}
-        </Text>
-        <Text tt={capt ? "capitalize" : undefined} fw={500}>
-          {value}
-        </Text>
-      </Card>
-    </Grid.Col>
-  );
-};

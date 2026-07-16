@@ -37,12 +37,11 @@ import { findUserSubmission } from "@/lib/find-user-submission";
 
 const EditSchoolInfoModal = ({
   school,
-  loading,
   review,
   submissionId,
 }: {
   school: Record<any, any>;
-  loading: boolean;
+  // loading?: boolean;
   review?: boolean;
   submissionId?: string;
 }) => {

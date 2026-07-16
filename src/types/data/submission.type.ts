@@ -20,9 +20,11 @@ export type Submission = {
     type: string;
     school_code: string;
   };
-  details: {
-    items: SubmissionDetails[];
-  };
+  details:
+    | {
+        items: SubmissionDetails[];
+      }
+    | Record<any, any>;
   comments: Record<any, any>[];
 };
 
